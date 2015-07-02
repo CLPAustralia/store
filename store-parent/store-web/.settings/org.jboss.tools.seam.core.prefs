@@ -1,0 +1,14 @@
+action.package=org.jboss.seam.example.booking
+action.sources=/store-ejb/src/main/java
+eclipse.preferences.version=1
+model.package=org.jboss.seam.example.booking
+model.sources=/store-ejb/src/main/java
+seam.ejb.project=store-ejb
+seam.project.connection.profile=DefaultDS
+seam.project.deployment.type=ear
+seam.project.settings.version=1.1
+seam.project.web.root.folder=/store-web/src/main/webapp
+seam.test.creating=false
+seam.test.project=store-web
+test.package=org.domain.storeweb.test
+test.sources=/store-web/src/main/java
