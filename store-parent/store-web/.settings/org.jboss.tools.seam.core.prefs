@@ -1,7 +1,7 @@
-action.package=org.jboss.seam.example.booking
+action.package=au.com.chloec.store
 action.sources=/store-ejb/src/main/java
 eclipse.preferences.version=1
-model.package=org.jboss.seam.example.booking
+model.package=au.com.chloec.store
 model.sources=/store-ejb/src/main/java
 seam.ejb.project=store-ejb
 seam.project.connection.profile=DefaultDS

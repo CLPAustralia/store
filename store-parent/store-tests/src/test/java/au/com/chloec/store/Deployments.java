@@ -1,4 +1,4 @@
-package org.jboss.seam.example.booking.test;
+package au.com.chloec.store;
 
 import java.io.File;
 

@@ -1,5 +1,5 @@
 //$Id: ChangePasswordTest.java 5810 2007-07-16 06:46:47Z gavin $
-package org.jboss.seam.example.booking.test;
+package au.com.chloec.store;
 
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.EnterpriseArchive;
@@ -11,8 +11,8 @@ import org.jboss.seam.Component;
 import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.contexts.Lifecycle;
 import org.jboss.seam.core.Manager;
-import org.jboss.seam.example.booking.ChangePassword;
-import org.jboss.seam.example.booking.User;
+import au.com.chloec.store.ChangePassword;
+import au.com.chloec.store.User;
 import org.jboss.seam.security.Identity;
 
 import static org.junit.Assert.*;
