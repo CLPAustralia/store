@@ -12,6 +12,8 @@ import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Out;
 
+import au.com.chloec.store.domain.User;
+
 @Stateless
 @Name("authenticator")
 public class AuthenticatorAction 

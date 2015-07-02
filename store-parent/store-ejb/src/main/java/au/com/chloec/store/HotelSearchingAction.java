@@ -16,6 +16,8 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
 import org.jboss.seam.annotations.security.Restrict;
 
+import au.com.chloec.store.domain.Hotel;
+
 @Stateful
 @Name("hotelSearch")
 @Scope(ScopeType.SESSION)

@@ -25,6 +25,9 @@ import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
 
+import au.com.chloec.store.domain.Booking;
+import au.com.chloec.store.domain.User;
+
 @Stateful
 @Scope(SESSION)
 @Name("bookingList")

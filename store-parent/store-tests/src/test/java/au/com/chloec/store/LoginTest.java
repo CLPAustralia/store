@@ -10,7 +10,9 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.seam.Component;
 import org.jboss.seam.contexts.Lifecycle;
 import org.jboss.seam.core.Manager;
-import au.com.chloec.store.User;
+
+import au.com.chloec.store.domain.User;
+
 import org.jboss.seam.security.Identity;
 import org.jboss.seam.web.Session;
 

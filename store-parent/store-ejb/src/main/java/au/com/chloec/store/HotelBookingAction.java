@@ -21,6 +21,10 @@ import org.jboss.seam.core.Events;
 import org.jboss.seam.faces.FacesMessages;
 import org.jboss.seam.log.Log;
 
+import au.com.chloec.store.domain.Booking;
+import au.com.chloec.store.domain.Hotel;
+import au.com.chloec.store.domain.User;
+
 @Stateful
 @Name("hotelBooking")
 @Restrict("#{identity.loggedIn}")

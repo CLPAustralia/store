@@ -1,5 +1,5 @@
 //$Id: User.java 5579 2007-06-27 00:06:49Z gavin $
-package au.com.chloec.store;
+package au.com.chloec.store.domain;
 
 import static org.jboss.seam.ScopeType.SESSION;
 

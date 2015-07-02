@@ -3,6 +3,8 @@ package au.com.chloec.store;
 
 import javax.ejb.Local;
 
+import au.com.chloec.store.domain.Hotel;
+
 @Local
 public interface HotelBooking
 {

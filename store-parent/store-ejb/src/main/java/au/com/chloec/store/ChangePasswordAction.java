@@ -15,6 +15,8 @@ import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.faces.FacesMessages;
 
+import au.com.chloec.store.domain.User;
+
 @Stateful
 @Scope(EVENT)
 @Name("changePassword")

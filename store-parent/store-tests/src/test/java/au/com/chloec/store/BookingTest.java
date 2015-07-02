@@ -17,12 +17,14 @@ import org.jboss.seam.Component;
 import org.jboss.seam.contexts.Contexts;
 import org.jboss.seam.contexts.Lifecycle;
 import org.jboss.seam.core.Manager;
-import au.com.chloec.store.Booking;
+
 import au.com.chloec.store.BookingList;
-import au.com.chloec.store.Hotel;
 import au.com.chloec.store.HotelBooking;
 import au.com.chloec.store.HotelSearching;
-import au.com.chloec.store.User;
+import au.com.chloec.store.domain.Booking;
+import au.com.chloec.store.domain.Hotel;
+import au.com.chloec.store.domain.User;
+
 import org.jboss.seam.security.Identity;
 
 import static org.junit.Assert.*;
