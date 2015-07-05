@@ -37,8 +37,9 @@ public class BookingListAction implements BookingList, Serializable
 {
    private static final long serialVersionUID = 1L;
    
-   @PersistenceContext
-   private EntityManager em;
+// @PersistenceContext
+   @In
+   private EntityManager entityManager;
    
    @In
    private User user;
@@ -55,7 +56,7 @@ public class BookingListAction implements BookingList, Serializable
    @Observer("bookingConfirmed")
    public void getBookings()
    {
-      bookings = em.createQuery("select b from Booking b where b.user.username = :username order by b.checkinDate")
+      bookings = entityManager.createQuery("select b from Booking b where b.user.username = :username order by b.checkinDate")
             .setParameter("username", user.getUsername())
             .getResultList();
    }
@@ -63,8 +64,8 @@ public class BookingListAction implements BookingList, Serializable
    public void cancel()
    {
       log.info("Cancel booking: #{bookingList.booking.id} for #{user.username}");
-      Booking cancelled = em.find(Booking.class, booking.getId());
-      if (cancelled!=null) em.remove( cancelled );
+      Booking cancelled = entityManager.find(Booking.class, booking.getId());
+      if (cancelled!=null) entityManager.remove( cancelled );
       getBookings();
       FacesMessages.instance().add("Booking cancelled for confirmation number #0", booking.getId());
    }

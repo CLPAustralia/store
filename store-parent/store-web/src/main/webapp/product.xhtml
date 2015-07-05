@@ -1,0 +1,132 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+
+<div class="section">
+  
+    <span class="errors">
+       <h:messages id="messages" globalOnly="true"/>
+    </span>
+    
+    <h1>Products</h1>
+
+	<h:form id="searchCriteria">
+	<fieldset>
+       <h:inputText id="searchString" value="#{productMaintenance.searchString}" style="width: 165px;">
+        <a:ajax event="keyup" render="searchResults productOptions" listener="#{productMaintenance.find}"/>
+       </h:inputText>                     
+       &#160;
+	   <a:commandButton id="findProducts" value="Find Product" actionListener="#{productMaintenance.find}"  render="searchResults productOptions"/>
+       &#160;
+       <h:commandButton id="addProduct" value="Add Product" action="#{productMaintenance.add}"/>
+       <a:status id="status">
+          <f:facet id="StartStatus" name="start">
+             <h:graphicImage id="SpinnerGif" value="/img/spinner.gif"/>
+          </f:facet>
+       </a:status>
+	   <br/>
+       <h:outputLabel id="MaximumResultsLabel" for="pageSize">Maximum results:</h:outputLabel>&#160;
+       <h:selectOneMenu id="pageSize" value="#{productMaintenance.pageSize}">
+          <f:selectItem id="PageSize5" itemLabel="5" itemValue="5"/>
+          <f:selectItem id="PageSize10" itemLabel="10" itemValue="10"/>
+          <f:selectItem id="PageSize20" itemLabel="20" itemValue="20"/>
+       </h:selectOneMenu>
+    </fieldset>
+    </h:form>
+    
+</div>
+
+<a:outputPanel id="searchResults">
+  <div class="section">
+  	<h:form id="searchResultsForm">
+	<h:outputText id="NoProductsFoundMessage" value="No Products Found" rendered="#{products!=null and products.rowCount==0}"/>
+	<h:dataTable id="products" value="#{products}" var="product" rendered="#{products.rowCount>0}">
+		<h:column id="column1">
+			<f:facet id="NameFacet" name="header">ID</f:facet>
+			#{product.id}
+		</h:column>
+		<h:column id="column2">
+			<f:facet id="NameFacet" name="header">Name</f:facet>
+			#{product.name}
+		</h:column>
+		<h:column id="column3">
+			<f:facet id="NameFacet" name="header">Display Name</f:facet>
+			#{product.displayName}
+		</h:column>
+		<h:column id="column4">
+			<f:facet id="NameFacet" name="header">Factory Barcode</f:facet>
+			#{product.factoryBarcode}
+		</h:column>
+		<h:column id="column5">
+			<f:facet id="NameFacet" name="header">Factory Code</f:facet>
+			#{product.factoryCode}
+		</h:column>
+		<h:column id="column6">
+			<f:facet id="NameFacet" name="header">Product Code</f:facet>
+			#{product.productCode}
+		</h:column>
+		<h:column id="column7">
+			<f:facet id="NameFacet" name="header">Gender</f:facet>
+			#{product.gender.name}
+		</h:column>
+		<h:column id="column8">
+			<f:facet id="NameFacet" name="header">Wholesale Price</f:facet>
+			#{product.wholesalePrice}
+		</h:column>
+		<h:column id="column9">
+			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
+			#{product.retailPrice}
+		</h:column>
+		<h:column id="column0">
+			<f:facet id="NameFacet" name="header">Category</f:facet>
+			#{product.category.name}
+		</h:column>
+		<h:column id="column11">
+			<f:facet id="NameFacet" name="header">Label</f:facet>
+			#{product.label.name}
+		</h:column>
+		<h:column id="column12">
+			<f:facet id="NameFacet" name="header">Creation Date</f:facet>
+			#{product.creationDate}
+		</h:column>
+		<h:column id="column13">
+			<f:facet id="NameFacet" name="header">Last Update Date</f:facet>
+			#{product.lastUpdateDate}
+		</h:column>
+		<h:column id="column14">
+			<f:facet id="NameFacet" name="header">Last Update User</f:facet>
+			#{product.lastUpdateUser.name}
+		</h:column>
+		<h:column id="column15">
+			<f:facet id="ActionFacet" name="header">Options</f:facet>
+			<ui:repeat var="productOption" value="#{product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
+		</h:column>
+		<h:column id="column16">
+			<f:facet id="ActionFacet" name="header">Action</f:facet>
+			<s:link id="editProduct" value="Edit" action="#{productMaintenance.edit}"/>
+		</h:column>
+	</h:dataTable>
+	<s:link id="MoreResultsLink" value="More results" action="#{productMaintenance.nextPage}" rendered="#{productMaintenance.nextPageAvailable}" />
+	</h:form>
+  </div>
+</a:outputPanel>
+
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+	<s:button id="sale" value="Sale" view="/sale.xhtml"/><br />	
+	<s:button id="product" value="Product" view="/product.xhtml"/><br />	
+	<s:button id="company" value="Company" view="/company.xhtml"/><br />
+	<s:button id="person" value="Person" view="/Person.xhtml"/><br />
+</ui:define>
+
+</ui:composition>

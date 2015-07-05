@@ -26,8 +26,9 @@ public class ChangePasswordAction implements ChangePassword
    @In @Out
    private User user;
    
-   @PersistenceContext
-   private EntityManager em;
+// @PersistenceContext
+   @In
+   private EntityManager entityManager;
    
    private String verify;
    
@@ -40,7 +41,7 @@ public class ChangePasswordAction implements ChangePassword
    {
       if ( user.getPassword().equals(verify) )
       {
-         user = em.merge(user);
+         user = entityManager.merge(user);
          facesMessages.add("Password updated");
          changed = true;
       }
@@ -59,7 +60,7 @@ public class ChangePasswordAction implements ChangePassword
    
    private void revertUser()
    {
-      user = em.find(User.class, user.getUsername());
+      user = entityManager.find(User.class, user.getUsername());
    }
    public String getVerify()
    {

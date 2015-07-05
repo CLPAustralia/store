@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
@@ -19,8 +18,9 @@ import au.com.chloec.store.domain.User;
 public class AuthenticatorAction 
     implements Authenticator
 {
-    @PersistenceContext 
-    private EntityManager em;
+//    @PersistenceContext
+	@In
+    private EntityManager entityManager;
 
     @In(required=false)   
     @Out(required=false, scope = SESSION)
@@ -28,7 +28,7 @@ public class AuthenticatorAction
    
     public boolean authenticate()
     {
-	List results = em.createQuery("select u from User u where u.username=#{identity.username} and u.password=#{identity.password}")
+	List results = entityManager.createQuery("select u from User u where u.username=#{identity.username} and u.password=#{identity.password}")
                          .getResultList();
       
 	if (results.size()==0) {

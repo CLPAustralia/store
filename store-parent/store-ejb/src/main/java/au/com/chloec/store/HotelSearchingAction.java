@@ -11,6 +11,7 @@ import javax.persistence.PersistenceContext;
 
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Factory;
+import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 import org.jboss.seam.annotations.datamodel.DataModel;
@@ -24,8 +25,9 @@ import au.com.chloec.store.domain.Hotel;
 @Restrict("#{identity.loggedIn}")
 public class HotelSearchingAction implements HotelSearching
 {
-    @PersistenceContext
-    private EntityManager em;
+	// @PersistenceContext
+	@In
+    private EntityManager entityManager;
     
     private String searchString;
     private int pageSize = 10;
@@ -48,7 +50,7 @@ public class HotelSearchingAction implements HotelSearching
     }
     
     private void queryHotels() {
-        List<Hotel> results = em.createQuery("select h from Hotel h where lower(h.name) like #{pattern} or lower(h.city) like #{pattern} or lower(h.zip) like #{pattern} or lower(h.address) like #{pattern}")
+        List<Hotel> results = entityManager.createQuery("select h from Hotel h where lower(h.name) like #{pattern} or lower(h.city) like #{pattern} or lower(h.zip) like #{pattern} or lower(h.address) like #{pattern}")
                                 .setMaxResults(pageSize+1)
                                 .setFirstResult(page * pageSize)
                                 .getResultList();

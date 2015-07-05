@@ -31,8 +31,9 @@ import au.com.chloec.store.domain.User;
 public class HotelBookingAction implements HotelBooking
 {
    
-   @PersistenceContext(type=EXTENDED)
-   private EntityManager em;
+//   @PersistenceContext(type=EXTENDED)
+   @In
+   private EntityManager entityManager;
    
    @In 
    private User user;
@@ -58,7 +59,7 @@ public class HotelBookingAction implements HotelBooking
    @Begin
    public void selectHotel(Hotel selectedHotel)
    {
-      hotel = em.merge(selectedHotel);
+      hotel = entityManager.merge(selectedHotel);
    }
    
    public void bookHotel()
@@ -98,7 +99,7 @@ public class HotelBookingAction implements HotelBooking
    @End
    public void confirm()
    {
-      em.persist(booking);
+	   entityManager.persist(booking);
       facesMessages.add("Thank you, #{user.name}, your confimation number for #{hotel.name} is #{booking.id}");
       log.info("New booking: #{booking.id} for #{user.username}");
       events.raiseTransactionSuccessEvent("bookingConfirmed");

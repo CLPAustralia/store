@@ -25,8 +25,9 @@ public class RegisterAction implements Register
    @In
    private User user;
    
-   @PersistenceContext
-   private EntityManager em;
+//   @PersistenceContext
+   @In
+   private EntityManager entityManager;
    
    @In
    private FacesMessages facesMessages;
@@ -39,11 +40,11 @@ public class RegisterAction implements Register
    {
       if ( user.getPassword().equals(verify) )
       {
-         List existing = em.createQuery("select u.username from User u where u.username=#{user.username}")
+         List existing = entityManager.createQuery("select u.username from User u where u.username=#{user.username}")
             .getResultList();
          if (existing.size()==0)
          {
-            em.persist(user);
+        	 entityManager.persist(user);
             facesMessages.add("Successfully registered as #{user.username}");
             registered = true;
          }
