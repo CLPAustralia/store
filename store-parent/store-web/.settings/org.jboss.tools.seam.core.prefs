@@ -1,7 +1,7 @@
-action.package=au.com.chloec.store
+action.package=au.com.chloec.store.utils
 action.sources=/store-ejb/src/main/java
 eclipse.preferences.version=1
-model.package=au.com.chloec.store
+model.package=au.com.chloec.store.utils
 model.sources=/store-ejb/src/main/java
 seam.ejb.project=store-ejb
 seam.project.connection.profile=DefaultDS

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>au.com.chloec.store</groupId>
 	<artifactId>store-parent</artifactId>
@@ -7,42 +8,53 @@
 		<groupId>org.jboss.seam</groupId>
 		<artifactId>examples</artifactId>
 		<version>2.3.1.Final</version>
-        <relativePath>../pom.xml</relativePath>
+		<relativePath>../pom.xml</relativePath>
 	</parent>
-    <packaging>pom</packaging>
-    <name>Chloe C Store</name>
-    
-    <properties>
-        <example.name>booking</example.name>
-    </properties>
-    
-    <modules>
-    	<module>store-ear</module>
-    	<module>store-ejb</module>
-    	<module>store-web</module>
-    	<module>store-tests</module>
-    </modules>
-    
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>au.com.chloec.store</groupId>
-                <artifactId>store-ejb</artifactId>
-                <version>${project.version}</version>
-                <type>ejb</type>
-            </dependency>
-            <dependency>
-                <groupId>au.com.chloec.store</groupId>
-                <artifactId>store-web</artifactId>
-                <version>${project.version}</version>
-                <type>war</type>
-            </dependency>
-            <dependency>
-                <groupId>au.com.chloec.store</groupId>
-                <artifactId>store-ear</artifactId>
-                <version>${project.version}</version>
-                <type>ear</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+	<packaging>pom</packaging>
+	<name>Chloe C Store</name>
+
+	<properties>
+		<example.name>booking</example.name>
+	</properties>
+
+	<modules>
+		<module>store-ear</module>
+		<module>store-ejb</module>
+		<module>store-web</module>
+		<module>store-tests</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>au.com.chloec.store</groupId>
+				<artifactId>store-ejb</artifactId>
+				<version>${project.version}</version>
+				<type>ejb</type>
+			</dependency>
+			<dependency>
+				<groupId>au.com.chloec.store</groupId>
+				<artifactId>store-web</artifactId>
+				<version>${project.version}</version>
+				<type>war</type>
+			</dependency>
+			<dependency>
+				<groupId>au.com.chloec.store</groupId>
+				<artifactId>store-ear</artifactId>
+				<version>${project.version}</version>
+				<type>ear</type>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.12.4</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>commons-collections</groupId>
+				<artifactId>commons-collections</artifactId>
+				<version>3.2</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>
