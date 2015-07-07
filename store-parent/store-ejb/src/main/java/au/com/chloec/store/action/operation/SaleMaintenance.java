@@ -25,7 +25,9 @@ public interface SaleMaintenance {
 
 	public void edit();
 	
-	public void save();
+	public void addInvoiceItem();
+
+	public void confirm();
 	
-	public void add();
+	public void cancel();
 }

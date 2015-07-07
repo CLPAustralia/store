@@ -4,8 +4,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -18,10 +22,12 @@ import org.jboss.seam.annotations.Name;
 @Entity
 @Name("product")
 @EqualsAndHashCode(callSuper=true)
-public class Product extends AbstractDomainObjectWithId implements Serializable {
+public class Product extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
+	
 	private String name;
 	private String displayName;
 
@@ -46,6 +52,17 @@ public class Product extends AbstractDomainObjectWithId implements Serializable 
 	
 	private byte[] picture;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "product_id")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Column(name = "product_name")
 	public String getName() {
 		return name;
@@ -150,6 +167,7 @@ public class Product extends AbstractDomainObjectWithId implements Serializable 
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "label_id")
 	public Label getLabel() {
 		return label;
 	}
@@ -158,7 +176,8 @@ public class Product extends AbstractDomainObjectWithId implements Serializable 
 		this.label = label;
 	}
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "product_id", referencedColumnName = "product_id")
 	public List<ProductOption> getProductOptions() {
 		return productOptions;
 	}

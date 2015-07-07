@@ -8,6 +8,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Predicate;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.security.Restrict;
@@ -20,10 +22,13 @@ import au.com.chloec.store.domain.EnumInstance;
 @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 public class EnumMaintenanceAction {
 
-	public static final String DOMAIN_NAME_GENDER = "gender";
-	public static final String DOMAIN_NAME_SIZE = "size";
-	public static final String DOMAIN_NAME_COLOR = "color";
-	public static final String DOMAIN_NAME_CATEGORY = "category";
+	public static final String DOMAIN_NAME_PRODUCT_CATEGORY = "Product Category";
+	public static final String DOMAIN_NAME_COMPANY_CATEGORY = "Company Category";
+	public static final String DOMAIN_NAME_GENDER = "Gender";
+	public static final String DOMAIN_NAME_SIZE = "Size";
+	public static final String DOMAIN_NAME_COLOR = "Color";
+	public static final String DOMAIN_NAME_INVOICE_STATUS = "Invoice Status";
+	public static final String DOMAIN_NAME_INVOICE_STATUS_COMPLETED = "Completed";
 	
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -43,9 +48,14 @@ public class EnumMaintenanceAction {
 		return getInstances(DOMAIN_NAME_COLOR);
 	}
 
-	@Factory("categories")
-	public List<EnumInstance> getCategoryInstances() {
-		return getInstances(DOMAIN_NAME_CATEGORY);
+	@Factory("productCategories")
+	public List<EnumInstance> getProductCategoryInstances() {
+		return getInstances(DOMAIN_NAME_PRODUCT_CATEGORY);
+	}
+	
+	@Factory("companyCategories")
+	public List<EnumInstance> getCompanyCategoryInstances() {
+		return getInstances(DOMAIN_NAME_COMPANY_CATEGORY);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -53,25 +63,20 @@ public class EnumMaintenanceAction {
 		return entityManager.createQuery("select e from EnumInstance e where e.domain.name = :domainName").setParameter("domainName", domainName).getResultList();
 	}
 
-	@Factory("defaultCategory")
-	public EnumInstance getDefaultCategory() {
-		return getCategoryInstances().get(0);
+	@SuppressWarnings("unchecked")
+	public List<EnumInstance> getInvoiceStatusInstances() {
+		return entityManager.createQuery("select e from EnumInstance e where e.domain.name = :domainName").setParameter("domainName", DOMAIN_NAME_INVOICE_STATUS).getResultList();
 	}
 	
-	@Factory("defaultGender")
-	public EnumInstance getDefaultGender() {
-		return getGenderInstances().get(0);
+	public EnumInstance getInvoiceStatusCompleted() {
+		List<EnumInstance> invoiceEnumInstances = getInvoiceStatusInstances();
+		return (EnumInstance) CollectionUtils.find(invoiceEnumInstances, new Predicate() {			
+			@Override
+			public boolean evaluate(Object obj) {
+				EnumInstance invoiceEnumInstance = (EnumInstance) obj;
+				return invoiceEnumInstance.getName().equals("Completed");
+			}
+		});
 	}
-	
-	@Factory("defaultSize")
-	public EnumInstance getDefaultSize() {
-		return getSizeInstances().get(0);
-	}
-	
-	@Factory(value = "defaultColor")
-	public EnumInstance getDefaultColor() {
-		return getColorInstances().get(0);
-	}
-	
-	
+		
 }

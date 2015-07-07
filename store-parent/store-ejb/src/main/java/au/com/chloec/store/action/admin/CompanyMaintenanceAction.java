@@ -20,13 +20,13 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
-import au.com.chloec.store.domain.Product;
+import au.com.chloec.store.domain.Company;
 
 @Stateful
-@Name("productMaintenance")
+@Name("companyMaintenance")
 @Scope(ScopeType.SESSION)
 @Restrict("#{identity.loggedIn}")
-public class ProductMaintenanceAction implements ProductMaintenance {
+public class CompanyMaintenanceAction implements CompanyMaintenance {
 
 	@Logger
 	private Log log;
@@ -40,34 +40,34 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	private boolean nextPageAvailable;
 
 	@DataModel
-	private List<Product> products;
+	private List<Company> companies;
 	
 	@In(create = true)
 	@Out
 	@DataModelSelection
-	private Product product;
+	private Company company;
 	
 	public void find() {
 		page = 0;
-		queryProducts();
+		queryCompanies();
 	}
 
 	public void nextPage() {
 		page++;
-		queryProducts();
+		queryCompanies();
 	}
 
-	private void queryProducts() {
+	private void queryCompanies() {
 		@SuppressWarnings("unchecked")
-		List<Product> results = entityManager
-				.createQuery("select p from Product p where lower(p.name) like #{productPattern} or lower(p.displayName) like #{productPattern} or lower(p.productCode) like #{productPattern}  or lower(p.factoryCode) like #{productPattern}")
+		List<Company> results = entityManager
+				.createQuery("select c from Company c where lower(c.name) like #{companyPattern} ")
 				.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
 
 		nextPageAvailable = results.size() > pageSize;
 		if (nextPageAvailable) {
-			products = new ArrayList<Product>(results.subList(0, pageSize));
+			companies = new ArrayList<Company>(results.subList(0, pageSize));
 		} else {
-			products = results;
+			companies = results;
 		}
 	}
 
@@ -83,7 +83,7 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 		this.pageSize = pageSize;
 	}
 
-	@Factory(value = "productPattern", scope = ScopeType.EVENT)
+	@Factory(value = "companyPattern", scope = ScopeType.EVENT)
 	public String getSearchPattern() {
 		return searchString == null ? "%" : '%' + searchString.toLowerCase().replace('*', '%') + '%';
 	}
@@ -102,20 +102,14 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	}
 	
 	public void edit() {
-		log.info(product.getId());
+		log.info(company.getId());
 	}
 	
 	public void save() {
-		entityManager.persist(product);
-	}
-	
-	public void update() {
-		entityManager.merge(product);
-		entityManager.refresh(product);
+		entityManager.persist(company);
 	}
 	
 	public void add() {
-		this.product = new Product();
+		this.company = new Company();
 	}
-	
 }

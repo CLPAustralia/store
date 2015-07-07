@@ -1,9 +1,13 @@
-package au.com.chloec.store.action.admin;
+package au.com.chloec.store.action.operation;
+
+import java.util.List;
 
 import javax.ejb.Local;
 
+import au.com.chloec.store.domain.Invoice;
+
 @Local
-public interface ProductMaintenance {
+public interface InvoiceMaintenance {
 
 	public int getPageSize();
 
@@ -12,9 +16,7 @@ public interface ProductMaintenance {
 	public String getSearchString();
 
 	public void setSearchString(String searchString);
-
-	public String getSearchPattern();
-
+	
 	public void find();
 
 	public void nextPage();
@@ -24,11 +26,6 @@ public interface ProductMaintenance {
 	public void destroy();
 
 	public void edit();
-	
-	public void update();
 
-	public void save();
-	
-	public void add();
-
+	public List<Invoice> invoices();
 }

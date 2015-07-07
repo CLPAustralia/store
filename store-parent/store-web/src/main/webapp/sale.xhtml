@@ -16,7 +16,7 @@
        <h:messages id="messages" globalOnly="true"/>
     </span>
     
-    <h1>Products</h1>
+    <h1>Sale</h1>
 
 	<h:form id="searchCriteria">
 	<fieldset>
@@ -84,7 +84,7 @@
 		</h:column>
 		<h:column id="column10">
 			<f:facet id="ActionFacet" name="header">Action</f:facet>
-			<s:button id="addSale" value="Add" action="#{saleMaintenance.add}"/>
+			<s:button id="addSale" value="Add" action="#{saleMaintenance.addInvoiceItem}"/>
 		</h:column>
 	</h:dataTable>
 	<s:link id="MoreResultsLink" value="More results" action="#{saleMaintenance.nextPage}" rendered="#{saleMaintenance.nextPageAvailable}" />
@@ -95,7 +95,7 @@
 <a:outputPanel id="invoiceResults">
 <div class="section">
 	<h1>Invoice</h1>
-	<h:outputLabel value="Invoice" rendered="#{invoice != null}" />
+	<!-- <h:outputLabel value="Invoice" rendered="#{invoice != null}" /> -->
 </div>
 <div class="section">
   <h:form id="invoice">
@@ -137,6 +137,9 @@
 			<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
 		</h:column>
 	</h:dataTable>
+	<h:commandButton id="confirm" value="Confirm" action="#{saleMaintenance.confirm}" rendered="#{invoice.invoiceItems.size>0}"/>
+	&#160;
+	<h:commandButton id="cancel" value="Cancel" action="#{saleMaintenance.cancel}" rendered="#{invoice.invoiceItems.size>0}"/>
   </h:form>
 </div>
 </a:outputPanel>
@@ -145,10 +148,12 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-	<s:button id="sale" value="Sale" view="/sale.xhtml"/><br />
-	<s:button id="product" value="Product" view="/product.xhtml"/><br />	
-	<s:button id="company" value="Company" view="/company.xhtml"/><br />
-	<s:button id="person" value="Person" view="/Person.xhtml"/><br />
+	<s:button id="saleButton" value="Sale" view="/sale.xhtml"/><br />	
+	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"/><br />	
+	<s:button id="companyButton" value="Company" view="/company.xhtml"/><br />
+	<s:button id="personButton" value="Person" view="/Person.xhtml"/><br />
+	<s:button id="productButton" value="Product" view="/product.xhtml"/><br />	
+	<s:button id="labelButton" value="Label" view="/label.xhtml"/><br />
 </ui:define>
 
 </ui:composition>

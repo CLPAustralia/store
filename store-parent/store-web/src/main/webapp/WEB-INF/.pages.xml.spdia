@@ -76,4 +76,47 @@
   <output ID="/product.xhtml" NAME="output" PATH="/product.xhtml"
    TARGET="#xproduct.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
+ <item ID="#sale.xhtml" NAME="#xsale.xhtml" PATH="/sale.xhtml"
+  SHAPE="56,609,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/invoiceView.xhtml" NAME="output"
+   PATH="/invoiceView.xhtml" TARGET="#xinvoiceView.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/sale.xhtml" NAME="output1" PATH="/sale.xhtml"
+   TARGET="#xsale.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item NAME="#xinvoiceView.xhtml" PATH="/invoiceView.xhtml"
+  SHAPE="376,609,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
+ <item ID="#company.xhtml" NAME="#xcompany.xhtml" PATH="/company.xhtml"
+  SHAPE="376,737,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/companyedit.xhtml" NAME="output"
+   PATH="/companyedit.xhtml" TARGET="#xcompanyedit.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/companyadd.xhtml" NAME="output1" PATH="/companyadd.xhtml"
+   TARGET="#xcompanyadd.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#companyedit.xhtml" NAME="#xcompanyedit.xhtml"
+  PATH="/companyedit.xhtml" SHAPE="24,737,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/company.xhtml" NAME="output" PATH="/company.xhtml"
+   TARGET="#xcompany.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#companyadd.xhtml" NAME="#xcompanyadd.xhtml"
+  PATH="/companyadd.xhtml" SHAPE="24,865,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/company.xhtml" NAME="output" PATH="/company.xhtml"
+   TARGET="#xcompany.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#label.xhtml" NAME="#xlabel.xhtml" PATH="/label.xhtml"
+  SHAPE="376,1073,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/labeledit.xhtml" NAME="output" PATH="/labeledit.xhtml"
+   TARGET="#xlabeledit.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/labeladd.xhtml" NAME="output1" PATH="/labeladd.xhtml"
+   TARGET="#xlabeladd.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#labeledit.xhtml" NAME="#xlabeledit.xhtml"
+  PATH="/labeledit.xhtml" SHAPE="24,1073,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/label.xhtml" NAME="output" PATH="/label.xhtml"
+   TARGET="#xlabel.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#labeladd.xhtml" NAME="#xlabeladd.xhtml"
+  PATH="/labeladd.xhtml" SHAPE="24,1201,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/label.xhtml" NAME="output" PATH="/label.xhtml"
+   TARGET="#xlabel.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
 </diagram>

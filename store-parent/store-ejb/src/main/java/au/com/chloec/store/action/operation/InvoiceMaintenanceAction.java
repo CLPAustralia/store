@@ -1,4 +1,4 @@
-package au.com.chloec.store.action.admin;
+package au.com.chloec.store.action.operation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Factory;
@@ -20,13 +21,13 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
-import au.com.chloec.store.domain.Product;
+import au.com.chloec.store.domain.Invoice;
 
 @Stateful
-@Name("productMaintenance")
+@Name("invoiceMaintenance")
 @Scope(ScopeType.SESSION)
 @Restrict("#{identity.loggedIn}")
-public class ProductMaintenanceAction implements ProductMaintenance {
+public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 
 	@Logger
 	private Log log;
@@ -35,39 +36,47 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	private EntityManager entityManager;
 
 	private String searchString;
+
 	private int pageSize = 10;
 	private int page;
 	private boolean nextPageAvailable;
 
 	@DataModel
-	private List<Product> products;
+	private List<Invoice> invoices;
 	
-	@In(create = true)
-	@Out
+	@In(required = false)
+	@Out(required = false)
 	@DataModelSelection
-	private Product product;
-	
+	private Invoice invoice;
+
 	public void find() {
 		page = 0;
-		queryProducts();
+		queryInvoices();
 	}
 
 	public void nextPage() {
 		page++;
-		queryProducts();
+		queryInvoices();
 	}
 
-	private void queryProducts() {
-		@SuppressWarnings("unchecked")
-		List<Product> results = entityManager
-				.createQuery("select p from Product p where lower(p.name) like #{productPattern} or lower(p.displayName) like #{productPattern} or lower(p.productCode) like #{productPattern}  or lower(p.factoryCode) like #{productPattern}")
-				.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
+	@SuppressWarnings("unchecked")
+	private void queryInvoices() {
+		List<Invoice> results;
+		if (StringUtils.isBlank(searchString)) {
+			results = entityManager
+					.createQuery("select i from Invoice i order by i.lastUpdateDate desc")
+					.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
+		} else {
+			results = entityManager
+					.createQuery("select i from Invoice i where i.id = #{searchString}  order by i.lastUpdateDate desc")
+					.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();			
+		}
 
 		nextPageAvailable = results.size() > pageSize;
 		if (nextPageAvailable) {
-			products = new ArrayList<Product>(results.subList(0, pageSize));
+			invoices = new ArrayList<Invoice>(results.subList(0, pageSize));
 		} else {
-			products = results;
+			invoices = results;
 		}
 	}
 
@@ -81,11 +90,6 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
-	}
-
-	@Factory(value = "productPattern", scope = ScopeType.EVENT)
-	public String getSearchPattern() {
-		return searchString == null ? "%" : '%' + searchString.toLowerCase().replace('*', '%') + '%';
 	}
 
 	public String getSearchString() {
@@ -102,20 +106,12 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	}
 	
 	public void edit() {
-		log.info(product.getId());
+		log.info(invoice.getId());
 	}
-	
-	public void save() {
-		entityManager.persist(product);
+
+	@Factory("invoices")
+	public List<Invoice> invoices() {
+		queryInvoices();
+		return invoices;
 	}
-	
-	public void update() {
-		entityManager.merge(product);
-		entityManager.refresh(product);
-	}
-	
-	public void add() {
-		this.product = new Product();
-	}
-	
 }

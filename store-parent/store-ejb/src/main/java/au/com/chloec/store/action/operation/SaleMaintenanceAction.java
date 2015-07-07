@@ -10,7 +10,9 @@ import javax.persistence.EntityManager;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Predicate;
 import org.jboss.seam.ScopeType;
+import org.jboss.seam.annotations.Begin;
 import org.jboss.seam.annotations.Destroy;
+import org.jboss.seam.annotations.End;
 import org.jboss.seam.annotations.Factory;
 import org.jboss.seam.annotations.In;
 import org.jboss.seam.annotations.Logger;
@@ -22,7 +24,7 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
-import au.com.chloec.store.action.admin.ProductMaintenance;
+import au.com.chloec.store.action.admin.EnumMaintenanceAction;
 import au.com.chloec.store.domain.Invoice;
 import au.com.chloec.store.domain.InvoiceItem;
 import au.com.chloec.store.domain.Product;
@@ -31,12 +33,11 @@ import au.com.chloec.store.domain.Product;
 @Name("saleMaintenance")
 @Scope(ScopeType.SESSION)
 @Restrict("#{identity.loggedIn}")
-public class SaleMaintenanceAction implements ProductMaintenance {
+public class SaleMaintenanceAction implements SaleMaintenance {
 
 	@Logger
 	private Log log;
 	
-//	@PersistenceContext(type=EXTENDED)
 	@In
 	private EntityManager entityManager;
 
@@ -48,14 +49,17 @@ public class SaleMaintenanceAction implements ProductMaintenance {
 	@DataModel
 	private List<Product> products;
 	
+	@In(required = false)
+	@Out(required = false)
 	@DataModelSelection
-	@Out(required = false, scope = ScopeType.SESSION)
-	@In(required = false, scope = ScopeType.SESSION)
 	private Product product;
+
+	@In(create = true)
+	@Out(required = false)
+	private Invoice invoice;
 	
 	@In(create = true)
-	@Out
-	private Invoice invoice;
+	private EnumMaintenanceAction enumMaintenance;
 	
 	public void find() {
 		page = 0;
@@ -115,11 +119,8 @@ public class SaleMaintenanceAction implements ProductMaintenance {
 		log.info(product.getId());
 	}
 	
-	public void save() {
-		entityManager.persist(product);
-	}
-	
-	public void add() {
+	@Begin(join = true)
+	public void addInvoiceItem() {
 		 InvoiceItem invoiceItem = (InvoiceItem) CollectionUtils.find(invoice.getInvoiceItems(), new Predicate() {			
 			@Override
 			public boolean evaluate(Object obj) {
@@ -134,9 +135,15 @@ public class SaleMaintenanceAction implements ProductMaintenance {
 		}
 	}
 	
-//
-//	@Factory("product")
-//	public Product product() {
-//		return new Product();
-//	}
+	@End
+	public void confirm() {
+		invoice.setStatus(enumMaintenance.getInvoiceStatusCompleted());
+		entityManager.persist(invoice);
+	}
+	
+	@End
+	public void cancel() {
+		invoice = null;
+	}
+	
 }

@@ -16,7 +16,7 @@
        <h:messages id="messages" globalOnly="true"/>
     </span>
     
-    <h1>Products</h1>
+    <h1>Product</h1>
 
 	<h:form id="searchCriteria">
 	<fieldset>
@@ -85,7 +85,7 @@
 			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
 			#{product.retailPrice}
 		</h:column>
-		<h:column id="column0">
+		<h:column id="column10">
 			<f:facet id="NameFacet" name="header">Category</f:facet>
 			#{product.category.name}
 		</h:column>
@@ -123,10 +123,12 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-	<s:button id="sale" value="Sale" view="/sale.xhtml"/><br />	
-	<s:button id="product" value="Product" view="/product.xhtml"/><br />	
-	<s:button id="company" value="Company" view="/company.xhtml"/><br />
-	<s:button id="person" value="Person" view="/Person.xhtml"/><br />
+	<s:button id="saleButton" value="Sale" view="/sale.xhtml"/><br />	
+	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"/><br />	
+	<s:button id="companyButton" value="Company" view="/company.xhtml"/><br />
+	<s:button id="personButton" value="Person" view="/Person.xhtml"/><br />
+	<s:button id="productButton" value="Product" view="/product.xhtml"/><br />	
+	<s:button id="labelButton" value="Label" view="/label.xhtml"/><br />
 </ui:define>
 
 </ui:composition>

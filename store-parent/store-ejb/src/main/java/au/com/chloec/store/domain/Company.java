@@ -7,25 +7,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.EqualsAndHashCode;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
-@Name("enumDomain")
-@Table(name = "enum_domain")
+@Name("company")
 @EqualsAndHashCode(callSuper=true)
-public class EnumDomain extends AbstractDomainObject implements Serializable {
+public class Company extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private String name;
+	private EnumInstance category;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "enum_domain_id")
+	@Column(name = "company_id")
 	public Long getId() {
 		return id;
 	}
@@ -34,7 +35,7 @@ public class EnumDomain extends AbstractDomainObject implements Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "domain_name")
+	@Column(name = "company_name")
 	public String getName() {
 		return name;
 	}
@@ -42,5 +43,15 @@ public class EnumDomain extends AbstractDomainObject implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	@ManyToOne
+	@JoinColumn(name = "category_instance_id")
+	public EnumInstance getCategory() {
+		return category;
+	}
 
+	public void setCategory(EnumInstance category) {
+		this.category = category;
+	}
+	
 }

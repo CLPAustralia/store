@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,15 +16,24 @@ import lombok.EqualsAndHashCode;
 @Entity
 @Table(name = "product_option")
 @EqualsAndHashCode(callSuper=true)
-public class ProductOption extends AbstractDomainObjectWithId implements Serializable {
+public class ProductOption extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	private Long id;
 	private String optionKey;
-	
 	private String optionValue;
-	
 	private Product product;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "product_option_id")
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	@Column(name = "option_key")
 	public String getOptionKey() {

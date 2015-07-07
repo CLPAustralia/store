@@ -1,9 +1,13 @@
 package au.com.chloec.store.action.admin;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
+import au.com.chloec.store.domain.Label;
+
 @Local
-public interface ProductMaintenance {
+public interface LabelMaintenance {
 
 	public int getPageSize();
 
@@ -25,10 +29,8 @@ public interface ProductMaintenance {
 
 	public void edit();
 	
-	public void update();
-
 	public void save();
 	
 	public void add();
-
+	
 }

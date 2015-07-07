@@ -73,8 +73,9 @@
 
 				    <s:decorate id="genderDecorate" template="display.xhtml">             
 						<ui:define name="label">Gender:</ui:define>						
-						<h:selectOneMenu id="genderMenu" value="#{product.gender.name}">
-							<f:selectItems var="di" value="#{genders}" itemLabel="#{di.name}"  />
+						<h:selectOneMenu id="genderMenu" value="#{product.gender}">
+							<f:selectItems value="#{genders}" var="gender" itemLabel="#{gender.name}"  />
+							<s:convertEntity />
 						</h:selectOneMenu>
 					</s:decorate>
 
@@ -96,18 +97,22 @@
 
 				    <s:decorate id="categoryDecorate" template="display.xhtml">             
 						<ui:define name="label">Category:</ui:define>
-						<h:selectOneMenu id="categoryMenu" value="#{product.category.name}">
-							<f:selectItems var="di" value="#{categories}" itemLabel="#{di.name}" itemValue="#{di.name}" />
+						<h:selectOneMenu id="categoryMenu" value="#{product.category}">
+							<f:selectItems value="#{productCategories}" var="category" itemLabel="#{category.name}" />
+							<s:convertEntity />
 						</h:selectOneMenu>
 					</s:decorate>
 
 				    <s:decorate id="labelDecorate" template="display.xhtml">             
 						<ui:define name="label">Label:</ui:define>
-						#{product.label.name}
+						<h:selectOneMenu id="labelMenu" value="#{product.label}">
+							<f:selectItems value="#{labels}" var="label" itemLabel="#{label.name}" />
+							<s:convertEntity />
+						</h:selectOneMenu>
 					</s:decorate>
 
 					<div class="buttonBox">
-						<h:commandButton id="save" value="Save" action="#{productMaintenance.save}"/>
+						<h:commandButton id="update" value="Update" action="#{productMaintenance.update}"/>
 						&#160;
 						<s:button id="cancel" value="Cancel" view="/product.xhtml"/>
 					</div>

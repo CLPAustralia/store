@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:s="http://jboss.org/schema/seam/taglib"
+      xmlns:a="http://richfaces.org/a4j">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<title>JBoss Suites: Seam Framework</title>
+	<link href="css/screen.css" rel="stylesheet" type="text/css" />
+</h:head>
+
+<body id="pgHome">
+
+<div id="document">
+
+	<div id="header">
+		<div id="title"><img src="img/hdr.title.gif" alt="JBoss Suites: seam framework demo"/></div>
+	</div>
+	
+	<div id="container">
+	
+		<div id="sidebar">		    
+			<h1>Blan</h1>
+			<p>
+			    Blah
+			</p>
+		</div>
+		
+		<div id="content">
+		
+			<div class="section">
+				<h1>Invoice ##{invoice.id}</h1>
+			</div>
+			
+			<div class="section">
+                
+				<div class="entry errors">
+					<h:messages id="messages" globalOnly="true"/>
+				</div>
+
+                <h:form id="registration">
+				<fieldset>
+				
+	<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}" var="invoiceItem" rendered="#{invoice.invoiceItems.size>0}">
+		<h:column id="column1">
+			<f:facet id="ActionFacet" name="header">Quantity</f:facet>
+			#{invoiceItem.quantity}			
+		</h:column>
+		<h:column id="column2">
+			<f:facet id="NameFacet" name="header">Name</f:facet>
+			<h:outputLabel value="#{invoiceItem.product.displayName!=null ? invoiceItem.product.displayName : invoiceItem.product.name}" />
+		</h:column>
+		<h:column id="column3">
+			<f:facet id="NameFacet" name="header">Barcode</f:facet>			
+			#{invoiceItem.product.factoryBarcode}
+		</h:column>
+		<h:column id="column4">
+			<f:facet id="NameFacet" name="header">Code</f:facet>
+			<h:outputLabel value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />
+		</h:column>
+		<h:column id="column5">
+			<f:facet id="NameFacet" name="header">Gender</f:facet>
+			#{invoiceItem.product.gender.name}
+		</h:column>
+		<h:column id="column6">
+			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
+			#{invoiceItem.product.retailPrice}
+		</h:column>
+		<h:column id="column7">
+			<f:facet id="NameFacet" name="header">Category</f:facet>
+			#{invoiceItem.product.category.name}
+		</h:column>
+		<h:column id="column8">
+			<f:facet id="NameFacet" name="header">Label</f:facet>
+			#{invoiceItem.product.label.name}
+		</h:column>
+		<h:column id="column9">
+			<f:facet id="ActionFacet" name="header">Options</f:facet>
+			<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
+		</h:column>
+	</h:dataTable>
+					
+					<div class="buttonBox">
+						<s:button id="ok" value="Ok" view="/sale.xhtml"/>
+					</div>
+									
+				</fieldset>
+                </h:form>
+                
+			</div>
+			
+		</div>
+		
+	</div>
+	
+	<div id="footer">Created with JBoss EJB 3.0, Seam, JSF (Mojarra) and Facelets</div>
+	
+</div>
+
+</body>
+
+</html>

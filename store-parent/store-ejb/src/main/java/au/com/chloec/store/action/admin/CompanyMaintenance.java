@@ -3,7 +3,7 @@ package au.com.chloec.store.action.admin;
 import javax.ejb.Local;
 
 @Local
-public interface ProductMaintenance {
+public interface CompanyMaintenance {
 
 	public int getPageSize();
 
@@ -25,10 +25,8 @@ public interface ProductMaintenance {
 
 	public void edit();
 	
-	public void update();
-
 	public void save();
 	
 	public void add();
-
+	
 }

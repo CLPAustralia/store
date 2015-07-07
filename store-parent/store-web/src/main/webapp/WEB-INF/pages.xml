@@ -74,13 +74,63 @@
 		</navigation>
 	</page>
 	<page login-required="true" view-id="/productedit.xhtml">
-		<navigation from-action="#{productMaintenance.save}">
+		<navigation from-action="#{productMaintenance.update}">
 			<redirect view-id="/product.xhtml" />
 		</navigation>
 	</page>
 	<page login-required="true" view-id="/productadd.xhtml">
 		<navigation from-action="#{productMaintenance.save}">
 			<redirect view-id="/product.xhtml" />
+		</navigation>
+	</page>
+
+	<!-- Company -->
+	<page login-required="true" view-id="/company.xhtml">
+		<navigation from-action="#{companyMaintenance.edit}">
+			<redirect view-id="/companyedit.xhtml" />
+		</navigation>
+		<navigation from-action="#{companyMaintenance.add}">
+			<redirect view-id="/companyadd.xhtml" />
+		</navigation>
+	</page>
+	<page login-required="true" view-id="/companyedit.xhtml">
+		<navigation from-action="#{companyMaintenance.save}">
+			<redirect view-id="/company.xhtml" />
+		</navigation>
+	</page>
+	<page login-required="true" view-id="/companyadd.xhtml">
+		<navigation from-action="#{companyMaintenance.save}">
+			<redirect view-id="/company.xhtml" />
+		</navigation>
+	</page>
+
+	<!-- Label -->
+	<page login-required="true" view-id="/label.xhtml">
+		<navigation from-action="#{labelMaintenance.edit}">
+			<redirect view-id="/labeledit.xhtml" />
+		</navigation>
+		<navigation from-action="#{labelMaintenance.add}">
+			<redirect view-id="/labeladd.xhtml" />
+		</navigation>
+	</page>
+	<page login-required="true" view-id="/labeledit.xhtml">
+		<navigation from-action="#{labelMaintenance.save}">
+			<redirect view-id="/label.xhtml" />
+		</navigation>
+	</page>
+	<page login-required="true" view-id="/labeladd.xhtml">
+		<navigation from-action="#{labelMaintenance.save}">
+			<redirect view-id="/label.xhtml" />
+		</navigation>
+	</page>
+
+	<!-- Sale -->
+	<page login-required="true" view-id="/sale.xhtml">
+		<navigation from-action="#{saleMaintenance.confirm}">
+			<redirect view-id="/invoiceView.xhtml" />
+		</navigation>
+		<navigation from-action="#{saleMaintenance.cancel}">
+			<redirect view-id="/sale.xhtml" />
 		</navigation>
 	</page>
 

@@ -20,13 +20,13 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
-import au.com.chloec.store.domain.Product;
+import au.com.chloec.store.domain.Label;
 
 @Stateful
-@Name("productMaintenance")
+@Name("labelMaintenance")
 @Scope(ScopeType.SESSION)
 @Restrict("#{identity.loggedIn}")
-public class ProductMaintenanceAction implements ProductMaintenance {
+public class LabelMaintenanceAction implements LabelMaintenance {
 
 	@Logger
 	private Log log;
@@ -40,34 +40,34 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	private boolean nextPageAvailable;
 
 	@DataModel
-	private List<Product> products;
+	private List<Label> labels;
 	
 	@In(create = true)
 	@Out
 	@DataModelSelection
-	private Product product;
+	private Label label;
 	
 	public void find() {
 		page = 0;
-		queryProducts();
+		queryLabels();
 	}
 
 	public void nextPage() {
 		page++;
-		queryProducts();
+		queryLabels();
 	}
 
-	private void queryProducts() {
+	private void queryLabels() {
 		@SuppressWarnings("unchecked")
-		List<Product> results = entityManager
-				.createQuery("select p from Product p where lower(p.name) like #{productPattern} or lower(p.displayName) like #{productPattern} or lower(p.productCode) like #{productPattern}  or lower(p.factoryCode) like #{productPattern}")
+		List<Label> results = entityManager
+				.createQuery("select l from Label l where lower(l.name) like #{labelPattern} ")
 				.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
 
 		nextPageAvailable = results.size() > pageSize;
 		if (nextPageAvailable) {
-			products = new ArrayList<Product>(results.subList(0, pageSize));
+			labels = new ArrayList<Label>(results.subList(0, pageSize));
 		} else {
-			products = results;
+			labels = results;
 		}
 	}
 
@@ -83,7 +83,7 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 		this.pageSize = pageSize;
 	}
 
-	@Factory(value = "productPattern", scope = ScopeType.EVENT)
+	@Factory(value = "labelPattern", scope = ScopeType.EVENT)
 	public String getSearchPattern() {
 		return searchString == null ? "%" : '%' + searchString.toLowerCase().replace('*', '%') + '%';
 	}
@@ -102,20 +102,15 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	}
 	
 	public void edit() {
-		log.info(product.getId());
+		log.info(label.getId());
 	}
 	
 	public void save() {
-		entityManager.persist(product);
-	}
-	
-	public void update() {
-		entityManager.merge(product);
-		entityManager.refresh(product);
+		entityManager.persist(label);
 	}
 	
 	public void add() {
-		this.product = new Product();
+		this.label = new Label();
 	}
-	
+
 }
