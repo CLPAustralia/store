@@ -1,5 +1,4 @@
-insert into Customer (id, username, password, name) values (1, 'gavin', 'foobar', 'Gavin King')
-insert into Customer (id, username, password, name) values (2, 'demo', 'demo', 'Demo User')
+insert into Customer (id, username, password, name) values (1, 'bhp', 'bhp', 'Birkenhead Point')
 insert into Hotel (id, price, name, address, city, state, zip, country) values (1, 120, 'Marriott Courtyard', 'Tower Place, Buckhead', 'Atlanta', 'GA', '30305', 'USA')
 insert into Hotel (id, price, name, address, city, state, zip, country) values (2, 180, 'Doubletree', 'Tower Place, Buckhead', 'Atlanta', 'GA', '30305', 'USA')
 insert into Hotel (id, price, name, address, city, state, zip, country) values (3, 450, 'W Hotel', 'Union Square, Manhattan', 'NY', 'NY', '10011', 'USA')
@@ -77,10 +76,13 @@ insert into label(label_id, label_name, company_id) values(6, 'Spicy Sugar', 16)
 insert into label(label_id, label_name, company_id) values(7, 'Sunny Girl', 17)
 insert into label(label_id, label_name, company_id) values(8, 'Wakee', 18)
 
-insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, creation_date, last_update_date, last_update_user_id) values (1,1234,'Test Factory Code 1', 'Test Product Code 1', 'Test Product Name 1', 'Test Display Name 1', 101, 'Test Summary 1', 'Test Description 1', 1, 1, 101, 1, current_date(), current_date(), 1)
+insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, creation_date, last_update_date, last_update_user_id) values (1,1234,'Test Factory Code 1', 'Test Product Code 1', 'Test Product Name 1', 'Test Display Name 1', 301, 'Test Summary 1', 'Test Description 1', 1, 1, 101, 1, current_date(), current_date(), 1)
 insert into product_option(product_option_id, option_key, option_value, product_id) values(1, 'color', 'black', 1)
 insert into product_option(product_option_id, option_key, option_value, product_id) values(2, 'gender', 'male', 1)
 
-insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, creation_date, last_update_date, last_update_user_id) values (2,4321,'Test Factory Code 2', 'Test Product Code 2', 'Test Product Name 2', 'Test Display Name 2', 102, 'Test Summary 2', 'Test Description 2', 1, 1, 102, 2, current_date(), current_date(), 1)
+insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, creation_date, last_update_date, last_update_user_id) values (2,4321,'Test Factory Code 2', 'Test Product Code 2', 'Test Product Name 2', 'Test Display Name 2', 302, 'Test Summary 2', 'Test Description 2', 1, 1, 102, 2, current_date(), current_date(), 1)
 insert into product_option(product_option_id, option_key, option_value, product_id) values(3, 'color', 'white', 2)
 insert into product_option(product_option_id, option_key, option_value, product_id) values(4, 'gender', 'female', 2)
+
+insert into inventory_item(inventory_item_id,store_id,product_id,quantity) values(1, 1, 1, 10)
+insert into inventory_item(inventory_item_id,store_id,product_id,quantity) values(2, 1, 2, 10)

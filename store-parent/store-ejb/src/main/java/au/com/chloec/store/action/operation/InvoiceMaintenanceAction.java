@@ -31,7 +31,7 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 
 	@Logger
 	private Log log;
-	
+
 	@In
 	private EntityManager entityManager;
 
@@ -43,7 +43,7 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 
 	@DataModel
 	private List<Invoice> invoices;
-	
+
 	@In(required = false)
 	@Out(required = false)
 	@DataModelSelection
@@ -61,16 +61,13 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 
 	@SuppressWarnings("unchecked")
 	private void queryInvoices() {
-		List<Invoice> results;
+		String queryString;
 		if (StringUtils.isBlank(searchString)) {
-			results = entityManager
-					.createQuery("select i from Invoice i order by i.lastUpdateDate desc")
-					.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
+			queryString = "select i from Invoice i order by i.lastUpdateDate desc";
 		} else {
-			results = entityManager
-					.createQuery("select i from Invoice i where i.id = #{searchString}  order by i.lastUpdateDate desc")
-					.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();			
+			queryString = "select i from Invoice i where i.id = #{searchString}  order by i.lastUpdateDate desc";
 		}
+		List<Invoice> results = entityManager.createQuery(queryString).setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
 
 		nextPageAvailable = results.size() > pageSize;
 		if (nextPageAvailable) {
@@ -104,7 +101,7 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 	@Destroy
 	public void destroy() {
 	}
-	
+
 	public void edit() {
 		log.info(invoice.getId());
 	}

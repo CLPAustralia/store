@@ -9,14 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
+@Table(name = "company")
 @Name("company")
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper=false,of={"id"})
+@ToString
 public class Company extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;

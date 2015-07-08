@@ -1,6 +1,7 @@
 package au.com.chloec.store.domain;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,25 +13,29 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
-@Name("invoiceItem")
 @Table(name = "invoice_item")
-@EqualsAndHashCode(callSuper=true)
+@Name("invoiceItem")
+@EqualsAndHashCode(callSuper=false,of={"id"})
+@ToString
 public class InvoiceItem extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Product product;	
-	private Invoice invoice;	
+	private Invoice invoice;
+	private BigDecimal unitPrice;
 	private Integer quantity;
 
 	public InvoiceItem(){}
 	
-	public InvoiceItem(Product product) {
+	public InvoiceItem(Product product, BigDecimal unitPrice) {
 		this.product = product;
+		this.unitPrice = unitPrice;
 		this.quantity = 1;
 	}
 	
@@ -76,5 +81,13 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 	public void add() {
 		quantity++;
 	}
-		
+
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		this.unitPrice = unitPrice;
+	}
+
 }

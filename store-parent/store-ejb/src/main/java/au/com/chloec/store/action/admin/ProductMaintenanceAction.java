@@ -1,6 +1,7 @@
 package au.com.chloec.store.action.admin;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Remove;
@@ -21,6 +22,7 @@ import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
 import au.com.chloec.store.domain.Product;
+import au.com.chloec.store.domain.User;
 
 @Stateful
 @Name("productMaintenance")
@@ -34,6 +36,9 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	@In
 	private EntityManager entityManager;
 
+	@In
+	private User user;
+	
 	private String searchString;
 	private int pageSize = 10;
 	private int page;
@@ -58,9 +63,15 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	}
 
 	private void queryProducts() {
+		String queryString = "select p "
+				+ "from Product p "
+				+ "where lower(p.name) like #{productPattern} "
+				+ "or lower(p.displayName) like #{productPattern} "
+				+ "or lower(p.productCode) like #{productPattern}  "
+				+ "or lower(p.factoryCode) like #{productPattern}";
 		@SuppressWarnings("unchecked")
 		List<Product> results = entityManager
-				.createQuery("select p from Product p where lower(p.name) like #{productPattern} or lower(p.displayName) like #{productPattern} or lower(p.productCode) like #{productPattern}  or lower(p.factoryCode) like #{productPattern}")
+				.createQuery(queryString )
 				.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
 
 		nextPageAvailable = results.size() > pageSize;
@@ -106,6 +117,8 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	}
 	
 	public void save() {
+		product.setLastUpdateDate(Calendar.getInstance().getTime());
+		product.setLastUpdateUser(user);
 		entityManager.persist(product);
 	}
 	
@@ -118,4 +131,9 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 		this.product = new Product();
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Factory("allProducts")
+	public List<Product> getAllProducts() {
+		return entityManager.createQuery("select p from Product p").getResultList();
+	}
 }

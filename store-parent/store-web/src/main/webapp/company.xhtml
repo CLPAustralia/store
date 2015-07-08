@@ -10,6 +10,10 @@
 <!-- content -->
 <ui:define name="content">
 
+<h:outputText>
+	<f:event listener="#{companyMaintenance.find}" type="javax.faces.event.PreRenderViewEvent" />
+</h:outputText>
+
 <div class="section">
   
     <span class="errors">
@@ -77,6 +81,7 @@
 <ui:define name="sidebar">
 	<s:button id="saleButton" value="Sale" view="/sale.xhtml"/><br />	
 	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"/><br />	
+	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml"/><br />	
 	<s:button id="companyButton" value="Company" view="/company.xhtml"/><br />
 	<s:button id="personButton" value="Person" view="/Person.xhtml"/><br />
 	<s:button id="productButton" value="Product" view="/product.xhtml"/><br />	

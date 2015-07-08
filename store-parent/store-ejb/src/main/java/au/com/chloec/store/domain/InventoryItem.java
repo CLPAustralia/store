@@ -12,20 +12,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
-@Name("inventoryItem")
 @Table(name = "inventory_item")
-@EqualsAndHashCode(callSuper=true)
+@Name("inventoryItem")
+@EqualsAndHashCode(callSuper=false,of={"id"})
+@ToString
 public class InventoryItem extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private Product product;	
 	private Integer quantity;
-
+	private Company store;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "inventory_item_id")
@@ -53,6 +56,16 @@ public class InventoryItem extends AbstractDomainObject implements Serializable 
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "store_id")
+	public Company getStore() {
+		return store;
+	}
+
+	public void setStore(Company store) {
+		this.store = store;
 	}
 	
 }

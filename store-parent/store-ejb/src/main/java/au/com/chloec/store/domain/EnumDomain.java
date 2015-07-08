@@ -10,13 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
-@Name("enumDomain")
 @Table(name = "enum_domain")
-@EqualsAndHashCode(callSuper=true)
+@Name("enumDomain")
+@EqualsAndHashCode(callSuper=false,of={"id"})
+@ToString
 public class EnumDomain extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;

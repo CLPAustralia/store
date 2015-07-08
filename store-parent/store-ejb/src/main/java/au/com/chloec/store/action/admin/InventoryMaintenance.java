@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import au.com.chloec.store.domain.Company;
 
 @Local
-public interface CompanyMaintenance {
+public interface InventoryMaintenance {
 
 	public int getPageSize();
 
@@ -29,9 +29,10 @@ public interface CompanyMaintenance {
 
 	public void edit();
 	
+	public void update();
+
 	public void save();
 	
 	public void add();
-	
-	public List<Company> getStores();
+
 }

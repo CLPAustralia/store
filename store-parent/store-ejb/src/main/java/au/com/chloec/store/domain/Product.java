@@ -14,14 +14,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
+@Table(name = "product")
 @Name("product")
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper=false,of={"id"})
+@ToString
 public class Product extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -203,5 +207,5 @@ public class Product extends AbstractDomainObject implements Serializable {
 	public void setPicture(byte[] picture) {
 		this.picture = picture;
 	}
-	
+
 }

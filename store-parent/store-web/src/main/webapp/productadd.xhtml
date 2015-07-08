@@ -73,7 +73,7 @@
 					</s:decorate>
 
 				    <s:decorate id="genderDecorate" template="display.xhtml">             
-						<ui:define name="label">BGender:</ui:define>						
+						<ui:define name="label">Gender:</ui:define>						
 						<h:selectOneMenu id="genderMenu" value="#{product.gender}">
 							<f:selectItems var="gender" value="#{genders}" itemLabel="#{gender.name}" />
 							<s:convertEntity />
@@ -107,7 +107,7 @@
 				    <s:decorate id="labelDecorate" template="display.xhtml">             
 						<ui:define name="label">Label:</ui:define>
 						<h:selectOneMenu id="labelMenu" value="#{product.label}">
-							<f:selectItems value="#{labels}" var="label" itemLabel="#{label.name}" />
+							<f:selectItems value="#{allLabels}" var="label" itemLabel="#{label.name}" />
 							<s:convertEntity />
 						</h:selectOneMenu>
 					</s:decorate>

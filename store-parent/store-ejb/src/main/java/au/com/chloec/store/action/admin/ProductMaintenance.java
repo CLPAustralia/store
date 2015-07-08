@@ -1,6 +1,10 @@
 package au.com.chloec.store.action.admin;
 
+import java.util.List;
+
 import javax.ejb.Local;
+
+import au.com.chloec.store.domain.Product;
 
 @Local
 public interface ProductMaintenance {
@@ -31,4 +35,5 @@ public interface ProductMaintenance {
 	
 	public void add();
 
+	public List<Product> getAllProducts();
 }

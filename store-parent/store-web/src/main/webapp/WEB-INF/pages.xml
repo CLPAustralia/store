@@ -124,6 +124,18 @@
 		</navigation>
 	</page>
 
+	<!-- Inventory -->
+	<page login-required="true" view-id="/inventory.xhtml">
+		<navigation from-action="#{inventoryMaintenance.add}">
+			<redirect view-id="/inventoryadd.xhtml" />
+		</navigation>
+	</page>
+	<page login-required="true" view-id="/inventoryadd.xhtml">
+		<navigation from-action="#{inventoryMaintenance.save}">
+			<redirect view-id="/inventory.xhtml" />
+		</navigation>
+	</page>
+
 	<!-- Sale -->
 	<page login-required="true" view-id="/sale.xhtml">
 		<navigation from-action="#{saleMaintenance.confirm}">

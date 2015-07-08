@@ -8,6 +8,7 @@ import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.jboss.seam.ScopeType;
 import org.jboss.seam.annotations.Destroy;
 import org.jboss.seam.annotations.Factory;
@@ -21,14 +22,14 @@ import org.jboss.seam.annotations.datamodel.DataModelSelection;
 import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
-import au.com.chloec.store.domain.Company;
+import au.com.chloec.store.domain.InventoryItem;
 import au.com.chloec.store.domain.User;
 
 @Stateful
-@Name("companyMaintenance")
+@Name("inventoryMaintenance")
 @Scope(ScopeType.SESSION)
 @Restrict("#{identity.loggedIn}")
-public class CompanyMaintenanceAction implements CompanyMaintenance {
+public class InventoryMaintenanceAction implements InventoryMaintenance {
 
 	@Logger
 	private Log log;
@@ -45,34 +46,42 @@ public class CompanyMaintenanceAction implements CompanyMaintenance {
 	private boolean nextPageAvailable;
 
 	@DataModel
-	private List<Company> companies;
+	private List<InventoryItem> inventoryItems;
 	
 	@In(create = true)
 	@Out
 	@DataModelSelection
-	private Company company;
+	private InventoryItem inventoryItem;
 	
 	public void find() {
 		page = 0;
-		queryCompanies();
+		queryInventoryItems();
 	}
 
 	public void nextPage() {
 		page++;
-		queryCompanies();
+		queryInventoryItems();
 	}
 
-	private void queryCompanies() {
+	private void queryInventoryItems() {
+		String queryString;
+		if (StringUtils.isBlank(searchString)) {
+			queryString = "select i from InventoryItem i join i.product p ";
+		} else {
+			queryString = "select i from InventoryItem i join i.product p "
+					+ "where lower(p.name) like #{inventoryProductPattern} "
+					+ "or lower(p.displayName) like #{inventoryProductPattern} "
+					+ "or lower(p.productCode) like #{inventoryProductPattern}  "
+					+ "or lower(p.factoryCode) like #{inventoryProductPattern}";
+		}
 		@SuppressWarnings("unchecked")
-		List<Company> results = entityManager
-				.createQuery("select c from Company c where lower(c.name) like #{companyPattern} ")
-				.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
+		List<InventoryItem> results = entityManager.createQuery(queryString).setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
 
 		nextPageAvailable = results.size() > pageSize;
 		if (nextPageAvailable) {
-			companies = new ArrayList<Company>(results.subList(0, pageSize));
+			inventoryItems = new ArrayList<InventoryItem>(results.subList(0, pageSize));
 		} else {
-			companies = results;
+			inventoryItems = results;
 		}
 	}
 
@@ -88,7 +97,7 @@ public class CompanyMaintenanceAction implements CompanyMaintenance {
 		this.pageSize = pageSize;
 	}
 
-	@Factory(value = "companyPattern", scope = ScopeType.EVENT)
+	@Factory(value = "inventoryProductPattern", scope = ScopeType.EVENT)
 	public String getSearchPattern() {
 		return searchString == null ? "%" : '%' + searchString.toLowerCase().replace('*', '%') + '%';
 	}
@@ -107,23 +116,22 @@ public class CompanyMaintenanceAction implements CompanyMaintenance {
 	}
 	
 	public void edit() {
-		log.info(company.getId());
+		log.info(inventoryItem.getId());
 	}
 	
 	public void save() {
-		company.setLastUpdateDate(Calendar.getInstance().getTime());
-		company.setLastUpdateUser(user);		
-		entityManager.persist(company);
+		inventoryItem.setLastUpdateDate(Calendar.getInstance().getTime());
+		inventoryItem.setLastUpdateUser(user);
+		entityManager.persist(inventoryItem);
+	}
+	
+	public void update() {
+		entityManager.merge(inventoryItem);
+		entityManager.refresh(inventoryItem);
 	}
 	
 	public void add() {
-		this.company = new Company();
-	}
-	
-	@SuppressWarnings("unchecked")
-	@Factory("allStores")
-	public List<Company> getStores() {
-		return entityManager.createQuery("select s from Company s join s.category c where c.name='Store'").getResultList();
+		this.inventoryItem = new InventoryItem();
 	}
 
 }

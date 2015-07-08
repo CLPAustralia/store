@@ -1,6 +1,7 @@
 package au.com.chloec.store.action.operation;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Remove;
@@ -25,9 +26,11 @@ import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
 import au.com.chloec.store.action.admin.EnumMaintenanceAction;
+import au.com.chloec.store.domain.InventoryItem;
 import au.com.chloec.store.domain.Invoice;
 import au.com.chloec.store.domain.InvoiceItem;
 import au.com.chloec.store.domain.Product;
+import au.com.chloec.store.domain.User;
 
 @Stateful
 @Name("saleMaintenance")
@@ -37,22 +40,25 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 
 	@Logger
 	private Log log;
-	
+
 	@In
 	private EntityManager entityManager;
 
+	@In
+	private User user;
+	
 	private String searchString;
 	private int pageSize = 10;
 	private int page;
 	private boolean nextPageAvailable;
 
 	@DataModel
-	private List<Product> products;
+	private List<InventoryItem> inventoryItems;
 	
 	@In(required = false)
 	@Out(required = false)
 	@DataModelSelection
-	private Product product;
+	private InventoryItem inventoryItem;
 
 	@In(create = true)
 	@Out(required = false)
@@ -61,6 +67,7 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 	@In(create = true)
 	private EnumMaintenanceAction enumMaintenance;
 	
+	@Begin(join = true)
 	public void find() {
 		page = 0;
 		queryProducts();
@@ -72,16 +79,25 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 	}
 
 	private void queryProducts() {
+		String queryString = "select i from InventoryItem i "
+				+ "join i.product p "
+				+ "where i.quantity > 0 "
+				+ "and("
+				+ "lower(p.name) like #{saleProductPattern} "
+				+ "or lower(p.displayName) like #{saleProductPattern} "
+				+ "or lower(p.productCode) like #{saleProductPattern}  "
+				+ "or lower(p.factoryCode) like #{saleProductPattern} or lower(p.factoryBarcode) like #{saleProductPattern}"
+				+ ")";
 		@SuppressWarnings("unchecked")
-		List<Product> results = entityManager
-				.createQuery("select p from Product p where lower(p.name) like #{saleProductPattern} or lower(p.displayName) like #{saleProductPattern} or lower(p.productCode) like #{saleProductPattern}  or lower(p.factoryCode) like #{saleProductPattern} or lower(p.factoryBarcode) like #{saleProductPattern}")
+		List<InventoryItem> results = entityManager
+				.createQuery(queryString )
 				.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
 
 		nextPageAvailable = results.size() > pageSize;
 		if (nextPageAvailable) {
-			products = new ArrayList<Product>(results.subList(0, pageSize));
+			inventoryItems = new ArrayList<InventoryItem>(results.subList(0, pageSize));
 		} else {
-			products = results;
+			inventoryItems = results;
 		}
 	}
 
@@ -116,11 +132,11 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 	}
 	
 	public void edit() {
-		log.info(product.getId());
+		log.info(inventoryItem.getId());
 	}
 	
-	@Begin(join = true)
 	public void addInvoiceItem() {
+		final Product product = inventoryItem.getProduct();
 		 InvoiceItem invoiceItem = (InvoiceItem) CollectionUtils.find(invoice.getInvoiceItems(), new Predicate() {			
 			@Override
 			public boolean evaluate(Object obj) {
@@ -129,20 +145,36 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 			}
 		});
 		if (invoiceItem == null) {
-			invoice.getInvoiceItems().add(new InvoiceItem(product));
+			invoice.getInvoiceItems().add(new InvoiceItem(product, product.getRetailPrice()));
 		} else {
 			invoiceItem.add();
 		}
+		inventoryItem.setQuantity(inventoryItem.getQuantity() - 1);
 	}
 	
 	@End
 	public void confirm() {
 		invoice.setStatus(enumMaintenance.getInvoiceStatusCompleted());
+		invoice.setLastUpdateDate(Calendar.getInstance().getTime());
+		invoice.setLastUpdateUser(user);
 		entityManager.persist(invoice);
+//		entityManager.flush();
+//		entityManager.persist(inventoryItem);
+//		entityManager.flush();
 	}
 	
 	@End
 	public void cancel() {
+		for (final InvoiceItem invoiceItem : invoice.getInvoiceItems()) {
+			InventoryItem inventoryItem = (InventoryItem) CollectionUtils.find(inventoryItems, new Predicate() {				
+				@Override
+				public boolean evaluate(Object obj) {
+					InventoryItem inventoryItem = (InventoryItem) obj;
+					return inventoryItem.getProduct().equals(invoiceItem.getProduct());
+				}
+			});
+			inventoryItem.setQuantity(inventoryItem.getQuantity() + invoiceItem.getQuantity());
+		}
 		invoice = null;
 	}
 	

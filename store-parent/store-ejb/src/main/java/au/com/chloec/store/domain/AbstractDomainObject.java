@@ -1,6 +1,7 @@
 package au.com.chloec.store.domain;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,8 +19,8 @@ public abstract class AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Date creationDate;
-	private Date lastUpdateDate;
+	private Date creationDate = Calendar.getInstance().getTime();
+	private Date lastUpdateDate = Calendar.getInstance().getTime();
 	private User lastUpdateUser;
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -11,11 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.jboss.seam.annotations.Name;
+
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Entity
 @Table(name = "product_option")
+@Name("productOption")
 @EqualsAndHashCode(callSuper=true)
+@ToString
 public class ProductOption extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;

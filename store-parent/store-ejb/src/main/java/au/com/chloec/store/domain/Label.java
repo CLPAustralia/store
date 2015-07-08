@@ -9,14 +9,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
+@Table(name = "label")
 @Name("label")
 @EqualsAndHashCode(callSuper=true)
+@ToString
 public class Label extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;

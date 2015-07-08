@@ -32,5 +32,6 @@ public interface LabelMaintenance {
 	public void save();
 	
 	public void add();
-	
+
+	public List<Label> getAllLabels();
 }

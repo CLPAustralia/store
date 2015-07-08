@@ -10,6 +10,10 @@
 <!-- content -->
 <ui:define name="content">
 
+<h:outputText>
+	<f:event listener="#{saleMaintenance.find}" type="javax.faces.event.PreRenderViewEvent" />
+</h:outputText>
+
 <div class="section">
   
     <span class="errors">
@@ -21,7 +25,7 @@
 	<h:form id="searchCriteria">
 	<fieldset>
        <h:inputText id="searchString" value="#{saleMaintenance.searchString}" style="width: 165px;">
-        <a:ajax event="change" render="searchResults productOptions" listener="#{saleMaintenance.find}"/>
+        <a:ajax event="keyup" render="searchResults productOptions" listener="#{saleMaintenance.find}"/>
        </h:inputText>                     
        &#160;
        <a:status id="status">
@@ -44,45 +48,45 @@
 <a:outputPanel id="searchResults">
   <div class="section">
   	<h:form id="searchResultsForm">
-	<h:outputText id="NoProductsFoundMessage" value="No Products Found" rendered="#{products!=null and products.rowCount==0}"/>
-	<h:dataTable id="products" value="#{products}" var="product" rendered="#{products.rowCount>0}">
-		<h:column id="column1">
-			<f:facet id="NameFacet" name="header">ID</f:facet>
-			#{product.id}
-		</h:column>
+	<h:outputText id="NoInventoryFoundMessage" value="No Inventory Found" rendered="#{pinventoryItems!=null and inventoryItems.rowCount==0}"/>
+	<h:dataTable id="inventoryItem" value="#{inventoryItems}" var="inventoryItem" rendered="#{inventoryItems.rowCount>0}">
 		<h:column id="column2">
 			<f:facet id="NameFacet" name="header">Name</f:facet>
-			<h:outputLabel value="#{product.displayName!=null ? product.displayName : product.name}" />
+			<h:outputLabel value="#{inventoryItem.product.displayName!=null ? inventoryItem.product.displayName : inventoryItem.product.name}" />
 		</h:column>
 		<h:column id="column3">
 			<f:facet id="NameFacet" name="header">Barcode</f:facet>			
-			#{product.factoryBarcode}
+			#{inventoryItem.product.factoryBarcode}
 		</h:column>
 		<h:column id="column4">
 			<f:facet id="NameFacet" name="header">Code</f:facet>
-			<h:outputLabel value="#{product.productCode!=null ? product.productCode : product.factoryCode}" />
+			<h:outputLabel value="#{inventoryItem.product.productCode!=null ? inventoryItem.product.productCode : inventoryItem.product.factoryCode}" />
 		</h:column>
 		<h:column id="column5">
 			<f:facet id="NameFacet" name="header">Gender</f:facet>
-			#{product.gender.name}
+			#{inventoryItem.product.gender.name}
 		</h:column>
 		<h:column id="column6">
 			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
-			#{product.retailPrice}
+			#{inventoryItem.product.retailPrice}
 		</h:column>
 		<h:column id="column7">
 			<f:facet id="NameFacet" name="header">Category</f:facet>
-			#{product.category.name}
+			#{inventoryItem.product.category.name}
 		</h:column>
 		<h:column id="column8">
 			<f:facet id="NameFacet" name="header">Label</f:facet>
-			#{product.label.name}
+			#{inventoryItem.product.label.name}
 		</h:column>
 		<h:column id="column9">
 			<f:facet id="ActionFacet" name="header">Options</f:facet>
-			<ui:repeat var="productOption" value="#{product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
+			<ui:repeat var="productOption" value="#{inventoryItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
 		</h:column>
 		<h:column id="column10">
+			<f:facet id="NameFacet" name="header">Availably Quantity</f:facet>
+			#{inventoryItem.quantity}
+		</h:column>
+		<h:column id="column11">
 			<f:facet id="ActionFacet" name="header">Action</f:facet>
 			<s:button id="addSale" value="Add" action="#{saleMaintenance.addInvoiceItem}"/>
 		</h:column>
@@ -94,50 +98,62 @@
 
 <a:outputPanel id="invoiceResults">
 <div class="section">
-	<h1>Invoice</h1>
-	<!-- <h:outputLabel value="Invoice" rendered="#{invoice != null}" /> -->
+	<h1><h:outputLabel value="Invoice" rendered="#{invoice.invoiceItems.size>0}" /></h1>	
 </div>
 <div class="section">
   <h:form id="invoice">
 	<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}" var="invoiceItem" rendered="#{invoice.invoiceItems.size>0}">
 		<h:column id="column1">
-			<f:facet id="ActionFacet" name="header">Quantity</f:facet>
-			#{invoiceItem.quantity}			
+			<f:facet id="NameFacet" name="header">Name</f:facet>
+			<h:outputText value="#{invoiceItem.product.displayName!=null ? invoiceItem.product.displayName : invoiceItem.product.name}" />
 		</h:column>
 		<h:column id="column2">
-			<f:facet id="NameFacet" name="header">Name</f:facet>
-			<h:outputLabel value="#{invoiceItem.product.displayName!=null ? invoiceItem.product.displayName : invoiceItem.product.name}" />
+			<f:facet id="NameFacet" name="header">Barcode</f:facet>
+			<h:outputText value="#{invoiceItem.product.factoryBarcode}" />						
 		</h:column>
 		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Barcode</f:facet>			
-			#{invoiceItem.product.factoryBarcode}
+			<f:facet id="NameFacet" name="header">Code</f:facet>
+			<h:outputText value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />			
 		</h:column>
 		<h:column id="column4">
-			<f:facet id="NameFacet" name="header">Code</f:facet>
-			<h:outputLabel value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />
+			<f:facet id="NameFacet" name="header">Gender</f:facet>
+			<h:outputText value="#{invoiceItem.product.gender.name}" />						
 		</h:column>
 		<h:column id="column5">
-			<f:facet id="NameFacet" name="header">Gender</f:facet>
-			#{invoiceItem.product.gender.name}
+			<f:facet id="NameFacet" name="header">Category</f:facet>
+			<h:outputText value="#{invoiceItem.product.category.name}" />						
 		</h:column>
 		<h:column id="column6">
-			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
-			#{invoiceItem.product.retailPrice}
+			<f:facet id="NameFacet" name="header">Label</f:facet>
+			<h:outputText value="#{invoiceItem.product.label.name}" />						
 		</h:column>
 		<h:column id="column7">
-			<f:facet id="NameFacet" name="header">Category</f:facet>
-			#{invoiceItem.product.category.name}
-		</h:column>
-		<h:column id="column8">
-			<f:facet id="NameFacet" name="header">Label</f:facet>
-			#{invoiceItem.product.label.name}
-		</h:column>
-		<h:column id="column9">
 			<f:facet id="ActionFacet" name="header">Options</f:facet>
 			<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
 		</h:column>
+		<h:column id="column8">
+			<f:facet id="NameFacet" name="header">Price</f:facet>
+			<h:inputText value="#{invoiceItem.unitPrice}">
+				<a:ajax event="keyup" render="invoiceResults"/>
+			</h:inputText>			
+		</h:column>
+		<h:column id="column9">
+			<f:facet id="ActionFacet" name="header">Quantity</f:facet>
+			<h:outputText value="#{invoiceItem.quantity}" />
+		</h:column>
+		<h:column id="column10">
+			<f:facet id="NameFacet" name="header">Subtotal</f:facet>
+			<h:panelGrid id="subtotal">
+				<h:outputText value="#{invoiceItem.unitPrice * invoiceItem.quantity}" />			
+			</h:panelGrid>
+		</h:column>
+		<f:facet name="footer">
+			<h:panelGrid id="total">
+				<h:outputText value="Total: #{invoice.total}" />			
+			</h:panelGrid>
+		</f:facet>
 	</h:dataTable>
-	<h:commandButton id="confirm" value="Confirm" action="#{saleMaintenance.confirm}" rendered="#{invoice.invoiceItems.size>0}"/>
+	<a:commandButton id="confirm" value="Confirm" action="#{saleMaintenance.confirm}" rendered="#{invoice.invoiceItems.size>0}" execute="@this"/>
 	&#160;
 	<h:commandButton id="cancel" value="Cancel" action="#{saleMaintenance.cancel}" rendered="#{invoice.invoiceItems.size>0}"/>
   </h:form>
@@ -150,6 +166,7 @@
 <ui:define name="sidebar">
 	<s:button id="saleButton" value="Sale" view="/sale.xhtml"/><br />	
 	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"/><br />	
+	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml"/><br />	
 	<s:button id="companyButton" value="Company" view="/company.xhtml"/><br />
 	<s:button id="personButton" value="Person" view="/Person.xhtml"/><br />
 	<s:button id="productButton" value="Product" view="/product.xhtml"/><br />	

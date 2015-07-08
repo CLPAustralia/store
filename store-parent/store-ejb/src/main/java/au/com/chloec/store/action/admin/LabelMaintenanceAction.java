@@ -1,6 +1,7 @@
 package au.com.chloec.store.action.admin;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.Remove;
@@ -21,6 +22,7 @@ import org.jboss.seam.annotations.security.Restrict;
 import org.jboss.seam.log.Log;
 
 import au.com.chloec.store.domain.Label;
+import au.com.chloec.store.domain.User;
 
 @Stateful
 @Name("labelMaintenance")
@@ -33,6 +35,9 @@ public class LabelMaintenanceAction implements LabelMaintenance {
 	
 	@In
 	private EntityManager entityManager;
+	
+	@In
+	private User user;
 
 	private String searchString;
 	private int pageSize = 10;
@@ -106,6 +111,8 @@ public class LabelMaintenanceAction implements LabelMaintenance {
 	}
 	
 	public void save() {
+		label.setLastUpdateDate(Calendar.getInstance().getTime());
+		label.setLastUpdateUser(user);
 		entityManager.persist(label);
 	}
 	
@@ -113,4 +120,9 @@ public class LabelMaintenanceAction implements LabelMaintenance {
 		this.label = new Label();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Factory("allLabels")
+	public List<Label> getAllLabels() {
+		return entityManager.createQuery("select l from Label l").getResultList();
+	}
 }

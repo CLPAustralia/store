@@ -43,45 +43,49 @@
                 <h:form id="registration">
 				<fieldset>
 				
-	<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}" var="invoiceItem" rendered="#{invoice.invoiceItems.size>0}">
-		<h:column id="column1">
-			<f:facet id="ActionFacet" name="header">Quantity</f:facet>
-			#{invoiceItem.quantity}			
-		</h:column>
-		<h:column id="column2">
-			<f:facet id="NameFacet" name="header">Name</f:facet>
-			<h:outputLabel value="#{invoiceItem.product.displayName!=null ? invoiceItem.product.displayName : invoiceItem.product.name}" />
-		</h:column>
-		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Barcode</f:facet>			
-			#{invoiceItem.product.factoryBarcode}
-		</h:column>
-		<h:column id="column4">
-			<f:facet id="NameFacet" name="header">Code</f:facet>
-			<h:outputLabel value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />
-		</h:column>
-		<h:column id="column5">
-			<f:facet id="NameFacet" name="header">Gender</f:facet>
-			#{invoiceItem.product.gender.name}
-		</h:column>
-		<h:column id="column6">
-			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
-			#{invoiceItem.product.retailPrice}
-		</h:column>
-		<h:column id="column7">
-			<f:facet id="NameFacet" name="header">Category</f:facet>
-			#{invoiceItem.product.category.name}
-		</h:column>
-		<h:column id="column8">
-			<f:facet id="NameFacet" name="header">Label</f:facet>
-			#{invoiceItem.product.label.name}
-		</h:column>
-		<h:column id="column9">
-			<f:facet id="ActionFacet" name="header">Options</f:facet>
-			<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
-		</h:column>
-	</h:dataTable>
-					
+			<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}" var="invoiceItem" rendered="#{invoice.invoiceItems.size>0}">
+				<h:column id="column2">
+					<f:facet id="NameFacet" name="header">Code</f:facet>
+					<h:outputText value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />
+				</h:column>
+				<h:column id="column3">
+					<f:facet id="NameFacet" name="header">Label</f:facet>
+					<h:outputText value="#{invoiceItem.product.label.name}" />					
+				</h:column>
+				<h:column id="column4">
+					<f:facet id="NameFacet" name="header">Category</f:facet>
+					<h:outputText value="#{invoiceItem.product.category.name}" />					
+				</h:column>
+				<h:column id="column5">
+					<f:facet id="NameFacet" name="header">Product</f:facet>
+					<h:outputText value="#{invoiceItem.product.name}" />					
+				</h:column>
+				<h:column id="column6">
+					<f:facet id="ActionFacet" name="header">Options</f:facet>
+					<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}"><h:outputText value="#{productOption.optionKey}: #{productOption.optionValue}" /> <br /></ui:repeat>
+				</h:column>
+				<h:column id="column7">
+					<f:facet id="NameFacet" name="header">Retail Price</f:facet>
+					<h:outputText value="#{invoiceItem.product.retailPrice}" />
+				</h:column>
+				<h:column id="column8">
+					<f:facet id="NameFacet" name="header">Invoice Price</f:facet>
+					<h:outputText value="#{invoiceItem.unitPrice}" />					
+				</h:column>
+				<h:column id="column9">
+					<f:facet id="NameFacet" name="header">Quantity</f:facet>
+					<h:outputText value="#{invoiceItem.quantity}" />					
+				</h:column>
+				<h:column id="column10">
+					<f:facet id="NameFacet" name="header">Subtotal</f:facet>
+					<h:outputText value="#{invoiceItem.unitPrice * invoiceItem.quantity}" />					
+				</h:column>
+				<f:facet name="footer">
+					<a:outputPanel id="total">
+						<h:outputText value="Total: #{invoice.total}" />			
+					</a:outputPanel>
+				</f:facet>
+			</h:dataTable>					
 					<div class="buttonBox">
 						<s:button id="ok" value="Ok" view="/sale.xhtml"/>
 					</div>

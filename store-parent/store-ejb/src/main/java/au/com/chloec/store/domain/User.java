@@ -9,15 +9,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 import org.jboss.seam.annotations.Scope;
 
 @Entity
+@Table(name = "Customer")
 @Name("user")
 @Scope(SESSION)
-@Table(name = "Customer")
+@EqualsAndHashCode
+@ToString(of = {"id", "name", "username"})
 public class User implements Serializable {
 	private static final long serialVersionUID = 4818188553954060410L;
 
@@ -77,8 +84,4 @@ public class User implements Serializable {
 		this.username = username;
 	}
 
-	@Override
-	public String toString() {
-		return "User(" + username + ")";
-	}
 }

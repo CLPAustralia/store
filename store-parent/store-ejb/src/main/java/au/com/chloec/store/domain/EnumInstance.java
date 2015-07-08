@@ -12,13 +12,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
 
 @Entity
-@Name("enumInstance")
 @Table(name = "enum_instance")
-@EqualsAndHashCode(callSuper=true)
+@Name("enumInstance")
+@EqualsAndHashCode(callSuper=false,of={"id"})
+@ToString
 public class EnumInstance extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;

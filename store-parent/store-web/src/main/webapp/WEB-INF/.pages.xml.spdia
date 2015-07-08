@@ -119,4 +119,14 @@
   <output ID="/label.xhtml" NAME="output" PATH="/label.xhtml"
    TARGET="#xlabel.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
+ <item ID="#inventory.xhtml" NAME="#xinventory.xhtml"
+  PATH="/inventory.xhtml" SHAPE="24,1409,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/inventoryadd.xhtml" NAME="output"
+   PATH="/inventoryadd.xhtml" TARGET="#xinventoryadd.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#inventoryadd.xhtml" NAME="#xinventoryadd.xhtml"
+  PATH="/inventoryadd.xhtml" SHAPE="24,1617,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/inventory.xhtml" NAME="output" PATH="/inventory.xhtml"
+   TARGET="#xinventory.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
 </diagram>
