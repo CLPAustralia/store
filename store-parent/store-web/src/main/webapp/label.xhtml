@@ -24,6 +24,7 @@
 
 	<h:form id="searchCriteria">
 	<fieldset>
+		<h:outputLabel value="Label name: " for="searchString" />
        <h:inputText id="searchString" value="#{labelMaintenance.searchString}" style="width: 165px;">
         <a:ajax event="keyup" render="searchResults" listener="#{labelMaintenance.find}"/>
        </h:inputText>                     
@@ -79,13 +80,13 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-	<s:button id="saleButton" value="Sale" view="/sale.xhtml"/><br />	
-	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"/><br />	
-	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml"/><br />	
-	<s:button id="companyButton" value="Company" view="/company.xhtml"/><br />
-	<s:button id="personButton" value="Person" view="/Person.xhtml"/><br />
-	<s:button id="productButton" value="Product" view="/product.xhtml"/><br />	
-	<s:button id="labelButton" value="Label" view="/label.xhtml"/><br />
+	<s:button id="saleButton" value="Sale" view="/sale.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="companyButton" value="Company" view="/company.xhtml" styleClass="ui-button"/><br />
+	<s:button id="personButton" value="Person" view="/Person.xhtml" styleClass="ui-button"/><br />
+	<s:button id="productButton" value="Product" view="/product.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="labelButton" value="Label" view="/label.xhtml" styleClass="ui-button"/><br />
 </ui:define>
 
 </ui:composition>

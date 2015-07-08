@@ -24,54 +24,60 @@
 
 	<h:form id="searchCriteria">
 	<fieldset>
-       <h:inputText id="searchString" value="#{companyMaintenance.searchString}" style="width: 165px;">
-        <a:ajax event="keyup" render="searchResults" listener="#{companyMaintenance.find}"/>
-       </h:inputText>                     
-       &#160;
-	   <a:commandButton id="findCompany" value="Find Company" actionListener="#{companyMaintenance.find}"  render="searchResult"/>
-       &#160;
-       <h:commandButton id="addCompany" value="Add Company" action="#{companyMaintenance.add}"/>
-       <a:status id="status">
-          <f:facet id="StartStatus" name="start">
-             <h:graphicImage id="SpinnerGif" value="/img/spinner.gif"/>
-          </f:facet>
-       </a:status>
+       
+		<h:outputLabel value="Company name: " for="searchString" />
+		<h:inputText id="searchString" value="#{companyMaintenance.searchString}" style="width: 165px;">
+			<a:ajax event="keyup" render="searchResults" listener="#{companyMaintenance.find}"/>
+		</h:inputText>                     
+		&#160;
+		<a:commandButton id="findCompany" value="Find Company" actionListener="#{companyMaintenance.find}" render="searchResult"/>
+		&#160;
+		<h:commandButton id="addCompany" value="Add Company" action="#{companyMaintenance.add}"/>
+		
+		<a:status id="status">
+			<f:facet id="StartStatus" name="start">
+				<h:graphicImage id="SpinnerGif" value="/img/spinner.gif"/>
+			</f:facet>
+		</a:status>
 	   <br/>
-       <h:outputLabel id="MaximumResultsLabel" for="pageSize">Maximum results:</h:outputLabel>&#160;
+       
+       <h:outputLabel id="MaximumResultsLabel" for="pageSize">Maximum results:</h:outputLabel>
+       &#160;
        <h:selectOneMenu id="pageSize" value="#{companyMaintenance.pageSize}">
           <f:selectItem id="PageSize5" itemLabel="5" itemValue="5"/>
           <f:selectItem id="PageSize10" itemLabel="10" itemValue="10"/>
           <f:selectItem id="PageSize20" itemLabel="20" itemValue="20"/>
        </h:selectOneMenu>
+       
     </fieldset>
     </h:form>
     
 </div>
 
 <a:outputPanel id="searchResults">
-  <div class="section">
-  	<h:form id="searchResultsForm">
-	<h:outputText id="NoComapnyFoundMessage" value="No Company Found" rendered="#{companies!=null and companies.rowCount==0}"/>
-	<h:dataTable id="companies" value="#{companies}" var="company" rendered="#{companies.rowCount>0}">
-		<h:column id="column1">
-			<f:facet id="NameFacet" name="header">ID</f:facet>
-			#{company.id}
-		</h:column>
-		<h:column id="column2">
-			<f:facet id="NameFacet" name="header">Name</f:facet>
-			#{company.name}
-		</h:column>
-		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Category</f:facet>
-			#{company.category.name}
-		</h:column>
-		<h:column id="column4">
-			<f:facet id="ActionFacet" name="header">Action</f:facet>
-			<s:link id="editCompany" value="Edit" action="#{companyMaintenance.edit}"/>
-		</h:column>
-	</h:dataTable>
-	<s:link id="MoreResultsLink" value="More results" action="#{companyMaintenance.nextPage}" rendered="#{companyMaintenance.nextPageAvailable}" />
-	</h:form>
+	<div class="section">
+  		<h:form id="searchResultsForm">
+		<h:outputText id="NoComapnyFoundMessage" value="No Company Found" rendered="#{companies!=null and companies.rowCount==0}"/>
+		<h:dataTable id="companies" value="#{companies}" var="company" rendered="#{companies.rowCount>0}">
+			<h:column id="column1">
+				<f:facet id="NameFacet" name="header">ID</f:facet>
+				#{company.id}
+			</h:column>
+			<h:column id="column2">
+				<f:facet id="NameFacet" name="header">Name</f:facet>
+				#{company.name}
+			</h:column>
+			<h:column id="column3">
+				<f:facet id="NameFacet" name="header">Category</f:facet>
+				#{company.category.name}
+			</h:column>
+			<h:column id="column4">
+				<f:facet id="ActionFacet" name="header">Action</f:facet>
+				<s:link id="editCompany" value="Edit" action="#{companyMaintenance.edit}"/>
+			</h:column>
+		</h:dataTable>
+		<s:link id="MoreResultsLink" value="More results" action="#{companyMaintenance.nextPage}" rendered="#{companyMaintenance.nextPageAvailable}" />
+		</h:form>
   </div>
 </a:outputPanel>
 
@@ -79,13 +85,13 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-	<s:button id="saleButton" value="Sale" view="/sale.xhtml"/><br />	
-	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"/><br />	
-	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml"/><br />	
-	<s:button id="companyButton" value="Company" view="/company.xhtml"/><br />
-	<s:button id="personButton" value="Person" view="/Person.xhtml"/><br />
-	<s:button id="productButton" value="Product" view="/product.xhtml"/><br />	
-	<s:button id="labelButton" value="Label" view="/label.xhtml"/><br />
+	<s:button id="saleButton" value="Sale" view="/sale.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="companyButton" value="Company" view="/company.xhtml" styleClass="ui-button"/><br />
+	<s:button id="personButton" value="Person" view="/Person.xhtml" styleClass="ui-button"/><br />
+	<s:button id="productButton" value="Product" view="/product.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="labelButton" value="Label" view="/label.xhtml" styleClass="ui-button"/><br />
 </ui:define>
 
 </ui:composition>

@@ -1,83 +1,57 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://java.sun.com/jsf/facelets"
-	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core"
-	  xmlns:s="http://jboss.org/schema/seam/taglib"
-      xmlns:a="http://richfaces.org/a4j">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-	<title>JBoss Suites: Seam Framework</title>
-	<link href="css/screen.css" rel="stylesheet" type="text/css" />
-</h:head>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+				template="template.xhtml">
 
-<body id="pgHome">
+<!-- content -->
+<ui:define name="content">
 
+<div class="section">
+  
+	<span class="errors">
+       <h:messages id="messages" globalOnly="true"/>
+    </span>
+    
+    <h1>Add Company</h1>
 
-<div id="document">
-
-	<div id="header">
-		<div id="title"><img src="img/hdr.title.gif" alt="JBoss Suites: seam framework demo"/></div>
-	</div>
-	
-	<div id="container">
-	
-		<div id="sidebar">		    
-			<h1>Blah</h1>
-			<p>
-			    Blah
-			</p>
-		</div>
-		
-		<div id="content">
-		
-			<div class="section">
-				<h1>Add Company</h1>
-			</div>
-			
-			<div class="section">
-                
-				<div class="entry errors">
-					<h:messages id="messages" globalOnly="true"/>
-				</div>
-
-                <h:form id="addcompany">
-				<fieldset>
-				
-					<s:decorate id="nameDecorate" template="edit.xhtml">
-						<ui:define name="label">Name:</ui:define>
-						<h:inputText id="name" value="#{company.name}" required="true">
-							<a:ajax event="blur" render="nameDecorate"/>
-						</h:inputText>
-					</s:decorate>
-					
-				    <s:decorate id="categoryDecorate" template="display.xhtml">             
-						<ui:define name="label">Category:</ui:define>
-						<h:selectOneMenu id="categoryMenu" value="#{company.category}">
-							<f:selectItems value="#{companyCategories}" var="category" itemLabel="#{category.name}" />
-							<s:convertEntity />
-						</h:selectOneMenu>
-					</s:decorate>
-					
-					<div class="buttonBox">
-						<h:commandButton id="confirm" value="Confirm" action="#{companyMaintenance.save}"/>
-						&#160;
-						<s:button id="cancel" value="Cancel" view="/company.xhtml"/>
-					</div>
-									
-				</fieldset>
-                </h:form>
-                
-			</div>
-			
-		</div>
-		
-	</div>
-	
-	<div id="footer">Created with JBoss EJB 3.0, Seam, JSF (Mojarra) and Facelets</div>
-	
+	<h:form id="addcompany">
+		<fieldset>			
+			<s:decorate id="nameDecorate" template="edit.xhtml">
+				<ui:define name="label">Name:</ui:define>
+				<h:inputText id="name" value="#{company.name}" required="true">
+					<a:ajax event="blur" render="nameDecorate"/>
+				</h:inputText>
+			</s:decorate>					
+		    <s:decorate id="categoryDecorate" template="display.xhtml">             
+				<ui:define name="label">Category:</ui:define>
+				<h:selectOneMenu id="categoryMenu" value="#{company.category}">
+					<f:selectItems value="#{companyCategories}" var="category" itemLabel="#{category.name}" />
+					<s:convertEntity />
+				</h:selectOneMenu>
+			</s:decorate>					
+			<div class="ui-button">
+				<h:commandButton id="confirm" value="Confirm" action="#{companyMaintenance.save}"/>
+				&#160;
+				<s:button id="cancel" value="Cancel" view="/company.xhtml"/>
+			</div>									
+		</fieldset>
+	</h:form>    
 </div>
+</ui:define>
 
-</body>
+<!-- sidebar -->
+<ui:define name="sidebar">
+	<s:button id="saleButton" value="Sale" view="/sale.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="companyButton" value="Company" view="/company.xhtml" styleClass="ui-button"/><br />
+	<s:button id="personButton" value="Person" view="/Person.xhtml" styleClass="ui-button"/><br />
+	<s:button id="productButton" value="Product" view="/product.xhtml" styleClass="ui-button"/><br />	
+	<s:button id="labelButton" value="Label" view="/label.xhtml" styleClass="ui-button"/><br />
+</ui:define>
 
-</html>
+</ui:composition>
