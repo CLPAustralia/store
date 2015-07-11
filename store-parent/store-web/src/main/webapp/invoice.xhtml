@@ -53,31 +53,31 @@
 	<h:outputText id="NoinvoicesFoundMessage" value="No invoices Found" rendered="#{invoices!=null and invoices.rowCount==0}"/>
 	<h:dataTable id="invoices" value="#{invoices}" var="invoice" rendered="#{invoices.rowCount>0}">
 		<h:column id="column1">
-			<f:facet id="NameFacet" name="header">Id</f:facet>
+			<f:facet id="IdFacet" name="header">Id</f:facet>
 			<h:outputText value="#{invoice.id}" />			
 		</h:column>
 		<h:column id="column2">
-			<f:facet id="NameFacet" name="header">Status</f:facet>
+			<f:facet id="StatusFacet" name="header">Status</f:facet>
 			<h:outputText value="#{invoice.status.name}" />			
 		</h:column>
 		
 		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Invoice Items - #{invoice.invoiceItems.size()} item(s)</f:facet>
+			<f:facet id="InvoiceItemFacet" name="header">Invoice Items - #{invoice.invoiceItems.size()} item(s)</f:facet>
 			<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}" var="invoiceItem" >
 				<h:column id="column2">
-					<f:facet id="NameFacet" name="header">Code</f:facet>
+					<f:facet id="CodeFacet" name="header">Code</f:facet>
 					<h:outputText value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />
 				</h:column>
 				<h:column id="column3">
-					<f:facet id="NameFacet" name="header">Label</f:facet>
+					<f:facet id="LabelFacet" name="header">Label</f:facet>
 					<h:outputText value="#{invoiceItem.product.label.name}" />					
 				</h:column>
 				<h:column id="column4">
-					<f:facet id="NameFacet" name="header">Category</f:facet>
+					<f:facet id="CategoryFacet" name="header">Category</f:facet>
 					<h:outputText value="#{invoiceItem.product.category.name}" />					
 				</h:column>
 				<h:column id="column5">
-					<f:facet id="NameFacet" name="header">Product</f:facet>
+					<f:facet id="ProductFacet" name="header">Product</f:facet>
 					<h:outputText value="#{invoiceItem.product.name}" />					
 				</h:column>
 				<h:column id="column6">
@@ -85,24 +85,26 @@
 					<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}"><h:outputText value="#{productOption.optionKey}: #{productOption.optionValue}" /> <br /></ui:repeat>
 				</h:column>
 				<h:column id="column7">
-					<f:facet id="NameFacet" name="header">Retail Price</f:facet>
+					<f:facet id="RetailPriceFacet" name="header">Retail Price</f:facet>
 					<h:outputText value="#{invoiceItem.product.retailPrice}" />
 				</h:column>
 				<h:column id="column8">
-					<f:facet id="NameFacet" name="header">Invoice Price</f:facet>
+					<f:facet id="InvoicePriceFacet" name="header">Invoice Price</f:facet>
 					<h:outputText value="#{invoiceItem.unitPrice}" />					
 				</h:column>
 				<h:column id="column9">
-					<f:facet id="NameFacet" name="header">Quantity</f:facet>
+					<f:facet id="QuantityFacet" name="header">Quantity</f:facet>
 					<h:outputText value="#{invoiceItem.quantity}" />					
 				</h:column>
 				<h:column id="column10">
-					<f:facet id="NameFacet" name="header">Subtotal</f:facet>
+					<f:facet id="SubtotalFacet" name="header">Subtotal</f:facet>
 					<h:outputText value="#{invoiceItem.unitPrice * invoiceItem.quantity}" />					
 				</h:column>
 				<f:facet name="footer">
 					<a:outputPanel id="total">
-						<h:outputText value="Total: #{invoice.total}" />			
+						<h:outputText value="Total: #{invoice.total}" />
+						&#160;
+						<h:outputText value="Payment Type: #{invoice.paymentType.name}" />			
 					</a:outputPanel>
 				</f:facet>
 			</h:dataTable>

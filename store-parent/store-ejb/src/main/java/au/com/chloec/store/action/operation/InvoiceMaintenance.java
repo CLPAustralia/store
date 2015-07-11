@@ -27,5 +27,5 @@ public interface InvoiceMaintenance {
 
 	public void edit();
 
-	public List<Invoice> invoices();
+//	public List<Invoice> invoices();
 }

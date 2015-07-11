@@ -54,6 +54,11 @@ insert into enum_instance(enum_instance_id, instance_name, domain_id) values(601
 insert into enum_instance(enum_instance_id, instance_name, domain_id) values(602, 'Completed', 6)
 insert into enum_instance(enum_instance_id, instance_name, domain_id) values(603, 'Cancelled', 6)
 
+insert into enum_domain(enum_domain_id, domain_name) values(7, 'Payment Type')
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(700, 'Unknown', 7)
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(701, 'Cash', 7)
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(702, 'Card', 7)
+
 insert into company(company_id, company_name, category_instance_id) values(0, 'Unknown', 200)
 insert into company(company_id, company_name, category_instance_id) values(1, 'ChloeC HQ', 202)
 insert into company(company_id, company_name, category_instance_id) values(2, 'ChloeC Birkenhead Point', 202)

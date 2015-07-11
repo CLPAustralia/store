@@ -27,35 +27,41 @@ public class EnumMaintenanceAction {
 	public static final String DOMAIN_NAME_GENDER = "Gender";
 	public static final String DOMAIN_NAME_SIZE = "Size";
 	public static final String DOMAIN_NAME_COLOR = "Color";
+	public static final String DOMAIN_NAME_PAYMENT_TYPE = "Payment Type";
 	public static final String DOMAIN_NAME_INVOICE_STATUS = "Invoice Status";
 	public static final String DOMAIN_NAME_INVOICE_STATUS_COMPLETED = "Completed";
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	@Factory("genders")
+	@Factory("allGenders")
 	public List<EnumInstance> getGenderInstances() {
 		return getInstances(DOMAIN_NAME_GENDER);
 	}
 
-	@Factory("sizes")
+	@Factory("allSizes")
 	public List<EnumInstance> getSizeInstances() {
 		return getInstances(DOMAIN_NAME_SIZE);
 	}
 
-	@Factory("colors")
+	@Factory("allColors")
 	public List<EnumInstance> getColorInstances() {
 		return getInstances(DOMAIN_NAME_COLOR);
 	}
 
-	@Factory("productCategories")
+	@Factory("allProductCategories")
 	public List<EnumInstance> getProductCategoryInstances() {
 		return getInstances(DOMAIN_NAME_PRODUCT_CATEGORY);
 	}
 	
-	@Factory("companyCategories")
+	@Factory("allCompanyCategories")
 	public List<EnumInstance> getCompanyCategoryInstances() {
 		return getInstances(DOMAIN_NAME_COMPANY_CATEGORY);
+	}
+	
+	@Factory("allPaymentTypes")
+	public List<EnumInstance> getPaymentTyeInstances() {
+		return getInstances(DOMAIN_NAME_PAYMENT_TYPE);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -64,10 +70,12 @@ public class EnumMaintenanceAction {
 	}
 
 	@SuppressWarnings("unchecked")
+	@Factory("allInvoiceStatus")
 	public List<EnumInstance> getInvoiceStatusInstances() {
 		return entityManager.createQuery("select e from EnumInstance e where e.domain.name = :domainName").setParameter("domainName", DOMAIN_NAME_INVOICE_STATUS).getResultList();
 	}
 	
+	@Factory("invoiceStatusComplete")
 	public EnumInstance getInvoiceStatusCompleted() {
 		List<EnumInstance> invoiceEnumInstances = getInvoiceStatusInstances();
 		return (EnumInstance) CollectionUtils.find(invoiceEnumInstances, new Predicate() {			

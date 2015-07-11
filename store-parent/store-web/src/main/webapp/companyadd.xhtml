@@ -29,7 +29,7 @@
 		    <s:decorate id="categoryDecorate" template="display.xhtml">             
 				<ui:define name="label">Category:</ui:define>
 				<h:selectOneMenu id="categoryMenu" value="#{company.category}">
-					<f:selectItems value="#{companyCategories}" var="category" itemLabel="#{category.name}" />
+					<f:selectItems value="#{allCompanyCategories}" var="category" itemLabel="#{category.name}" />
 					<s:convertEntity />
 				</h:selectOneMenu>
 			</s:decorate>					

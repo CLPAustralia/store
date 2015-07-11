@@ -1,177 +1,225 @@
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:s="http://jboss.org/schema/seam/taglib"
-                xmlns:a="http://richfaces.org/a4j"
-				template="template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:s="http://jboss.org/schema/seam/taglib"
+	xmlns:a="http://richfaces.org/a4j" template="template.xhtml">
 
-<!-- content -->
-<ui:define name="content">
+	<!-- content -->
+	<ui:define name="content">
 
-<h:outputText>
-	<f:event listener="#{saleMaintenance.find}" type="javax.faces.event.PreRenderViewEvent" />
-</h:outputText>
+		<h:outputText>
+			<f:event listener="#{saleMaintenance.find}"
+				type="javax.faces.event.PreRenderViewEvent" />
+		</h:outputText>
 
-<div class="section">
-  
-    <span class="errors">
-       <h:messages id="messages" globalOnly="true"/>
-    </span>
-    
-    <h1>Sale</h1>
+		<div class="section">
 
-	<h:form id="searchCriteria">
-	<fieldset>
-		<h:outputLabel value="Produt code / barcode: " for="searchString" />
-       <h:inputText id="searchString" value="#{saleMaintenance.searchString}" style="width: 165px;">
-        <a:ajax event="keyup" render="searchResults productOptions" listener="#{saleMaintenance.find}"/>
-       </h:inputText>                     
-       &#160;
-       <a:status id="status">
-          <f:facet id="StartStatus" name="start">
-             <h:graphicImage id="SpinnerGif" value="/img/spinner.gif"/>
-          </f:facet>
-       </a:status>
-	   <br/>
-       <h:outputLabel id="MaximumResultsLabel" for="pageSize">Maximum results:</h:outputLabel>&#160;
-       <h:selectOneMenu id="pageSize" value="#{saleMaintenance.pageSize}">
-          <f:selectItem id="PageSize5" itemLabel="5" itemValue="5"/>
-          <f:selectItem id="PageSize10" itemLabel="10" itemValue="10"/>
-          <f:selectItem id="PageSize20" itemLabel="20" itemValue="20"/>
-       </h:selectOneMenu>
-    </fieldset>
-    </h:form>
-    
-</div>
+			<span class="errors"> <h:messages id="messages"
+					globalOnly="true" />
+			</span>
 
-<a:outputPanel id="searchResults">
-  <div class="section">
-  	<h:form id="searchResultsForm">
-	<h:outputText id="NoInventoryFoundMessage" value="No Inventory Found" rendered="#{pinventoryItems!=null and inventoryItems.rowCount==0}"/>
-	<h:dataTable id="inventoryItem" value="#{inventoryItems}" var="inventoryItem" rendered="#{inventoryItems.rowCount>0}">
-		<h:column id="column2">
-			<f:facet id="NameFacet" name="header">Name</f:facet>
-			<h:outputLabel value="#{inventoryItem.product.displayName!=null ? inventoryItem.product.displayName : inventoryItem.product.name}" />
-		</h:column>
-		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Barcode</f:facet>			
+			<h1>Sale</h1>
+
+			<h:form id="searchCriteria">
+				<fieldset>
+					<h:outputLabel value="Produt code / barcode: " for="searchString" />
+					<h:inputText id="searchString"
+						value="#{saleMaintenance.searchString}" style="width: 165px;">
+						<a:ajax event="keyup" render="searchResults productOptions"
+							listener="#{saleMaintenance.find}" />
+					</h:inputText>
+					&#160;
+					<a:status id="status">
+						<f:facet id="StartStatus" name="start">
+							<h:graphicImage id="SpinnerGif" value="/img/spinner.gif" />
+						</f:facet>
+					</a:status>
+					<br />
+					<h:outputLabel id="MaximumResultsLabel" for="pageSize">Maximum results:</h:outputLabel>
+					&#160;
+					<h:selectOneMenu id="pageSize" value="#{saleMaintenance.pageSize}">
+						<f:selectItem id="PageSize5" itemLabel="5" itemValue="5" />
+						<f:selectItem id="PageSize10" itemLabel="10" itemValue="10" />
+						<f:selectItem id="PageSize20" itemLabel="20" itemValue="20" />
+					</h:selectOneMenu>
+				</fieldset>
+			</h:form>
+
+		</div>
+
+		<a:outputPanel id="searchResults">
+			<div class="section">
+				<h:form id="searchResultsForm">
+					<h:outputText id="NoInventoryFoundMessage"
+						value="No Inventory Found"
+						rendered="#{inventoryItems!=null and inventoryItems.rowCount==0}" />
+					<h:dataTable id="inventoryItem" value="#{inventoryItems}"
+						var="inventoryItem" rendered="#{inventoryItems.rowCount>0}">
+						<h:column id="column2">
+							<f:facet id="NameFacet" name="header">Name</f:facet>
+							<h:outputLabel
+								value="#{inventoryItem.product.displayName!=null ? inventoryItem.product.displayName : inventoryItem.product.name}" />
+						</h:column>
+						<h:column id="column3">
+							<f:facet id="BarcodeFacet" name="header">Barcode</f:facet>			
 			#{inventoryItem.product.factoryBarcode}
 		</h:column>
-		<h:column id="column4">
-			<f:facet id="NameFacet" name="header">Code</f:facet>
-			<h:outputLabel value="#{inventoryItem.product.productCode!=null ? inventoryItem.product.productCode : inventoryItem.product.factoryCode}" />
-		</h:column>
-		<h:column id="column5">
-			<f:facet id="NameFacet" name="header">Gender</f:facet>
+						<h:column id="column4">
+							<f:facet id="CodeFacet" name="header">Code</f:facet>
+							<h:outputLabel
+								value="#{inventoryItem.product.productCode!=null ? inventoryItem.product.productCode : inventoryItem.product.factoryCode}" />
+						</h:column>
+						<h:column id="column5">
+							<f:facet id="GenderFacet" name="header">Gender</f:facet>
 			#{inventoryItem.product.gender.name}
 		</h:column>
-		<h:column id="column6">
-			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
+						<h:column id="column6">
+							<f:facet id="RetailPriceFacet" name="header">Retail Price</f:facet>
 			#{inventoryItem.product.retailPrice}
 		</h:column>
-		<h:column id="column7">
-			<f:facet id="NameFacet" name="header">Category</f:facet>
+						<h:column id="column7">
+							<f:facet id="CategoryFacet" name="header">Category</f:facet>
 			#{inventoryItem.product.category.name}
 		</h:column>
-		<h:column id="column8">
-			<f:facet id="NameFacet" name="header">Label</f:facet>
+						<h:column id="column8">
+							<f:facet id="LabelFacet" name="header">Label</f:facet>
 			#{inventoryItem.product.label.name}
 		</h:column>
-		<h:column id="column9">
-			<f:facet id="ActionFacet" name="header">Options</f:facet>
-			<ui:repeat var="productOption" value="#{inventoryItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
-		</h:column>
-		<h:column id="column10">
-			<f:facet id="NameFacet" name="header">Availably Quantity</f:facet>
+						<h:column id="column9">
+							<f:facet id="OptionFacet" name="header">Options</f:facet>
+							<ui:repeat var="productOption"
+								value="#{inventoryItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br />
+							</ui:repeat>
+						</h:column>
+						<h:column id="column10">
+							<f:facet id="AvailableQuantityFacet" name="header">Available Quantity</f:facet>
 			#{inventoryItem.quantity}
 		</h:column>
-		<h:column id="column11">
-			<f:facet id="ActionFacet" name="header">Action</f:facet>
-			<s:button id="addSale" value="Add" action="#{saleMaintenance.addInvoiceItem}"/>
-		</h:column>
-	</h:dataTable>
-	<s:link id="MoreResultsLink" value="More results" action="#{saleMaintenance.nextPage}" rendered="#{saleMaintenance.nextPageAvailable}" />
-	</h:form>
-  </div>
-</a:outputPanel>
+						<h:column id="column11">
+							<f:facet id="ActionFacet" name="header">Action</f:facet>
+							<s:button id="addSale" value="Add"
+								action="#{saleMaintenance.addInvoiceItem}" />
+						</h:column>
+					</h:dataTable>
+					<s:link id="MoreResultsLink" value="More results"
+						action="#{saleMaintenance.nextPage}"
+						rendered="#{saleMaintenance.nextPageAvailable}" />
+				</h:form>
+			</div>
+		</a:outputPanel>
 
-<a:outputPanel id="invoiceResults">
-<div class="section">
-	<h1><h:outputLabel value="Invoice" rendered="#{invoice.invoiceItems.size>0}" /></h1>	
-</div>
-<div class="section">
-  <h:form id="invoice">
-	<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}" var="invoiceItem" rendered="#{invoice.invoiceItems.size>0}">
-		<h:column id="column1">
-			<f:facet id="NameFacet" name="header">Name</f:facet>
-			<h:outputText value="#{invoiceItem.product.displayName!=null ? invoiceItem.product.displayName : invoiceItem.product.name}" />
-		</h:column>
-		<h:column id="column2">
-			<f:facet id="NameFacet" name="header">Barcode</f:facet>
-			<h:outputText value="#{invoiceItem.product.factoryBarcode}" />						
-		</h:column>
-		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Code</f:facet>
-			<h:outputText value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />			
-		</h:column>
-		<h:column id="column4">
-			<f:facet id="NameFacet" name="header">Gender</f:facet>
-			<h:outputText value="#{invoiceItem.product.gender.name}" />						
-		</h:column>
-		<h:column id="column5">
-			<f:facet id="NameFacet" name="header">Category</f:facet>
-			<h:outputText value="#{invoiceItem.product.category.name}" />						
-		</h:column>
-		<h:column id="column6">
-			<f:facet id="NameFacet" name="header">Label</f:facet>
-			<h:outputText value="#{invoiceItem.product.label.name}" />						
-		</h:column>
-		<h:column id="column7">
-			<f:facet id="ActionFacet" name="header">Options</f:facet>
-			<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
-		</h:column>
-		<h:column id="column8">
-			<f:facet id="NameFacet" name="header">Price</f:facet>
-			<h:inputText value="#{invoiceItem.unitPrice}">
-				<a:ajax event="keyup" render="invoiceResults"/>
-			</h:inputText>			
-		</h:column>
-		<h:column id="column9">
-			<f:facet id="ActionFacet" name="header">Quantity</f:facet>
-			<h:outputText value="#{invoiceItem.quantity}" />
-		</h:column>
-		<h:column id="column10">
-			<f:facet id="NameFacet" name="header">Subtotal</f:facet>
-			<h:panelGrid id="subtotal">
-				<h:outputText value="#{invoiceItem.unitPrice * invoiceItem.quantity}" />			
-			</h:panelGrid>
-		</h:column>
-		<f:facet name="footer">
-			<h:panelGrid id="total">
-				<h:outputText value="Total: #{invoice.total}" />			
-			</h:panelGrid>
-		</f:facet>
-	</h:dataTable>
-	<a:commandButton id="confirm" value="Confirm" action="#{saleMaintenance.confirm}" rendered="#{invoice.invoiceItems.size>0}" execute="@this"/>
+		<a:outputPanel id="invoiceResults"
+			rendered="#{invoice.status != invoiceStatusComplete and invoice.invoiceItems.size>0}">
+			<div class="section">
+				<h1>
+					<h:outputLabel value="Invoice" />
+				</h1>
+			</div>
+			<div class="section">
+				<h:form id="invoice">
+					<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}"
+						var="invoiceItem">
+						<h:column id="column1">
+							<f:facet id="iNameFacet" name="header">Name</f:facet>
+							<h:outputText
+								value="#{invoiceItem.product.displayName!=null ? invoiceItem.product.displayName : invoiceItem.product.name}" />
+						</h:column>
+						<h:column id="column2">
+							<f:facet id="NameFacet" name="header">Barcode</f:facet>
+							<h:outputText value="#{invoiceItem.product.factoryBarcode}" />
+						</h:column>
+						<h:column id="column3">
+							<f:facet id="iBarcodeFacet" name="header">Code</f:facet>
+							<h:outputText
+								value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />
+						</h:column>
+						<h:column id="column4">
+							<f:facet id="iGenderFacet" name="header">Gender</f:facet>
+							<h:outputText value="#{invoiceItem.product.gender.name}" />
+						</h:column>
+						<h:column id="column5">
+							<f:facet id="iCategoryFacet" name="header">Category</f:facet>
+							<h:outputText value="#{invoiceItem.product.category.name}" />
+						</h:column>
+						<h:column id="column6">
+							<f:facet id="iLabelFacet" name="header">Label</f:facet>
+							<h:outputText value="#{invoiceItem.product.label.name}" />
+						</h:column>
+						<h:column id="column7">
+							<f:facet id="iOptionFacet" name="header">Options</f:facet>
+							<ui:repeat var="productOption"
+								value="#{invoiceItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br />
+							</ui:repeat>
+						</h:column>
+						<h:column id="column8">
+							<f:facet id="iPriceFacet" name="header">Price</f:facet>
+							<h:inputText value="#{invoiceItem.unitPrice}">
+								<a:ajax event="keyup" render="invoiceResults" />
+							</h:inputText>
+						</h:column>
+						<h:column id="column9">
+							<f:facet id="iQuantityFacet" name="header">Quantity</f:facet>
+							<h:outputText value="#{invoiceItem.quantity}" />
+						</h:column>
+						<h:column id="column10">
+							<f:facet id="iSubtotalFacet" name="header">Subtotal</f:facet>
+							<h:panelGrid id="subtotal">
+								<h:outputText
+									value="#{invoiceItem.unitPrice * invoiceItem.quantity}" />
+							</h:panelGrid>
+						</h:column>
+						<f:facet name="footer">
+							<h:panelGrid id="total">
+								<h:outputText value="Total: #{invoice.total}" />
+								<s:decorate id="paymentTypeDecorate" template="edit.xhtml">
+									<ui:define name="label">Payment Type:</ui:define>
+									<h:selectOneMenu id="paymentTypeMenu"
+										value="#{invoice.paymentType}">
+										<f:selectItems var="paymentType" value="#{allPaymentTypes}"
+											itemLabel="#{paymentType.name}" itemValue="#{paymentType}" />
+										<s:convertEntity />
+									</h:selectOneMenu>
+								</s:decorate>
+							</h:panelGrid>
+						</f:facet>
+					</h:dataTable>
+
+					<a:commandButton id="confirm" value="Confirm"
+						action="#{saleMaintenance.confirm}" />
 	&#160;
-	<h:commandButton id="cancel" value="Cancel" action="#{saleMaintenance.cancel}" rendered="#{invoice.invoiceItems.size>0}"/>
-  </h:form>
-</div>
-</a:outputPanel>
+	<h:commandButton id="cancel" value="Cancel"
+						action="#{saleMaintenance.cancel}" />
+				</h:form>
+			</div>
+		</a:outputPanel>
 
-</ui:define>
+	</ui:define>
 
-<!-- sidebar -->
-<ui:define name="sidebar">
-	<s:button id="saleButton" value="Sale" view="/sale.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="companyButton" value="Company" view="/company.xhtml" styleClass="ui-button"/><br />
-	<s:button id="personButton" value="Person" view="/Person.xhtml" styleClass="ui-button"/><br />
-	<s:button id="productButton" value="Product" view="/product.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="labelButton" value="Label" view="/label.xhtml" styleClass="ui-button"/><br />
-</ui:define>
+	<!-- sidebar -->
+	<ui:define name="sidebar">
+		<s:button id="saleButton" value="Sale" view="/sale.xhtml"
+			styleClass="ui-button" />
+		<br />
+		<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"
+			styleClass="ui-button" />
+		<br />
+		<s:button id="inventoryButton" value="Inventory"
+			view="/inventory.xhtml" styleClass="ui-button" />
+		<br />
+		<s:button id="companyButton" value="Company" view="/company.xhtml"
+			styleClass="ui-button" />
+		<br />
+		<s:button id="personButton" value="Person" view="/Person.xhtml"
+			styleClass="ui-button" />
+		<br />
+		<s:button id="productButton" value="Product" view="/product.xhtml"
+			styleClass="ui-button" />
+		<br />
+		<s:button id="labelButton" value="Label" view="/label.xhtml"
+			styleClass="ui-button" />
+		<br />
+	</ui:define>
 
 </ui:composition>

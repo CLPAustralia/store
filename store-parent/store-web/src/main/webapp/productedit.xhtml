@@ -10,10 +10,6 @@
 <!-- content -->
 <ui:define name="content">
 
-<h:outputText>
-	<f:event listener="#{productMaintenance.find}" type="javax.faces.event.PreRenderViewEvent" />
-</h:outputText>
-
 <div class="section">
   
     <span class="errors">
@@ -56,7 +52,7 @@
 				    <s:decorate id="genderDecorate" template="display.xhtml">             
 						<ui:define name="label">Gender:</ui:define>						
 						<h:selectOneMenu id="genderMenu" value="#{product.gender}">
-							<f:selectItems value="#{genders}" var="gender" itemLabel="#{gender.name}"  />
+							<f:selectItems value="#{allGenders}" var="gender" itemLabel="#{gender.name}"  />
 							<s:convertEntity />
 						</h:selectOneMenu>
 					</s:decorate>
@@ -80,7 +76,7 @@
 				    <s:decorate id="categoryDecorate" template="display.xhtml">             
 						<ui:define name="label">Category:</ui:define>
 						<h:selectOneMenu id="categoryMenu" value="#{product.category}">
-							<f:selectItems value="#{productCategories}" var="category" itemLabel="#{category.name}" />
+							<f:selectItems value="#{allProductCategories}" var="category" itemLabel="#{category.name}" />
 							<s:convertEntity />
 						</h:selectOneMenu>
 					</s:decorate>

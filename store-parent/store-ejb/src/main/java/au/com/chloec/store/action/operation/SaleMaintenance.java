@@ -2,6 +2,8 @@ package au.com.chloec.store.action.operation;
 
 import javax.ejb.Local;
 
+import au.com.chloec.store.domain.Invoice;
+
 @Local
 public interface SaleMaintenance {
 
@@ -30,4 +32,5 @@ public interface SaleMaintenance {
 	public void confirm();
 	
 	public void cancel();
+
 }

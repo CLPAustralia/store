@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,8 @@ import javax.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.jboss.seam.annotations.Name;
 
 @Entity
@@ -180,8 +183,9 @@ public class Product extends AbstractDomainObject implements Serializable {
 		this.label = label;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "product_id", referencedColumnName = "product_id")
+	@Fetch(value = FetchMode.SUBSELECT)
 	public List<ProductOption> getProductOptions() {
 		return productOptions;
 	}

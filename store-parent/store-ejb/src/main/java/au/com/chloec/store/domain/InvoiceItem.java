@@ -33,9 +33,10 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 
 	public InvoiceItem(){}
 	
-	public InvoiceItem(Product product, BigDecimal unitPrice) {
+	public InvoiceItem(Product product, BigDecimal unitPrice, Invoice invoice) {
 		this.product = product;
 		this.unitPrice = unitPrice;
+		this.invoice = invoice;
 		this.quantity = 1;
 	}
 	

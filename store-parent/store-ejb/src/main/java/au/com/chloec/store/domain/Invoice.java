@@ -33,7 +33,8 @@ public class Invoice extends AbstractDomainObject implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Long id;
 	private List<InvoiceItem> invoiceItems = new ArrayList<InvoiceItem>();
-	private EnumInstance status;		
+	private EnumInstance status;
+	private EnumInstance paymentType;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +67,7 @@ public class Invoice extends AbstractDomainObject implements Serializable {
 		this.status = status;
 	}
 
+	
 	@Transient
 	public BigDecimal getTotal() {
 		BigDecimal total = BigDecimal.ZERO;
@@ -75,5 +77,15 @@ public class Invoice extends AbstractDomainObject implements Serializable {
 			total = total.add(unitPrice.multiply(quantity));
 		}
 		return total;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "payment_type_instance_id")
+	public EnumInstance getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(EnumInstance paymentType) {
+		this.paymentType = paymentType;
 	}
 }

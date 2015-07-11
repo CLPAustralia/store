@@ -55,7 +55,7 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 	@DataModel
 	private List<InventoryItem> inventoryItems;
 	
-	@In(required = false)
+	@In(create = true)
 	@Out(required = false)
 	@DataModelSelection
 	private InventoryItem inventoryItem;
@@ -145,7 +145,7 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 			}
 		});
 		if (invoiceItem == null) {
-			invoice.getInvoiceItems().add(new InvoiceItem(product, product.getRetailPrice()));
+			invoice.getInvoiceItems().add(new InvoiceItem(product, product.getRetailPrice(), invoice));
 		} else {
 			invoiceItem.add();
 		}
@@ -158,9 +158,6 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 		invoice.setLastUpdateDate(Calendar.getInstance().getTime());
 		invoice.setLastUpdateUser(user);
 		entityManager.persist(invoice);
-//		entityManager.flush();
-//		entityManager.persist(inventoryItem);
-//		entityManager.flush();
 	}
 	
 	@End
@@ -177,5 +174,15 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 		}
 		invoice = null;
 	}
-	
+
+//	public class InventoryItemView extends InventoryItem {
+//		private InventoryItem inventoryItem;
+//		public InventoryItemView(InventoryItem inventoryItem){
+//			this.inventoryItem = inventoryItem;
+//		}
+//		public String getName() {
+//			Product product = inventoryItem.getProduct();
+//			return product.getDisplayName() != null ? product.getDisplayName() : product.getName(); 
+//		}
+//	}
 }

@@ -106,9 +106,9 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 		log.info(invoice.getId());
 	}
 
-	@Factory("invoices")
-	public List<Invoice> invoices() {
-		queryInvoices();
-		return invoices;
-	}
+//	@Factory("invoices")
+//	public List<Invoice> invoices() {
+//		queryInvoices();
+//		return invoices;
+//	}
 }
