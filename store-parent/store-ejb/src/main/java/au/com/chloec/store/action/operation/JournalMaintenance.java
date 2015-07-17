@@ -1,14 +1,11 @@
 package au.com.chloec.store.action.operation;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.ejb.Local;
 
-import au.com.chloec.store.domain.InvoiceItem;
-
 @Local
-public interface InvoiceMaintenance {
+public interface JournalMaintenance {
 
 	public int getPageSize();
 
@@ -32,9 +29,8 @@ public interface InvoiceMaintenance {
 
 	public void edit();
 
-//	public List<Invoice> invoices();
+	public void add();
 	
-	public BigDecimal getTotal();
-
-	public BigDecimal getSubtotal(InvoiceItem invoiceItem);
+	public void save();
+	
 }

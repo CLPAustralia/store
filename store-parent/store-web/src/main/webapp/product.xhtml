@@ -20,7 +20,7 @@
        <h:messages id="messages" globalOnly="true"/>
     </span>
     
-    <h1>Product</h1>
+    <h2>Product</h2>
 
 	<h:form id="searchCriteria">
 	<fieldset>
@@ -55,7 +55,7 @@
 	<h:outputText id="NoProductsFoundMessage" value="No Products Found" rendered="#{products!=null and products.rowCount==0}"/>
 	<h:dataTable id="products" value="#{products}" var="product" rendered="#{products.rowCount>0}">
 		<h:column id="column1">
-			<f:facet id="NameFacet" name="header">ID</f:facet>
+			<f:facet id="IdFacet" name="header">ID</f:facet>
 			#{product.id}
 		</h:column>
 		<h:column id="column2">
@@ -63,58 +63,62 @@
 			#{product.name}
 		</h:column>
 		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Display Name</f:facet>
+			<f:facet id="DisplayNameFacet" name="header">Display Name</f:facet>
 			#{product.displayName}
 		</h:column>
 		<h:column id="column4">
-			<f:facet id="NameFacet" name="header">Factory Barcode</f:facet>
+			<f:facet id="FactoryBarcodeFacet" name="header">Factory Barcode</f:facet>
 			#{product.factoryBarcode}
 		</h:column>
 		<h:column id="column5">
-			<f:facet id="NameFacet" name="header">Factory Code</f:facet>
+			<f:facet id="FactoryCodeFacet" name="header">Factory Code</f:facet>
 			#{product.factoryCode}
 		</h:column>
 		<h:column id="column6">
-			<f:facet id="NameFacet" name="header">Product Code</f:facet>
+			<f:facet id="ProductCodeFacet" name="header">Product Code</f:facet>
 			#{product.productCode}
 		</h:column>
 		<h:column id="column7">
-			<f:facet id="NameFacet" name="header">Gender</f:facet>
-			#{product.gender.name}
+			<f:facet id="ProductTypeFacet" name="header">Product Type</f:facet>
+			#{product.productType.name}
 		</h:column>
 		<h:column id="column8">
-			<f:facet id="NameFacet" name="header">Wholesale Price</f:facet>
-			#{product.wholesalePrice}
+			<f:facet id="GenderFacet" name="header">Gender</f:facet>
+			#{product.gender.name}
 		</h:column>
 		<h:column id="column9">
-			<f:facet id="NameFacet" name="header">Retail Price</f:facet>
-			#{product.retailPrice}
+			<f:facet id="WholesalePriceFacet" name="header">Wholesale Price</f:facet>
+			#{product.wholesalePrice}
 		</h:column>
 		<h:column id="column10">
-			<f:facet id="NameFacet" name="header">Category</f:facet>
-			#{product.category.name}
+			<f:facet id="RetailPriceFacet" name="header">Retail Price</f:facet>
+			#{product.retailPrice}
 		</h:column>
 		<h:column id="column11">
-			<f:facet id="NameFacet" name="header">Label</f:facet>
-			#{product.label.name}
+			<f:facet id="CategoryFacet" name="header">Category</f:facet>
+			#{product.category.name}
 		</h:column>
 		<h:column id="column12">
-			<f:facet id="NameFacet" name="header">Creation Date</f:facet>
-			#{product.creationDate}
+			<f:facet id="LabelFacet" name="header">Label</f:facet>
+			#{product.label.name}
 		</h:column>
 		<h:column id="column13">
-			<f:facet id="NameFacet" name="header">Last Update Date</f:facet>
-			#{product.lastUpdateDate}
+			<f:facet id="CreationDateFacet" name="header">Creation Date</f:facet>
+			#{product.creationDate}
 		</h:column>
 		<h:column id="column14">
-			<f:facet id="NameFacet" name="header">Last Update User</f:facet>
-			#{product.lastUpdateUser.name}
+			<f:facet id="LastUpdateDateFacet" name="header">Last Update Date</f:facet>
+			#{product.lastUpdateDate}
 		</h:column>
 		<h:column id="column15">
-			<f:facet id="ActionFacet" name="header">Options</f:facet>
-			<ui:repeat var="productOption" value="#{product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
+			<f:facet id="LastUpdateUserFacet" name="header">Last Update User</f:facet>
+			#{product.lastUpdateUser.name}
 		</h:column>
 		<h:column id="column16">
+			<f:facet id="OptionFacet" name="header">Options</f:facet>
+			<ui:repeat var="productOption" value="#{product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
+		</h:column>
+		<h:column id="column17">
 			<f:facet id="ActionFacet" name="header">Action</f:facet>
 			<s:link id="editProduct" value="Edit" action="#{productMaintenance.edit}"/>
 		</h:column>
@@ -128,13 +132,6 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-	<s:button id="saleButton" value="Sale" view="/sale.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="companyButton" value="Company" view="/company.xhtml" styleClass="ui-button"/><br />
-	<s:button id="personButton" value="Person" view="/Person.xhtml" styleClass="ui-button"/><br />
-	<s:button id="productButton" value="Product" view="/product.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="labelButton" value="Label" view="/label.xhtml" styleClass="ui-button"/><br />
 </ui:define>
 
 </ui:composition>

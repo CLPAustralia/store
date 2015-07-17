@@ -66,7 +66,6 @@ fieldset {
 #container {
 	float: left;
 	width: 758px;
-	background: url(../img/hdr.bar.jpg) 0 0 repeat-x;
 }
 #sidebar {
 	float: left;
@@ -269,9 +268,9 @@ input[type="submit"], input[type="button"] {
 }
 /* Homepage Modifications
 ----------------------------------------------- */
-#pgHome #container {
+/*#pgHome #container {
 	background: url(../img/hdr.ad.jpg) 0 0 repeat-x;
-}
+}*/
 #pgHome #sidebar {
 	margin-top: 207px;
 }

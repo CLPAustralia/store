@@ -5,6 +5,7 @@
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
 				template="template.xhtml">
 
 <!-- content -->
@@ -20,16 +21,13 @@
        <h:messages id="messages" globalOnly="true"/>
     </span>
     
-    <h1>Invoice</h1>
+    <h2>Invoice</h2>
 
 	<h:form id="searchCriteria">
 	<fieldset>
-		<h:outputLabel value="Product name: " for="searchString" />
-       <h:inputText id="searchString" value="#{invoiceMaintenance.searchString}" style="width: 165px;">
-        <a:ajax event="keyup" render="searchResults productOptions" listener="#{invoiceMaintenance.find}"/>
-       </h:inputText>                     
-       &#160;
-	   <a:commandButton id="findInvoices" value="Find Invoice" actionListener="#{invoiceMaintenance.find}"  render="searchResults productOptions"/>
+		<rich:calendar id="checkinDate" value="#{invoiceMaintenance.searchDate}" required="false" datePattern="dd/MM/yyyy" render="searchResults" style="width: auto;">
+			<a:ajax event="change" render="searchResults productOptions" listener="#{invoiceMaintenance.find}"/>
+		</rich:calendar>
        &#160;
        <a:status id="status">
           <f:facet id="StartStatus" name="start">
@@ -38,7 +36,7 @@
        </a:status>
 	   <br/>
        <h:outputLabel id="MaximumResultsLabel" for="pageSize">Maximum results:</h:outputLabel>&#160;
-       <h:selectOneMenu id="pageSize" value="#{productMaintenance.pageSize}">
+       <h:selectOneMenu id="pageSize" value="#{invoiceMaintenance.pageSize}">
           <f:selectItem id="PageSize5" itemLabel="5" itemValue="5"/>
           <f:selectItem id="PageSize10" itemLabel="10" itemValue="10"/>
           <f:selectItem id="PageSize20" itemLabel="20" itemValue="20"/>
@@ -53,65 +51,77 @@
 	<h:outputText id="NoinvoicesFoundMessage" value="No invoices Found" rendered="#{invoices!=null and invoices.rowCount==0}"/>
 	<h:dataTable id="invoices" value="#{invoices}" var="invoice" rendered="#{invoices.rowCount>0}">
 		<h:column id="column1">
-			<f:facet id="IdFacet" name="header">Id</f:facet>
-			<h:outputText value="#{invoice.id}" />			
+			<f:facet id="IdFacet" name="header">Time of Creation</f:facet>
+			<h:outputText value="#{invoice.creationDate}">
+				<s:convertDateTime dateStyle="short" type="both" />
+			</h:outputText>
 		</h:column>
 		<h:column id="column2">
-			<f:facet id="StatusFacet" name="header">Status</f:facet>
-			<h:outputText value="#{invoice.status.name}" />			
-		</h:column>
-		
+			<f:facet id="ProcessFacet" name="header">Processed By</f:facet>
+			<h:outputText value="#{invoice.lastUpdateUser.name}" />			
+		</h:column>		
 		<h:column id="column3">
 			<f:facet id="InvoiceItemFacet" name="header">Invoice Items - #{invoice.invoiceItems.size()} item(s)</f:facet>
 			<h:dataTable id="invoiceItems" value="#{invoice.invoiceItems}" var="invoiceItem" >
-				<h:column id="column2">
+				<h:column id="column1">
 					<f:facet id="CodeFacet" name="header">Code</f:facet>
 					<h:outputText value="#{invoiceItem.product.productCode!=null ? invoiceItem.product.productCode : invoiceItem.product.factoryCode}" />
 				</h:column>
-				<h:column id="column3">
+				<h:column id="column2">
 					<f:facet id="LabelFacet" name="header">Label</f:facet>
 					<h:outputText value="#{invoiceItem.product.label.name}" />					
 				</h:column>
-				<h:column id="column4">
+				<h:column id="column3">
 					<f:facet id="CategoryFacet" name="header">Category</f:facet>
 					<h:outputText value="#{invoiceItem.product.category.name}" />					
 				</h:column>
-				<h:column id="column5">
+				<h:column id="column4">
 					<f:facet id="ProductFacet" name="header">Product</f:facet>
 					<h:outputText value="#{invoiceItem.product.name}" />					
 				</h:column>
+				<h:column id="column5">
+					<f:facet id="ColorFacet" name="header">Color</f:facet>
+					<h:outputText value="#{invoiceItem.productColor}" />					
+				</h:column>
 				<h:column id="column6">
-					<f:facet id="ActionFacet" name="header">Options</f:facet>
-					<ui:repeat var="productOption" value="#{invoiceItem.product.productOptions}"><h:outputText value="#{productOption.optionKey}: #{productOption.optionValue}" /> <br /></ui:repeat>
+					<f:facet id="ColorFacet" name="header">Size</f:facet>
+					<h:outputText value="#{invoiceItem.productSize}" />					
 				</h:column>
 				<h:column id="column7">
 					<f:facet id="RetailPriceFacet" name="header">Retail Price</f:facet>
 					<h:outputText value="#{invoiceItem.product.retailPrice}" />
 				</h:column>
 				<h:column id="column8">
-					<f:facet id="InvoicePriceFacet" name="header">Invoice Price</f:facet>
+					<f:facet id="InvoicePriceFacet" name="header">Price</f:facet>
 					<h:outputText value="#{invoiceItem.unitPrice}" />					
 				</h:column>
 				<h:column id="column9">
+					<f:facet id="iDiscountPercentFacet" name="header">Discount Unit</f:facet>
+					<h:outputText value="#{invoiceItem.discountUnit.name}" />
+				</h:column>
+				<h:column id="column10">
+					<f:facet id="iDiscountAmountFacet" name="header">Discount Amount</f:facet>
+					<h:outputText value="#{invoiceItem.discountAmount}" />
+				</h:column>
+				<h:column id="column11">
 					<f:facet id="QuantityFacet" name="header">Quantity</f:facet>
 					<h:outputText value="#{invoiceItem.quantity}" />					
 				</h:column>
-				<h:column id="column10">
+				<h:column id="column12">
 					<f:facet id="SubtotalFacet" name="header">Subtotal</f:facet>
-					<h:outputText value="#{invoiceItem.unitPrice * invoiceItem.quantity}" />					
+					<h:outputText value="#{invoiceMaintenance.getSubtotal(invoiceItem)}" />					
 				</h:column>
 				<f:facet name="footer">
 					<a:outputPanel id="total">
-						<h:outputText value="Total: #{invoice.total}" />
+						<h:outputText value="Total: #{invoiceMaintenance.total}" />
 						&#160;
 						<h:outputText value="Payment Type: #{invoice.paymentType.name}" />			
 					</a:outputPanel>
 				</f:facet>
 			</h:dataTable>
 		</h:column>
-			
 	</h:dataTable>
-	<s:link id="MoreResultsLink" value="More results" action="#{productMaintenance.nextPage}" rendered="#{productMaintenance.nextPageAvailable}" />
+	<s:link id="MoreResultsLink" value="More results" action="#{invoiceMaintenance.nextPage}" rendered="#{invoiceMaintenance.nextPageAvailable}"/>
 	</h:form>
   </div>
 </a:outputPanel>
@@ -120,13 +130,6 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-	<s:button id="saleButton" value="Sale" view="/sale.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="companyButton" value="Company" view="/company.xhtml" styleClass="ui-button"/><br />
-	<s:button id="personButton" value="Person" view="/Person.xhtml" styleClass="ui-button"/><br />
-	<s:button id="productButton" value="Product" view="/product.xhtml" styleClass="ui-button"/><br />	
-	<s:button id="labelButton" value="Label" view="/label.xhtml" styleClass="ui-button"/><br />
 </ui:define>
 
 </ui:composition>

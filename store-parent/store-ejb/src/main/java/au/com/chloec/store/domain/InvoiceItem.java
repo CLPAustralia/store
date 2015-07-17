@@ -11,11 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import org.jboss.seam.annotations.Name;
+
+import au.com.chloec.store.utils.ProductUtil;
 
 @Entity
 @Table(name = "invoice_item")
@@ -29,15 +32,19 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 	private Product product;	
 	private Invoice invoice;
 	private BigDecimal unitPrice;
+	private EnumInstance discountUnit;
+	private Double discountAmount = Double.valueOf(0);
 	private Integer quantity;
 
 	public InvoiceItem(){}
 	
-	public InvoiceItem(Product product, BigDecimal unitPrice, Invoice invoice) {
+	public InvoiceItem(Product product, BigDecimal unitPrice, Invoice invoice, EnumInstance discountUnit, Double discountAmount) {
 		this.product = product;
 		this.unitPrice = unitPrice;
 		this.invoice = invoice;
 		this.quantity = 1;
+		this.discountUnit = discountUnit;
+		this.discountAmount = discountAmount;
 	}
 	
 	@Id
@@ -91,4 +98,33 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 		this.unitPrice = unitPrice;
 	}
 
+	@Transient
+	public String getProductColor() {
+		return ProductUtil.getOptionIgnoreCase(product, "color");
+	}
+
+	@Transient
+	public String getProductSize() {
+		return ProductUtil.getOptionIgnoreCase(product, "size");
+	}
+
+	@Column(name = "discount_amount")
+	public Double getDiscountAmount() {
+		return discountAmount;
+	}
+
+	public void setDiscountAmount(Double discountAmount) {
+		this.discountAmount = discountAmount;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "discount_unit_instance_id")
+	public EnumInstance getDiscountUnit() {
+		return discountUnit;
+	}
+
+	public void setDiscountUnit(EnumInstance discountUnit) {
+		this.discountUnit = discountUnit;
+	}
+	
 }

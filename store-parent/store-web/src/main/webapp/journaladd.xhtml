@@ -1,0 +1,55 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:s="http://jboss.org/schema/seam/taglib"
+                xmlns:a="http://richfaces.org/a4j"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+
+<div class="section">
+  
+    <span class="errors">
+       <h:messages id="messages" globalOnly="true"/>
+    </span>
+    
+    <h2>Add Journal</h2>
+
+                <h:form id="addjournal">
+				<fieldset>
+				
+					<s:decorate id="contentDecorate" template="edit.xhtml">
+						<ui:define name="label">Content:</ui:define>
+						<h:inputTextarea id="name" value="#{journal.content}" required="true" >
+							<a:ajax event="blur" render="contentDecorate"/>
+						</h:inputTextarea>
+					</s:decorate>					
+										
+				    <s:decorate id="categoryDecorate" template="display.xhtml">             
+						<ui:define name="label">Category:</ui:define>						
+						<h:selectOneMenu id="categoryMenu" value="#{journal.category}">
+							<f:selectItems var="category" value="#{allJournalCategories}" itemLabel="#{category.name}" />
+							<s:convertEntity />
+						</h:selectOneMenu>
+					</s:decorate>
+
+					<div class="ui-button">
+						<h:commandButton id="confirm" value="Confirm" action="#{journalMaintenance.save}"/>
+						&#160;
+						<s:button id="cancel" value="Cancel" view="/journal.xhtml"/>
+					</div>
+									
+				</fieldset>
+                </h:form>    
+</div>
+
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+</ui:define>
+
+</ui:composition>

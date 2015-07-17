@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <datasources xmlns="http://www.jboss.org/ironjacamar/schema">
-    <datasource 
+    <!-- <datasource 
         jndi-name="java:/bookingDatasource" 
         enabled="true" 
         use-java-context="true" pool-name="bookingdb">
-        <!-- <connection-url>jdbc:h2:mem:bookingdb;DB_CLOSE_DELAY=-1</connection-url> -->
+        <connection-url>jdbc:h2:mem:bookingdb;DB_CLOSE_DELAY=-1</connection-url>
         <connection-url>jdbc:h2:tcp://localhost/~/bookingdb;DB_CLOSE_DELAY=-1</connection-url>
         <driver>h2</driver>
         <security>
             <user-name>sa</user-name>
             <password></password>
         </security>
+    </datasource> -->
+	<datasource jndi-name="java:/bookingDatasource" enabled="true" use-java-context="true" pool-name="bookingdb">
+		<connection-url>jdbc:mysql://localhost:3306/chloecstore?characterEncoding=UTF-8&amp;characterSetResults=UTF-8&amp;autoReconnect=true&amp;zeroDateTimeBehavior=convertToNull</connection-url>  
+        <driver>mysql</driver>  
+        <security>  
+            <user-name>root</user-name>  
+            <password>mysql</password>  
+        </security>  
     </datasource>
+    <!-- JBAS010411: <drivers/> in standalone -ds.xml deployments aren't supported.  
+            ==> Needs to go to standalone.xml.  
+    <drivers>  
+        <driver name="mysql" module="com.mysql.jdbc">  
+                <xa-datasource-class>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</xa-datasource-class>  
+        </driver>  
+    </drivers>  
+    -->  
 </datasources>

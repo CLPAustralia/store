@@ -139,13 +139,25 @@
 	<!-- Sale -->
 	<page login-required="true" view-id="/sale.xhtml">
 		<navigation from-action="#{saleMaintenance.confirm}">
-			<redirect view-id="/invoiceView.xhtml" />
+			<redirect view-id="/invoice.xhtml" />
 		</navigation>
 		<navigation from-action="#{saleMaintenance.cancel}">
 			<redirect view-id="/sale.xhtml" />
 		</navigation>
 	</page>
 
+	<!-- Journal -->
+	<page login-required="true" view-id="/journal.xhtml">
+		<navigation from-action="#{journalMaintenance.add}">
+			<redirect view-id="/journaladd.xhtml" />
+		</navigation>
+	</page>
+	<page login-required="true" view-id="/journaladd.xhtml">
+		<navigation from-action="#{journalMaintenance.save}">
+			<redirect view-id="/journal.xhtml" />
+		</navigation>
+	</page>
+	
 	<exception class="org.jboss.seam.security.NotLoggedInException">
 		<redirect view-id="/home.xhtml">
 			<message severity="warn">You must be logged in to use this feature</message>

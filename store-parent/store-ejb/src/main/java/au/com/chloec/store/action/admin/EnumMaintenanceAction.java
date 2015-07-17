@@ -24,6 +24,7 @@ public class EnumMaintenanceAction {
 
 	public static final String DOMAIN_NAME_PRODUCT_CATEGORY = "Product Category";
 	public static final String DOMAIN_NAME_COMPANY_CATEGORY = "Company Category";
+	public static final String DOMAIN_NAME_JOURNAL_CATEGORY = "Journal Category";
 	public static final String DOMAIN_NAME_GENDER = "Gender";
 	public static final String DOMAIN_NAME_SIZE = "Size";
 	public static final String DOMAIN_NAME_COLOR = "Color";
@@ -31,6 +32,9 @@ public class EnumMaintenanceAction {
 	public static final String DOMAIN_NAME_INVOICE_STATUS = "Invoice Status";
 	public static final String DOMAIN_NAME_INVOICE_STATUS_COMPLETED = "Completed";
 	
+	public static final String DOMAIN_NAME_DISCOUNT_UNIT = "Discount Unit";
+	public static final String DOMAIN_NAME_DISCOUNT_UNIT_PERCENTAGE = "Percentage";
+
 	@PersistenceContext
 	private EntityManager entityManager;
 	
@@ -83,6 +87,41 @@ public class EnumMaintenanceAction {
 			public boolean evaluate(Object obj) {
 				EnumInstance invoiceEnumInstance = (EnumInstance) obj;
 				return invoiceEnumInstance.getName().equals("Completed");
+			}
+		});
+	}
+		
+	@SuppressWarnings("unchecked")
+	@Factory("allDiscountUnits")
+	public List<EnumInstance> getDiscountUnitInstances() {
+		return entityManager.createQuery("select e from EnumInstance e where e.domain.name = :domainName").setParameter("domainName", DOMAIN_NAME_DISCOUNT_UNIT).getResultList();
+	}
+	
+	@Factory("discountUnitPercentage")
+	public EnumInstance getDiscountUnitPercentage() {
+		List<EnumInstance> discountUnitEnumInstances = getDiscountUnitInstances();
+		return (EnumInstance) CollectionUtils.find(discountUnitEnumInstances, new Predicate() {			
+			@Override
+			public boolean evaluate(Object obj) {
+				EnumInstance invoiceEnumInstance = (EnumInstance) obj;
+				return invoiceEnumInstance.getName().equals("Percentage");
+			}
+		});
+	}
+
+	@Factory("allJournalCategories")
+	public List<EnumInstance> getJournalCategoryInstances() {
+		return getInstances(DOMAIN_NAME_JOURNAL_CATEGORY);
+	}
+	
+	@Factory("journalCategoryGeneral")
+	public EnumInstance getJournalCategoryGeneral() {
+		List<EnumInstance> journalEnumInstances = getJournalCategoryInstances();
+		return (EnumInstance) CollectionUtils.find(journalEnumInstances, new Predicate() {			
+			@Override
+			public boolean evaluate(Object obj) {
+				EnumInstance journalEnumInstance = (EnumInstance) obj;
+				return journalEnumInstance.getName().equals("General");
 			}
 		});
 	}

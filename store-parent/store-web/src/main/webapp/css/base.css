@@ -513,12 +513,13 @@ textarea {
 }
 
 #content input[type="text"],
+#content input[type="password"],
 #content input[type="email"],
 #content textarea {
 	color: #666;
 
-	width: 70%;
-	min-width: 300px;
+	width: 150px;
+	min-width: 30px;
 
 	margin: 5px 0 10px 0;
 	padding: 8px 12px;
@@ -1280,6 +1281,8 @@ iframe {
 #content {
 	float: left;
 	width: 71%;
+	margin-left: 90px;
+	margin-top: 20px;
 }
 
 .content-right #content {
@@ -1301,7 +1304,7 @@ iframe {
 .sidebar-left,
 .sidebar-right {
 	padding: 20px;
-	width: 29%;
+	width: 10%;
 }
 
 #sidebar,
@@ -1319,17 +1322,15 @@ iframe {
 }
 
 
-.content-right #sidebar,
+#sidebar,
 .sidebar-left {
 	float: left;
 	border-left: 0;
 	border-right: 1px solid #e7e7e7;
-	margin: -20px 0 0 -25px;
+	margin: 0px 0 0 -25px;
 	-webkit-border-image: -webkit-linear-gradient(#ffffff, #e7e7e7 15%, #e7e7e7 85%, #ffffff);
 	border-image: linear-gradient(#ffffff, #e7e7e7 15%, #e7e7e7 85%, #ffffff);
 	box-shadow: inset 15px 0 5px -16px #e7e7e7;
-	background-image: -webkit-radial-gradient(right, #f2f2f2, #ffffff 80%);
-	background-image: radial-gradient(right, #f2f2f2, #ffffff 80%);
 }
 
 .entry-summary p {
@@ -1555,7 +1556,7 @@ iframe {
 
 #container,
 .footer {
-	border-top: 1px solid #7ACEF4;
+	border-top: 1px solid #C3BBB6;
 }
 
 .jquery-ui #container,
@@ -3833,4 +3834,24 @@ pre .chunk {
 
 #content .syntaxhighlighter tr {
 	border-bottom: none;
+}
+
+#header {
+	height: 45px;
+}
+
+#footer {
+	clear: both;
+	margin-top: 40px;
+	float: left;
+	padding: 20px;
+	border-top: 1px solid #C3BBB6;
+	background-color: #fff;
+	width: 100%;
+	text-align: center;
+}
+
+#title {
+	margin-top:20px;
+	margin-left: 10px;
 }

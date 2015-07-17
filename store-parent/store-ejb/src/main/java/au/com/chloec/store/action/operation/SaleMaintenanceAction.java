@@ -31,6 +31,7 @@ import au.com.chloec.store.domain.Invoice;
 import au.com.chloec.store.domain.InvoiceItem;
 import au.com.chloec.store.domain.Product;
 import au.com.chloec.store.domain.User;
+import au.com.chloec.store.view.InventoryItemView;
 
 @Stateful
 @Name("saleMaintenance")
@@ -53,12 +54,12 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 	private boolean nextPageAvailable;
 
 	@DataModel
-	private List<InventoryItem> inventoryItems;
+	private List<InventoryItemView> inventoryItemViews = new ArrayList<InventoryItemView>();
 	
-	@In(create = true)
+	@In(required = false)
 	@Out(required = false)
 	@DataModelSelection
-	private InventoryItem inventoryItem;
+	private InventoryItemView inventoryItemView;
 
 	@In(create = true)
 	@Out(required = false)
@@ -78,6 +79,7 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 		queryProducts();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void queryProducts() {
 		String queryString = "select i from InventoryItem i "
 				+ "join i.product p "
@@ -88,16 +90,20 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 				+ "or lower(p.productCode) like #{saleProductPattern}  "
 				+ "or lower(p.factoryCode) like #{saleProductPattern} or lower(p.factoryBarcode) like #{saleProductPattern}"
 				+ ")";
-		@SuppressWarnings("unchecked")
 		List<InventoryItem> results = entityManager
 				.createQuery(queryString )
 				.setMaxResults(pageSize + 1).setFirstResult(page * pageSize).getResultList();
 
 		nextPageAvailable = results.size() > pageSize;
+		List<InventoryItem> inventoryItems;
 		if (nextPageAvailable) {
 			inventoryItems = new ArrayList<InventoryItem>(results.subList(0, pageSize));
 		} else {
 			inventoryItems = results;
+		}
+		inventoryItemViews.clear();
+		for (InventoryItem inventoryItem : inventoryItems) {
+			inventoryItemViews.add(new InventoryItemView(inventoryItem));
 		}
 	}
 
@@ -131,12 +137,8 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 	public void destroy() {
 	}
 	
-	public void edit() {
-		log.info(inventoryItem.getId());
-	}
-	
 	public void addInvoiceItem() {
-		final Product product = inventoryItem.getProduct();
+		final Product product = inventoryItemView.getProduct();
 		 InvoiceItem invoiceItem = (InvoiceItem) CollectionUtils.find(invoice.getInvoiceItems(), new Predicate() {			
 			@Override
 			public boolean evaluate(Object obj) {
@@ -145,11 +147,11 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 			}
 		});
 		if (invoiceItem == null) {
-			invoice.getInvoiceItems().add(new InvoiceItem(product, product.getRetailPrice(), invoice));
+			invoice.getInvoiceItems().add(new InvoiceItem(product, product.getRetailPrice(), invoice, enumMaintenance.getDiscountUnitPercentage(), Double.valueOf(0)));
 		} else {
 			invoiceItem.add();
 		}
-		inventoryItem.setQuantity(inventoryItem.getQuantity() - 1);
+		inventoryItemView.reduceQuantityByOne();
 	}
 	
 	@End
@@ -163,26 +165,16 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 	@End
 	public void cancel() {
 		for (final InvoiceItem invoiceItem : invoice.getInvoiceItems()) {
-			InventoryItem inventoryItem = (InventoryItem) CollectionUtils.find(inventoryItems, new Predicate() {				
+			InventoryItemView inventoryItemView = (InventoryItemView) CollectionUtils.find(inventoryItemViews, new Predicate() {				
 				@Override
 				public boolean evaluate(Object obj) {
-					InventoryItem inventoryItem = (InventoryItem) obj;
-					return inventoryItem.getProduct().equals(invoiceItem.getProduct());
+					InventoryItemView inventoryItemView = (InventoryItemView) obj;
+					return inventoryItemView.getProduct().equals(invoiceItem.getProduct());
 				}
 			});
-			inventoryItem.setQuantity(inventoryItem.getQuantity() + invoiceItem.getQuantity());
+			inventoryItemView.increaseQuantity(invoiceItem.getQuantity());
 		}
 		invoice = null;
 	}
 
-//	public class InventoryItemView extends InventoryItem {
-//		private InventoryItem inventoryItem;
-//		public InventoryItemView(InventoryItem inventoryItem){
-//			this.inventoryItem = inventoryItem;
-//		}
-//		public String getName() {
-//			Product product = inventoryItem.getProduct();
-//			return product.getDisplayName() != null ? product.getDisplayName() : product.getName(); 
-//		}
-//	}
 }

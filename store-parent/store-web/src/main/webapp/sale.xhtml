@@ -20,7 +20,7 @@
 					globalOnly="true" />
 			</span>
 
-			<h1>Sale</h1>
+			<h2>Sale</h2>
 
 			<h:form id="searchCriteria">
 				<fieldset>
@@ -54,53 +54,54 @@
 				<h:form id="searchResultsForm">
 					<h:outputText id="NoInventoryFoundMessage"
 						value="No Inventory Found"
-						rendered="#{inventoryItems!=null and inventoryItems.rowCount==0}" />
-					<h:dataTable id="inventoryItem" value="#{inventoryItems}"
-						var="inventoryItem" rendered="#{inventoryItems.rowCount>0}">
+						rendered="#{inventoryItemViews!=null and inventoryItemViews.rowCount==0}" />
+					<h:dataTable id="inventoryItemView" value="#{inventoryItemViews}"
+						var="inventoryItemView" rendered="#{inventoryItemViews.rowCount>0}">
 						<h:column id="column2">
 							<f:facet id="NameFacet" name="header">Name</f:facet>
-							<h:outputLabel
-								value="#{inventoryItem.product.displayName!=null ? inventoryItem.product.displayName : inventoryItem.product.name}" />
+							<h:outputText value="#{inventoryItemView.name}" />
 						</h:column>
 						<h:column id="column3">
-							<f:facet id="BarcodeFacet" name="header">Barcode</f:facet>			
-			#{inventoryItem.product.factoryBarcode}
-		</h:column>
+							<f:facet id="BarcodeFacet" name="header">Barcode</f:facet>
+							<h:outputText value="#{inventoryItemView.barcode}" />			
+						</h:column>
 						<h:column id="column4">
 							<f:facet id="CodeFacet" name="header">Code</f:facet>
-							<h:outputLabel
-								value="#{inventoryItem.product.productCode!=null ? inventoryItem.product.productCode : inventoryItem.product.factoryCode}" />
+							<h:outputText
+								value="#{inventoryItemView.code}" />
 						</h:column>
 						<h:column id="column5">
 							<f:facet id="GenderFacet" name="header">Gender</f:facet>
-			#{inventoryItem.product.gender.name}
-		</h:column>
+							<h:outputText value="#{inventoryItemView.gender}" />
+						</h:column>
 						<h:column id="column6">
 							<f:facet id="RetailPriceFacet" name="header">Retail Price</f:facet>
-			#{inventoryItem.product.retailPrice}
-		</h:column>
+							<h:outputText value="#{inventoryItemView.retailPrice}" />
+						</h:column>
 						<h:column id="column7">
 							<f:facet id="CategoryFacet" name="header">Category</f:facet>
-			#{inventoryItem.product.category.name}
-		</h:column>
+							<h:outputText value="#{inventoryItemView.category}" />
+						</h:column>
 						<h:column id="column8">
 							<f:facet id="LabelFacet" name="header">Label</f:facet>
-			#{inventoryItem.product.label.name}
-		</h:column>
+							<h:outputText value="#{inventoryItemView.label}" />
+						</h:column>
 						<h:column id="column9">
-							<f:facet id="OptionFacet" name="header">Options</f:facet>
-							<ui:repeat var="productOption"
-								value="#{inventoryItem.product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br />
-							</ui:repeat>
+							<f:facet id="ColorFacet" name="header">Color</f:facet>
+							<h:outputText value="#{inventoryItemView.color}" />
 						</h:column>
 						<h:column id="column10">
-							<f:facet id="AvailableQuantityFacet" name="header">Available Quantity</f:facet>
-			#{inventoryItem.quantity}
-		</h:column>
+							<f:facet id="SizeFacet" name="header">Size</f:facet>
+							<h:outputText value="#{inventoryItemView.size}" />
+						</h:column>
 						<h:column id="column11">
+							<f:facet id="SizeFacet" name="header">Quantity</f:facet>
+							<h:outputText value="#{inventoryItemView.quantity}" />
+						</h:column>
+						<h:column id="column12">
 							<f:facet id="ActionFacet" name="header">Action</f:facet>
 							<s:button id="addSale" value="Add"
-								action="#{saleMaintenance.addInvoiceItem}" />
+								action="#{saleMaintenance.addInvoiceItem}"/>
 						</h:column>
 					</h:dataTable>
 					<s:link id="MoreResultsLink" value="More results"
@@ -113,9 +114,9 @@
 		<a:outputPanel id="invoiceResults"
 			rendered="#{invoice.status != invoiceStatusComplete and invoice.invoiceItems.size>0}">
 			<div class="section">
-				<h1>
+				<h2>
 					<h:outputLabel value="Invoice" />
-				</h1>
+				</h2>
 			</div>
 			<div class="section">
 				<h:form id="invoice">
@@ -155,24 +156,36 @@
 						</h:column>
 						<h:column id="column8">
 							<f:facet id="iPriceFacet" name="header">Price</f:facet>
-							<h:inputText value="#{invoiceItem.unitPrice}">
-								<a:ajax event="keyup" render="invoiceResults" />
-							</h:inputText>
+							<h:outputText value="#{invoiceItem.unitPrice}" />
 						</h:column>
 						<h:column id="column9">
+							<f:facet id="iDiscountPercentFacet" name="header">Discount Unit</f:facet>
+							<h:selectOneMenu id="discountUnitMenu" value="#{invoiceItem.discountUnit}">
+								<f:selectItems value="#{allDiscountUnits}" var="discountUnit" itemLabel="#{discountUnit.name}" />
+								<s:convertEntity />
+								<a:ajax event="change" render="invoiceResults" />
+							</h:selectOneMenu>
+						</h:column>
+						<h:column id="column10">
+							<f:facet id="iDiscountAmountFacet" name="header">Discount Amount</f:facet>
+							<h:inputText value="#{invoiceItem.discountAmount}">
+								<a:ajax event="change" render="invoiceResults" />
+							</h:inputText>
+						</h:column>
+						<h:column id="column11">
 							<f:facet id="iQuantityFacet" name="header">Quantity</f:facet>
 							<h:outputText value="#{invoiceItem.quantity}" />
 						</h:column>
-						<h:column id="column10">
+						<h:column id="column12">
 							<f:facet id="iSubtotalFacet" name="header">Subtotal</f:facet>
 							<h:panelGrid id="subtotal">
 								<h:outputText
-									value="#{invoiceItem.unitPrice * invoiceItem.quantity}" />
+									value="#{invoiceMaintenance.getSubtotal(invoiceItem)}" />
 							</h:panelGrid>
 						</h:column>
 						<f:facet name="footer">
 							<h:panelGrid id="total">
-								<h:outputText value="Total: #{invoice.total}" />
+								<h:outputText value="Total: #{invoiceMaintenance.total}" />
 								<s:decorate id="paymentTypeDecorate" template="edit.xhtml">
 									<ui:define name="label">Payment Type:</ui:define>
 									<h:selectOneMenu id="paymentTypeMenu"
@@ -199,27 +212,6 @@
 
 	<!-- sidebar -->
 	<ui:define name="sidebar">
-		<s:button id="saleButton" value="Sale" view="/sale.xhtml"
-			styleClass="ui-button" />
-		<br />
-		<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml"
-			styleClass="ui-button" />
-		<br />
-		<s:button id="inventoryButton" value="Inventory"
-			view="/inventory.xhtml" styleClass="ui-button" />
-		<br />
-		<s:button id="companyButton" value="Company" view="/company.xhtml"
-			styleClass="ui-button" />
-		<br />
-		<s:button id="personButton" value="Person" view="/Person.xhtml"
-			styleClass="ui-button" />
-		<br />
-		<s:button id="productButton" value="Product" view="/product.xhtml"
-			styleClass="ui-button" />
-		<br />
-		<s:button id="labelButton" value="Label" view="/label.xhtml"
-			styleClass="ui-button" />
-		<br />
 	</ui:define>
 
 </ui:composition>

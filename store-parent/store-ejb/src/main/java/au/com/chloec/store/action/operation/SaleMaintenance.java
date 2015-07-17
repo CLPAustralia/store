@@ -2,8 +2,6 @@ package au.com.chloec.store.action.operation;
 
 import javax.ejb.Local;
 
-import au.com.chloec.store.domain.Invoice;
-
 @Local
 public interface SaleMaintenance {
 
@@ -25,8 +23,6 @@ public interface SaleMaintenance {
 
 	public void destroy();
 
-	public void edit();
-	
 	public void addInvoiceItem();
 
 	public void confirm();

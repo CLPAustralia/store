@@ -1,4 +1,6 @@
 insert into Customer (id, username, password, name) values (1, 'bhp', 'bhp', 'Birkenhead Point')
+insert into Customer (id, username, password, name) values (2, 'ian', 'ian', 'Ian')
+insert into Customer (id, username, password, name) values (3, 'cathy', 'cathy', 'Cathy')
 insert into Hotel (id, price, name, address, city, state, zip, country) values (1, 120, 'Marriott Courtyard', 'Tower Place, Buckhead', 'Atlanta', 'GA', '30305', 'USA')
 insert into Hotel (id, price, name, address, city, state, zip, country) values (2, 180, 'Doubletree', 'Tower Place, Buckhead', 'Atlanta', 'GA', '30305', 'USA')
 insert into Hotel (id, price, name, address, city, state, zip, country) values (3, 450, 'W Hotel', 'Union Square, Manhattan', 'NY', 'NY', '10011', 'USA')
@@ -59,7 +61,21 @@ insert into enum_instance(enum_instance_id, instance_name, domain_id) values(700
 insert into enum_instance(enum_instance_id, instance_name, domain_id) values(701, 'Cash', 7)
 insert into enum_instance(enum_instance_id, instance_name, domain_id) values(702, 'Card', 7)
 
-insert into company(company_id, company_name, category_instance_id) values(0, 'Unknown', 200)
+insert into enum_domain(enum_domain_id, domain_name) values(8, 'Discount Unit')
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(801, 'Amount', 8)
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(802, 'Percentage', 8)
+
+insert into enum_domain(enum_domain_id, domain_name) values(9, 'Journal Category')
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(901, 'General', 9)
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(902, 'Opening Balance', 9)
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(903, 'Closing Balance', 9)
+
+insert into enum_domain(enum_domain_id, domain_name) values(10, 'Product Type')
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(1001, 'Wholesale', 10)
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(1002, 'Retail', 10)
+insert into enum_instance(enum_instance_id, instance_name, domain_id) values(1003, 'Consignment', 10)
+
+insert into company(company_id, company_name, category_instance_id) values(999, 'Unknown', 200)
 insert into company(company_id, company_name, category_instance_id) values(1, 'ChloeC HQ', 202)
 insert into company(company_id, company_name, category_instance_id) values(2, 'ChloeC Birkenhead Point', 202)
 insert into company(company_id, company_name, category_instance_id) values(11, 'Desire Fashion', 201)
@@ -71,7 +87,7 @@ insert into company(company_id, company_name, category_instance_id) values(16, '
 insert into company(company_id, company_name, category_instance_id) values(17, 'Sunny Girl', 201)
 insert into company(company_id, company_name, category_instance_id) values(18, 'Wakee', 201)
 
-insert into label(label_id, label_name, company_id) values(0, 'Unknown', 0)
+insert into label(label_id, label_name, company_id) values(999, 'Unknown', 999)
 insert into label(label_id, label_name, company_id) values(1, 'Mia', 11)
 insert into label(label_id, label_name, company_id) values(2, 'Indikah', 12)
 insert into label(label_id, label_name, company_id) values(3, 'Oscar-St', 13)
@@ -81,13 +97,17 @@ insert into label(label_id, label_name, company_id) values(6, 'Spicy Sugar', 16)
 insert into label(label_id, label_name, company_id) values(7, 'Sunny Girl', 17)
 insert into label(label_id, label_name, company_id) values(8, 'Wakee', 18)
 
-insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, creation_date, last_update_date, last_update_user_id) values (1,1234,'Test Factory Code 1', 'Test Product Code 1', 'Test Product Name 1', 'Test Display Name 1', 301, 'Test Summary 1', 'Test Description 1', 1, 1, 101, 1, current_date(), current_date(), 1)
-insert into product_option(product_option_id, option_key, option_value, product_id) values(1, 'color', 'black', 1)
-insert into product_option(product_option_id, option_key, option_value, product_id) values(2, 'gender', 'male', 1)
+insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, product_type_instance_id, creation_date, last_update_date, last_update_user_id) values (1,'2PDBBQ8D4TCY3X7T21','Test Factory Code 1', 'Test Product Code 1', 'Test Product Using Dr Prescription', 'Test Display Name 1', 301, 'Test Summary 1', 'Test Description 1', 50, 500, 101, 1, 1002, current_date(), current_date(), 1)
+insert into product_option(product_option_id, option_key, option_value, product_id) values(1, 'color', 'Black', 1)
+insert into product_option(product_option_id, option_key, option_value, product_id) values(2, 'gender', 'Male', 1)
+insert into product_option(product_option_id, option_key, option_value, product_id) values(3, 'size', 'S/M', 1)
 
-insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, creation_date, last_update_date, last_update_user_id) values (2,4321,'Test Factory Code 2', 'Test Product Code 2', 'Test Product Name 2', 'Test Display Name 2', 302, 'Test Summary 2', 'Test Description 2', 1, 1, 102, 2, current_date(), current_date(), 1)
-insert into product_option(product_option_id, option_key, option_value, product_id) values(3, 'color', 'white', 2)
-insert into product_option(product_option_id, option_key, option_value, product_id) values(4, 'gender', 'female', 2)
+insert into product(product_id, factory_barcode, factory_code, product_code, product_name, display_name, gender_instance_id, summary, description, wholesale_price, retail_price, category_instance_id, label_id, product_type_instance_id, creation_date, last_update_date, last_update_user_id) values (2,4321,'Test Factory Code 2', 'Test Product Code 2', 'Test Product Name 2', 'Test Display Name 2', 302, 'Test Summary 2', 'Test Description 2', 70, 700, 102, 2, 1003, current_date(), current_date(), 1)
+insert into product_option(product_option_id, option_key, option_value, product_id) values(4, 'color', 'White', 2)
+insert into product_option(product_option_id, option_key, option_value, product_id) values(5, 'gender', 'Female', 2)
+insert into product_option(product_option_id, option_key, option_value, product_id) values(6, 'size', 'M/L', 2)
 
 insert into inventory_item(inventory_item_id,store_id,product_id,quantity) values(1, 1, 1, 10)
 insert into inventory_item(inventory_item_id,store_id,product_id,quantity) values(2, 1, 2, 10)
+
+insert into journal(journal_id, content, category_instance_id, creation_date, last_update_date, last_update_user_id) values(1, 'test', 901, current_date(), current_date(), 1)

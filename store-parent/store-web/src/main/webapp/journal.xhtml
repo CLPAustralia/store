@@ -5,13 +5,14 @@
 	  			xmlns:f="http://java.sun.com/jsf/core"
 	  			xmlns:s="http://jboss.org/schema/seam/taglib"
                 xmlns:a="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
 				template="template.xhtml">
 
 <!-- content -->
 <ui:define name="content">
 
 <h:outputText>
-	<f:event listener="#{labelMaintenance.find}" type="javax.faces.event.PreRenderViewEvent" />
+	<f:event listener="#{journalMaintenance.find}" type="javax.faces.event.PreRenderViewEvent" />
 </h:outputText>
 
 <div class="section">
@@ -20,18 +21,16 @@
        <h:messages id="messages" globalOnly="true"/>
     </span>
     
-    <h2>Label</h2>
+    <h2>Journal</h2>
 
 	<h:form id="searchCriteria">
 	<fieldset>
-		<h:outputLabel value="Label name: " for="searchString" />
-       <h:inputText id="searchString" value="#{labelMaintenance.searchString}" style="width: 165px;">
-        <a:ajax event="keyup" render="searchResults" listener="#{labelMaintenance.find}"/>
-       </h:inputText>                     
+		<rich:calendar id="checkinDate" value="#{journalMaintenance.searchDate}" required="false" datePattern="dd/MM/yyyy" render="searchResults" style="width: auto;">
+			<a:ajax event="change" render="searchResults productOptions" listener="#{journalMaintenance.find}"/>
+		</rich:calendar>
        &#160;
-	   <a:commandButton id="findlabel" value="Find label" actionListener="#{labelMaintenance.find}"  render="searchResult"/>
+       <h:commandButton id="addJournal" value="Add Journal" action="#{journalMaintenance.add}"/>
        &#160;
-       <h:commandButton id="addlabel" value="Add label" action="#{labelMaintenance.add}"/>
        <a:status id="status">
           <f:facet id="StartStatus" name="start">
              <h:graphicImage id="SpinnerGif" value="/img/spinner.gif"/>
@@ -39,39 +38,40 @@
        </a:status>
 	   <br/>
        <h:outputLabel id="MaximumResultsLabel" for="pageSize">Maximum results:</h:outputLabel>&#160;
-       <h:selectOneMenu id="pageSize" value="#{labelMaintenance.pageSize}">
+       <h:selectOneMenu id="pageSize" value="#{journalMaintenance.pageSize}">
           <f:selectItem id="PageSize5" itemLabel="5" itemValue="5"/>
           <f:selectItem id="PageSize10" itemLabel="10" itemValue="10"/>
           <f:selectItem id="PageSize20" itemLabel="20" itemValue="20"/>
        </h:selectOneMenu>
     </fieldset>
     </h:form>
-    
 </div>
 
 <a:outputPanel id="searchResults">
   <div class="section">
   	<h:form id="searchResultsForm">
-	<h:outputText id="NoLabelFoundMessage" value="No label Found" rendered="#{labels!=null and labels.rowCount==0}"/>
-	<h:dataTable id="labels" value="#{labels}" var="label" rendered="#{labels.rowCount>0}">
+	<h:outputText id="NoinvoicesFoundMessage" value="No journals Found" rendered="#{journals!=null and journals.rowCount==0}"/>
+	<h:dataTable id="journals" value="#{journals}" var="journal" rendered="#{journals.rowCount>0}">
 		<h:column id="column1">
-			<f:facet id="NameFacet" name="header">ID</f:facet>
-			#{label.id}
+			<f:facet id="IdFacet" name="header">Time of Creation</f:facet>
+			<h:outputText value="#{journal.creationDate}">
+				<s:convertDateTime dateStyle="short" type="both" />
+			</h:outputText>
 		</h:column>
 		<h:column id="column2">
-			<f:facet id="NameFacet" name="header">Name</f:facet>
-			#{label.name}
+			<f:facet id="UserFacet" name="header">Created BY</f:facet>
+			<h:outputText value="#{journal.lastUpdateUser.name}" />
 		</h:column>
 		<h:column id="column3">
-			<f:facet id="NameFacet" name="header">Company</f:facet>
-			#{label.company.name}
+			<f:facet id="CategoryFacet" name="header">Category</f:facet>
+			<h:outputText value="#{journal.category.name}" />
 		</h:column>
 		<h:column id="column4">
-			<f:facet id="ActionFacet" name="header">Action</f:facet>
-			<s:link id="editlabel" value="Edit" action="#{labelMaintenance.edit}"/>
+			<f:facet id="ContentFacet" name="header">Content</f:facet>
+			<h:outputText value="#{journal.content}" />
 		</h:column>
 	</h:dataTable>
-	<s:link id="MoreResultsLink" value="More results" action="#{labelMaintenance.nextPage}" rendered="#{labelMaintenance.nextPageAvailable}" />
+	<s:link id="MoreResultsLink" value="More results" action="#{journalMaintenance.nextPage}" rendered="#{journalMaintenance.nextPageAvailable}" />
 	</h:form>
   </div>
 </a:outputPanel>

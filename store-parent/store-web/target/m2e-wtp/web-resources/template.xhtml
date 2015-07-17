@@ -18,16 +18,22 @@
 
 <div id="document">
 	<div id="header">
-		<div id="title"><img src="img/hdr.title.gif" alt="Chloe C - Fashion &amp; Accessories"/></div>
-		<div id="status">
+		<div id="title"><img src="img/hdr.title.png" alt="Chloe C - Fashion &amp; Accessories"/></div>
+		<div id="status" align="right" style="margin-right: 20px">
             Welcome #{user.name}
-            | <s:link id="search" view="/main.xhtml" value="Search" propagation="none"/>
-            | <s:link id="settings" view="/password.xhtml" value="Settings" propagation="none"/>
             | <s:link id="logout" action="#{identity.logout}" value="Logout"/>
 		</div>
 	</div>
 	<div id="container">
 		<div id="sidebar" class="sidebar-left">
+			<s:button id="saleButton" value="Sale" view="/sale.xhtml" styleClass="ui-button"/><br />	
+			<s:button id="invoiceButton" value="Invoice" view="/invoice.xhtml" styleClass="ui-button"/><br />	
+			<s:button id="inventoryButton" value="Inventory" view="/inventory.xhtml" styleClass="ui-button"/><br />	
+			<s:button id="companyButton" value="Company" view="/company.xhtml" styleClass="ui-button"/><br />
+			<s:button id="personButton" value="Person" view="/Person.xhtml" styleClass="ui-button"/><br />
+			<s:button id="productButton" value="Product" view="/product.xhtml" styleClass="ui-button"/><br />	
+			<s:button id="labelButton" value="Label" view="/label.xhtml" styleClass="ui-button"/><br />
+			<s:button id="journalButton" value="Journal" view="/journal.xhtml" styleClass="ui-button"/><br />
 			<ui:insert name="sidebar"/>
 		</div>
 		<div id="content">
@@ -36,7 +42,7 @@
 		</div>
 		
 	</div>
-	<div id="footer" class="footer">CHLOE C&copy; 2015</div>
+	<div id="footer" class="footer">PLC Australia &copy;2015</div>
 </div>
 </body>
 </html>

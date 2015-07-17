@@ -17,6 +17,9 @@
         <dependent-module archiveName="commons-lang-2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="joda-time-2.8.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/joda-time/joda-time/2.8.1/joda-time-2.8.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="jboss-el-1.0_02.CR6.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/jboss/el/jboss-el/1.0_02.CR6/jboss-el-1.0_02.CR6.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>

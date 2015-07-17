@@ -1,7 +1,7 @@
 package au.com.chloec.store.action.operation;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -24,18 +24,20 @@ import org.jboss.seam.log.Log;
 import org.joda.time.DateTime;
 
 import au.com.chloec.store.action.admin.EnumMaintenanceAction;
-import au.com.chloec.store.domain.EnumInstance;
-import au.com.chloec.store.domain.Invoice;
-import au.com.chloec.store.domain.InvoiceItem;
+import au.com.chloec.store.domain.Journal;
+import au.com.chloec.store.domain.User;
 
 @Stateful
-@Name("invoiceMaintenance")
+@Name("journalMaintenance")
 @Scope(ScopeType.SESSION)
 @Restrict("#{identity.loggedIn}")
-public class InvoiceMaintenanceAction implements InvoiceMaintenance {
+public class JournalMaintenanceAction implements JournalMaintenance {
 
 	@Logger
 	private Log log;
+
+	@In
+	private User user;
 
 	@In
 	private EntityManager entityManager;
@@ -51,34 +53,34 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 	private EnumMaintenanceAction enumMaintenance;
 
 	@DataModel
-	private List<Invoice> invoices;
+	private List<Journal> journals;
 
 	@In(required = false)
 	@Out(required = false)
 	@DataModelSelection
-	private Invoice invoice;
+	private Journal journal;
 
 	public void find() {
 		page = 0;
-		queryInvoices();
+		queryJournals();
 	}
 
 	public void nextPage() {
 		page++;
-		queryInvoices();
+		queryJournals();
 	}
 
 	@SuppressWarnings("unchecked")
-	private void queryInvoices() {
+	private void queryJournals() {
 
-		List<Invoice> results;
+		List<Journal> results;
 		Query query;
 		if (searchDate == null) {
-			query = entityManager.createQuery("select i from Invoice i order by i.lastUpdateDate desc");
+			query = entityManager.createQuery("select i from Journal i order by i.lastUpdateDate desc");
 		} else {
 			DateTime startDate = new DateTime(searchDate).withTimeAtStartOfDay();
 			DateTime endDate = startDate.plusDays(1).withTimeAtStartOfDay();
-			query = entityManager.createQuery("select i from Invoice i where i.creationDate between :startDate and :endDate order by i.lastUpdateDate desc")
+			query = entityManager.createQuery("select i from Journal i where i.creationDate between :startDate and :endDate order by i.lastUpdateDate desc")
 					.setParameter("startDate", startDate.toDate())
 					.setParameter("endDate", endDate.toDate());
 		}
@@ -86,9 +88,9 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 
 		nextPageAvailable = results.size() > pageSize;
 		if (nextPageAvailable) {
-			invoices = new ArrayList<Invoice>(results.subList(0, pageSize));
+			journals = new ArrayList<Journal>(results.subList(0, pageSize));
 		} else {
-			invoices = results;
+			journals = results;
 		}
 	}
 
@@ -144,7 +146,7 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 	}
 
 	public void edit() {
-		log.info(invoice.getId());
+		log.info(journal.getId());
 	}
 
 	// @Factory("invoices")
@@ -153,27 +155,13 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 	// return invoices;
 	// }
 	
-	public BigDecimal getTotal() {
-		BigDecimal total = BigDecimal.ZERO;
-		for (InvoiceItem invoiceItem : invoice.getInvoiceItems()) {
-			total = total.add(getSubtotal(invoiceItem));
-		}
-		return total;
+	public void add() {
+		this.journal = new Journal(enumMaintenance.getJournalCategoryGeneral());
 	}
 
-	public BigDecimal getSubtotal(InvoiceItem invoiceItem) {
-		BigDecimal unitPrice = invoiceItem.getUnitPrice();
-		BigDecimal discountedPrice = BigDecimal.ZERO;
-		EnumInstance discountUnit = invoiceItem.getDiscountUnit();
-		if (discountUnit == null) {
-			discountedPrice = unitPrice;
-		} else if (discountUnit.equals(enumMaintenance.getDiscountUnitPercentage())) {
-			discountedPrice = unitPrice.multiply(BigDecimal.valueOf(1 - invoiceItem.getDiscountAmount() / 100));
-		} else {
-			discountedPrice = unitPrice.subtract(BigDecimal.valueOf(invoiceItem.getDiscountAmount()));
-		}
-		BigDecimal quantity = BigDecimal.valueOf(invoiceItem.getQuantity());	
-		return discountedPrice.multiply(quantity);		
+	public void save() {
+		journal.setLastUpdateDate(Calendar.getInstance().getTime());
+		journal.setLastUpdateUser(user);
+		entityManager.persist(journal);
 	}
-
 }

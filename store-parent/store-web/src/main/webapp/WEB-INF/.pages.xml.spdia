@@ -71,20 +71,18 @@
   <output ID="/product.xhtml" NAME="output" PATH="/product.xhtml"
    TARGET="#xproduct.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
- <item ID="#productadd.xhtml" NAME="#xproductadd.xhtml"
-  PATH="/productadd.xhtml" SHAPE="344,481,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
-  <output ID="/product.xhtml" NAME="output" PATH="/product.xhtml"
-   TARGET="#xproduct.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ <item ID="#journaladd.xhtml" NAME="#xjournaladd.xhtml"
+  PATH="/journaladd.xhtml" SHAPE="344,481,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/journal.xhtml" NAME="output" PATH="/journal.xhtml"
+   TARGET="#xjournal.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
  <item ID="#sale.xhtml" NAME="#xsale.xhtml" PATH="/sale.xhtml"
   SHAPE="56,609,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
-  <output ID="/invoiceView.xhtml" NAME="output"
-   PATH="/invoiceView.xhtml" TARGET="#xinvoiceView.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+  <output ID="/invoice.xhtml" NAME="output" PATH="/invoice.xhtml"
+   TARGET="#xinvoice.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
   <output ID="/sale.xhtml" NAME="output1" PATH="/sale.xhtml"
    TARGET="#xsale.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
- <item NAME="#xinvoiceView.xhtml" PATH="/invoiceView.xhtml"
-  SHAPE="376,609,0,0" TYPE="page" model-entity="SeamPagesDiagramItem"/>
  <item ID="#company.xhtml" NAME="#xcompany.xhtml" PATH="/company.xhtml"
   SHAPE="376,737,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
   <output ID="/companyedit.xhtml" NAME="output"
@@ -129,4 +127,16 @@
   <output ID="/inventory.xhtml" NAME="output" PATH="/inventory.xhtml"
    TARGET="#xinventory.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
  </item>
+ <item ID="#journal.xhtml" NAME="#xjournal.xhtml" PATH="/journal.xhtml"
+  SHAPE="24,1825,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/journaladd.xhtml" NAME="output" PATH="/journaladd.xhtml"
+   TARGET="#xjournaladd.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item ID="#productadd.xhtml" NAME="#xproductadd.xhtml"
+  PATH="/productadd.xhtml" SHAPE="1016,609,0,0" TYPE="page" model-entity="SeamPagesDiagramItem">
+  <output ID="/product.xhtml" NAME="output" PATH="/product.xhtml"
+   TARGET="#xproduct.xhtml" model-entity="SeamPagesDiagramItemOutput"/>
+ </item>
+ <item NAME="#xinvoice.xhtml" PATH="/invoice.xhtml" SHAPE="376,2033,0,0"
+  TYPE="page" model-entity="SeamPagesDiagramItem"/>
 </diagram>

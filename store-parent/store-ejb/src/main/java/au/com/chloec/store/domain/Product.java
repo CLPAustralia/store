@@ -58,6 +58,8 @@ public class Product extends AbstractDomainObject implements Serializable {
 	private byte[] thumbnail;
 	
 	private byte[] picture;
+
+	private EnumInstance productType;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -212,4 +214,15 @@ public class Product extends AbstractDomainObject implements Serializable {
 		this.picture = picture;
 	}
 
+	@ManyToOne
+	@JoinColumn(name = "product_type_instance_id")
+	public EnumInstance getProductType() {
+		return productType;
+	}
+
+	public void setProductType(EnumInstance productType) {
+		this.productType = productType;
+	}
+
+	
 }
