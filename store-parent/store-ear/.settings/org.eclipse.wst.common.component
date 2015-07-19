@@ -11,9 +11,6 @@
         <dependent-module archiveName="jboss-seam.jar" deploy-path="/" handle="module:/classpath/var/M2_REPO/org/jboss/seam/jboss-seam/2.3.1.Final/jboss-seam-2.3.1.Final.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="commons-collections-3.2.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-collections/commons-collections/3.2/commons-collections-3.2.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="commons-lang-2.1.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-lang/commons-lang/2.1/commons-lang-2.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>

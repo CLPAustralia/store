@@ -4,16 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>au.com.chloec.store</groupId>
 	<artifactId>store-parent</artifactId>
-	<parent>
-		<groupId>org.jboss.seam</groupId>
-		<artifactId>examples</artifactId>
-		<version>2.3.1.Final</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 	<name>Chloe C Store</name>
 
 	<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.6</maven.compiler.source>
 		<example.name>booking</example.name>
 	</properties>
 
@@ -26,6 +24,13 @@
 
 	<dependencyManagement>
 		<dependencies>
+            <dependency>
+                <groupId>org.jboss.seam</groupId>
+                <artifactId>bom</artifactId>
+                <version>2.3.1.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
 			<dependency>
 				<groupId>au.com.chloec.store</groupId>
 				<artifactId>store-ejb</artifactId>
@@ -54,17 +59,29 @@
 				<groupId>commons-collections</groupId>
 				<artifactId>commons-collections</artifactId>
 				<version>3.2</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>commons-lang</groupId>
 				<artifactId>commons-lang</artifactId>
 				<version>2.1</version>
 			</dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.1.1</version>
+                <scope>provided</scope>
+            </dependency>
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
 				<version>2.8.1</version>
 			</dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.6.1</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 </project>

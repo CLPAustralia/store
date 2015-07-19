@@ -4,7 +4,6 @@
 	"http://java.sun.com/dtd/application_1_3.dtd">
 <application>
   <display-name>store-ear</display-name>
-  <description>Examples for Seam 2 Framework in Java EE6 environment</description>
   <module>
     <web>
       <web-uri>store-web.war</web-uri>
