@@ -165,7 +165,7 @@ public class InvoiceMaintenanceAction implements InvoiceMaintenance {
 		BigDecimal unitPrice = invoiceItem.getUnitPrice();
 		BigDecimal discountedPrice = BigDecimal.ZERO;
 		EnumInstance discountUnit = invoiceItem.getDiscountUnit();
-		if (discountUnit == null) {
+		if (!invoiceItem.hasDiscount()) {
 			discountedPrice = unitPrice;
 		} else if (discountUnit.equals(enumMaintenance.getDiscountUnitPercentage())) {
 			discountedPrice = unitPrice.multiply(BigDecimal.valueOf(1 - invoiceItem.getDiscountAmount() / 100));

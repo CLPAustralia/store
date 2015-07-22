@@ -9,7 +9,6 @@
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<groupId>au.com.chloec.store</groupId>
 	<artifactId>store-ejb</artifactId>
 	<packaging>ejb</packaging>
 	<name>Chloe C Store EJB Module</name>

@@ -55,24 +55,24 @@
 	<h:outputText id="NoProductsFoundMessage" value="No Products Found" rendered="#{products!=null and products.rowCount==0}"/>
 	<h:dataTable id="products" value="#{products}" var="product" rendered="#{products.rowCount>0}">
 		<h:column id="column1">
-			<f:facet id="IdFacet" name="header">ID</f:facet>
-			#{product.id}
-		</h:column>
-		<h:column id="column2">
 			<f:facet id="NameFacet" name="header">Name</f:facet>
 			#{product.name}
 		</h:column>
-		<h:column id="column3">
+		<h:column id="column2">
 			<f:facet id="DisplayNameFacet" name="header">Display Name</f:facet>
 			#{product.displayName}
 		</h:column>
-		<h:column id="column4">
+		<h:column id="column3">
 			<f:facet id="FactoryBarcodeFacet" name="header">Factory Barcode</f:facet>
 			#{product.factoryBarcode}
 		</h:column>
-		<h:column id="column5">
+		<h:column id="column4">
 			<f:facet id="FactoryCodeFacet" name="header">Factory Code</f:facet>
 			#{product.factoryCode}
+		</h:column>
+		<h:column id="column5">
+			<f:facet id="ProductBarcodeFacet" name="header">Product Barcode</f:facet>
+			#{product.productBarcode}
 		</h:column>
 		<h:column id="column6">
 			<f:facet id="ProductCodeFacet" name="header">Product Code</f:facet>
@@ -87,36 +87,36 @@
 			#{product.gender.name}
 		</h:column>
 		<h:column id="column9">
-			<f:facet id="WholesalePriceFacet" name="header">Wholesale Price</f:facet>
-			#{product.wholesalePrice}
-		</h:column>
-		<h:column id="column10">
-			<f:facet id="RetailPriceFacet" name="header">Retail Price</f:facet>
-			#{product.retailPrice}
-		</h:column>
-		<h:column id="column11">
-			<f:facet id="CategoryFacet" name="header">Category</f:facet>
-			#{product.category.name}
-		</h:column>
-		<h:column id="column12">
 			<f:facet id="LabelFacet" name="header">Label</f:facet>
 			#{product.label.name}
 		</h:column>
+		<h:column id="column10">
+			<f:facet id="CategoryFacet" name="header">Category</f:facet>
+			#{product.category.name}
+		</h:column>
+		<h:column id="column11">
+			<f:facet id="OptionFacet" name="header">Options</f:facet>
+			<ui:repeat var="productOption" value="#{product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
+		</h:column>
+		<h:column id="column12">
+			<f:facet id="RetailPriceFacet" name="header">Retail Price</f:facet>
+			#{product.retailPrice}
+		</h:column>
 		<h:column id="column13">
+			<f:facet id="OptionFacet" name="header">Promotion</f:facet>
+			<ui:repeat var="productPromotion" value="#{product.productPromotions}">#{productPromotion.discountAmount} #{productPromotion.discountUnit.name}<br /></ui:repeat>
+		</h:column>
+		<h:column id="column14">
 			<f:facet id="CreationDateFacet" name="header">Creation Date</f:facet>
 			#{product.creationDate}
 		</h:column>
-		<h:column id="column14">
+		<h:column id="column15">
 			<f:facet id="LastUpdateDateFacet" name="header">Last Update Date</f:facet>
 			#{product.lastUpdateDate}
 		</h:column>
-		<h:column id="column15">
+		<h:column id="column16">
 			<f:facet id="LastUpdateUserFacet" name="header">Last Update User</f:facet>
 			#{product.lastUpdateUser.name}
-		</h:column>
-		<h:column id="column16">
-			<f:facet id="OptionFacet" name="header">Options</f:facet>
-			<ui:repeat var="productOption" value="#{product.productOptions}">#{productOption.optionKey}: #{productOption.optionValue}<br /></ui:repeat>
 		</h:column>
 		<h:column id="column17">
 			<f:facet id="ActionFacet" name="header">Action</f:facet>

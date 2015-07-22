@@ -33,7 +33,7 @@ public class EnumMaintenanceAction {
 	public static final String DOMAIN_NAME_INVOICE_STATUS_COMPLETED = "Completed";
 	
 	public static final String DOMAIN_NAME_DISCOUNT_UNIT = "Discount Unit";
-	public static final String DOMAIN_NAME_DISCOUNT_UNIT_PERCENTAGE = "Percentage";
+	public static final String DOMAIN_NAME_DISCOUNT_UNIT_PERCENTAGE = "Percent";
 
 	@PersistenceContext
 	private EntityManager entityManager;

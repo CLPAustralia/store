@@ -39,6 +39,9 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	@In
 	private User user;
 	
+	@In(create = true)
+	private EnumMaintenanceAction enumMaintenance;
+	
 	private String searchString;
 	private int pageSize = 10;
 	private int page;
@@ -136,4 +139,5 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 	public List<Product> getAllProducts() {
 		return entityManager.createQuery("select p from Product p").getResultList();
 	}
+	
 }

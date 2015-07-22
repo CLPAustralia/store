@@ -8,7 +8,6 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     
-    <groupId>au.com.chloec.store</groupId>
     <artifactId>store-tests</artifactId>
     <name>Chloe C Store Integration Tests Module</name>
     

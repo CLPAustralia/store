@@ -42,6 +42,20 @@
 						</h:inputText>
 					</s:decorate>
 
+					<s:decorate id="factoryCodeDecorate" template="edit.xhtml">
+						<ui:define name="label">Factory Code:</ui:define>
+						<h:inputText id="factoryCode" value="#{product.factoryCode}" >
+							<a:ajax event="blur" render="factoryCodeDecorate"/>
+						</h:inputText>
+					</s:decorate>
+
+					<s:decorate id="productBarcodeDecorate" template="edit.xhtml">
+						<ui:define name="label">Product Barcode:</ui:define>
+						<h:inputText id="productBarcode" value="#{product.productBarcode}" required="true">
+							<a:ajax event="blur" render="productBarcodeDecorate"/>
+						</h:inputText>
+					</s:decorate>
+
 					<s:decorate id="productCodeDecorate" template="edit.xhtml">
 						<ui:define name="label">Product Code:</ui:define>
 						<h:inputText id="productCode" value="#{product.productCode}" >
@@ -57,20 +71,12 @@
 						</h:selectOneMenu>
 					</s:decorate>
 
-					<s:decorate id="wholesalePriceDecorate" template="edit.xhtml">
-						<ui:define name="label">WholesalePrice:</ui:define>
-						<h:inputText id="wholesalePrice" value="#{product.wholesalePrice}" >
-							<a:ajax event="blur" render="wholesalePriceDecorate"/>
-							<f:convertNumber type="currency" currencySymbol="$"/>
-						</h:inputText>
-					</s:decorate>
-
-					<s:decorate id="retailPriceDecorate" template="edit.xhtml">
-						<ui:define name="label">RetailPrice:</ui:define>
-						<h:inputText id="retailPrice" value="#{product.retailPrice}" >
-							<a:ajax event="blur" render="retailPriceDecorate"/>
-							<f:convertNumber type="currency" currencySymbol="$"/>
-						</h:inputText>
+				    <s:decorate id="labelDecorate" template="display.xhtml">             
+						<ui:define name="label">Label:</ui:define>
+						<h:selectOneMenu id="labelMenu" value="#{product.label}">
+							<f:selectItems value="#{allLabels}" var="label" itemLabel="#{label.name}" />
+							<s:convertEntity />
+						</h:selectOneMenu>
 					</s:decorate>
 
 				    <s:decorate id="categoryDecorate" template="display.xhtml">             
@@ -81,12 +87,12 @@
 						</h:selectOneMenu>
 					</s:decorate>
 
-				    <s:decorate id="labelDecorate" template="display.xhtml">             
-						<ui:define name="label">Label:</ui:define>
-						<h:selectOneMenu id="labelMenu" value="#{product.label}">
-							<f:selectItems value="#{allLabels}" var="label" itemLabel="#{label.name}" />
-							<s:convertEntity />
-						</h:selectOneMenu>
+					<s:decorate id="retailPriceDecorate" template="edit.xhtml">
+						<ui:define name="label">RetailPrice:</ui:define>
+						<h:inputText id="retailPrice" value="#{product.retailPrice}" >
+							<a:ajax event="blur" render="retailPriceDecorate"/>
+							<f:convertNumber type="currency" currencySymbol="$"/>
+						</h:inputText>
 					</s:decorate>
 
 					<div class="ui-button">

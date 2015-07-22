@@ -31,7 +31,7 @@ public class ProductOption extends AbstractDomainObject implements Serializable 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "product_option_id")
+	@Column(name = "option_id")
 	public Long getId() {
 		return id;
 	}

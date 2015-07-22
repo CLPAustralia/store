@@ -38,6 +38,13 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 
 	public InvoiceItem(){}
 	
+	public InvoiceItem(Product product, BigDecimal unitPrice, Invoice invoice) {
+		this.product = product;
+		this.unitPrice = unitPrice;
+		this.invoice = invoice;
+		this.quantity = 1;
+	}
+	
 	public InvoiceItem(Product product, BigDecimal unitPrice, Invoice invoice, EnumInstance discountUnit, Double discountAmount) {
 		this.product = product;
 		this.unitPrice = unitPrice;
@@ -127,4 +134,7 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 		this.discountUnit = discountUnit;
 	}
 	
+	public boolean hasDiscount() {
+		return this.discountUnit != null && this.discountAmount > 0;
+	}
 }

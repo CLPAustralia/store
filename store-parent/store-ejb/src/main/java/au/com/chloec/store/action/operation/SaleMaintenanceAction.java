@@ -103,7 +103,7 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 		}
 		inventoryItemViews.clear();
 		for (InventoryItem inventoryItem : inventoryItems) {
-			inventoryItemViews.add(new InventoryItemView(inventoryItem));
+			inventoryItemViews.add(new InventoryItemView(inventoryItem, enumMaintenance));
 		}
 	}
 
@@ -147,7 +147,7 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 			}
 		});
 		if (invoiceItem == null) {
-			invoice.getInvoiceItems().add(new InvoiceItem(product, product.getRetailPrice(), invoice, enumMaintenance.getDiscountUnitPercentage(), Double.valueOf(0)));
+			invoice.getInvoiceItems().add(new InvoiceItem(product, inventoryItemView.getPromotedPrice(), invoice));
 		} else {
 			invoiceItem.add();
 		}

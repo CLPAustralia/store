@@ -2,11 +2,14 @@ package au.com.chloec.store.view;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.jboss.seam.annotations.Name;
 
+import au.com.chloec.store.action.admin.EnumMaintenanceAction;
 import au.com.chloec.store.domain.InventoryItem;
 import au.com.chloec.store.domain.Product;
+import au.com.chloec.store.domain.ProductPromotion;
 import au.com.chloec.store.utils.ProductUtil;
 
 @Name("inventoryItemView")
@@ -14,9 +17,11 @@ public class InventoryItemView extends InventoryItem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private InventoryItem inventoryItem;
+	private EnumMaintenanceAction enumMaintenance;
 
-	public InventoryItemView(InventoryItem inventoryItem) {
+	public InventoryItemView(InventoryItem inventoryItem, EnumMaintenanceAction enumMaintenance) {
 		this.inventoryItem = inventoryItem;
+		this.enumMaintenance = enumMaintenance;
 	}
 
 	public Product getProduct() {
@@ -28,7 +33,7 @@ public class InventoryItemView extends InventoryItem implements Serializable {
 	}
 
 	public String getBarcode() {
-		return getProduct().getFactoryBarcode();
+		return getProduct().getProductBarcode() != null ? getProduct().getProductBarcode() : getProduct().getFactoryBarcode();
 	}
 	
 	public String getCode() {
@@ -43,6 +48,18 @@ public class InventoryItemView extends InventoryItem implements Serializable {
 		return getProduct().getRetailPrice();
 	}
 
+	public BigDecimal getPromotedPrice() {
+		BigDecimal price = getProduct().getRetailPrice();		
+		List<ProductPromotion> productPromotions = getProduct().getProductPromotions();
+		for (ProductPromotion productPromotion : productPromotions) {
+			if (productPromotion.getDiscountUnit().equals(enumMaintenance.getDiscountUnitPercentage())) {
+				price = price.multiply(BigDecimal.ONE.subtract(productPromotion.getDiscountAmount().divide(BigDecimal.valueOf(100))));
+			} else {
+				price = price.subtract(productPromotion.getDiscountAmount());
+			}
+		}
+		return price;
+	}
 	public String getCategory() {
 		return getProduct().getCategory().getName();
 	}

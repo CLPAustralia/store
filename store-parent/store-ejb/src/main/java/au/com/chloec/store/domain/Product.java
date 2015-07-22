@@ -2,6 +2,7 @@ package au.com.chloec.store.domain;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -41,6 +42,7 @@ public class Product extends AbstractDomainObject implements Serializable {
 	private String factoryBarcode;
 	private String factoryCode;
 	private String productCode;
+	private String productBarcode;
 	
 	private EnumInstance gender;	
 	
@@ -53,7 +55,8 @@ public class Product extends AbstractDomainObject implements Serializable {
 	private EnumInstance category;
 	private Label label;
 	
-	private List<ProductOption> productOptions;
+	private List<ProductOption> productOptions = new ArrayList<ProductOption>();
+	private List<ProductPromotion> productPromotions = new ArrayList<ProductPromotion>();
 	
 	private byte[] thumbnail;
 	
@@ -115,6 +118,15 @@ public class Product extends AbstractDomainObject implements Serializable {
 
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
+	}
+
+	@Column(name = "product_barcode")
+	public String getProductBarcode() {
+		return productBarcode;
+	}
+
+	public void setProductBarcode(String productBarcode) {
+		this.productBarcode = productBarcode;
 	}
 
 	@ManyToOne
@@ -196,6 +208,18 @@ public class Product extends AbstractDomainObject implements Serializable {
 		this.productOptions = productOptions;
 	}
 
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "product_id", referencedColumnName = "product_id")
+	@Fetch(value = FetchMode.SUBSELECT)
+	public List<ProductPromotion> getProductPromotions() {
+		return productPromotions;
+	}
+
+	public void setProductPromotions(List<ProductPromotion> productPromotions) {
+		this.productPromotions = productPromotions;
+	}
+
 	@Lob
 	public byte[] getThumbnail() {
 		return thumbnail;
@@ -224,5 +248,7 @@ public class Product extends AbstractDomainObject implements Serializable {
 		this.productType = productType;
 	}
 
-	
+	public boolean hasPromotions() {
+		return this.productPromotions.size() > 1;
+	}
 }
