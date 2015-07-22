@@ -18,9 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.jboss.seam.annotations.Name;
@@ -28,8 +25,6 @@ import org.jboss.seam.annotations.Name;
 @Entity
 @Table(name = "product")
 @Name("product")
-@EqualsAndHashCode(callSuper=false,of={"id"})
-@ToString
 public class Product extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -251,4 +246,36 @@ public class Product extends AbstractDomainObject implements Serializable {
 	public boolean hasPromotions() {
 		return this.productPromotions.size() > 1;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [id=" + id + ", name=" + name + ", description="
+				+ description + "]";
+	}
+	
 }

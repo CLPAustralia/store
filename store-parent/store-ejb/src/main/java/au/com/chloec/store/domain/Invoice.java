@@ -16,16 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-
 import org.jboss.seam.annotations.Name;
 
 @Entity
 @Table(name = "invoice")
 @Name("invoice")
-@EqualsAndHashCode(callSuper=false,of={"id"})
-@ToString(of = {"id", "status"})
 public class Invoice extends AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -74,4 +69,36 @@ public class Invoice extends AbstractDomainObject implements Serializable {
 	public void setPaymentType(EnumInstance paymentType) {
 		this.paymentType = paymentType;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Invoice other = (Invoice) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Invoice [id=" + id + ", status=" + status + ", paymentType="
+				+ paymentType + "]";
+	}
+	
 }

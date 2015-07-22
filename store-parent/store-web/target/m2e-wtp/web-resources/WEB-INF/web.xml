@@ -62,7 +62,7 @@
         
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.seam</url-pattern>
+        <url-pattern>*.cc</url-pattern>
     </servlet-mapping>
 
     <session-config>

@@ -11,10 +11,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import lombok.EqualsAndHashCode;
-
 @MappedSuperclass
-@EqualsAndHashCode
 public abstract class AbstractDomainObject implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -52,5 +49,25 @@ public abstract class AbstractDomainObject implements Serializable {
 	public void setLastUpdateUser(User lastUpdateUser) {
 		this.lastUpdateUser = lastUpdateUser;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result;
+		return result;
+	}
+	
 	
 }
