@@ -69,6 +69,7 @@ public class ProductMaintenanceAction implements ProductMaintenance {
 		String queryString = "select p "
 				+ "from Product p "
 				+ "where lower(p.name) like #{productPattern} "
+				+ "or lower(p.factoryBarcode) like #{productPattern} "
 				+ "or lower(p.displayName) like #{productPattern} "
 				+ "or lower(p.productCode) like #{productPattern}  "
 				+ "or lower(p.factoryCode) like #{productPattern}";
