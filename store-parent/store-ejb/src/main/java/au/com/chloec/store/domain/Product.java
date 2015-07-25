@@ -125,7 +125,7 @@ public class Product extends AbstractDomainObject implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "gender_instance_id")
+	@JoinColumn(name = "gender_id")
 	public EnumInstance getGender() {
 		return gender;
 	}
@@ -173,7 +173,7 @@ public class Product extends AbstractDomainObject implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "category_instance_id")
+	@JoinColumn(name = "category_id")
 	public EnumInstance getCategory() {
 		return category;
 	}
@@ -234,7 +234,7 @@ public class Product extends AbstractDomainObject implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "product_type_instance_id")
+	@JoinColumn(name = "product_type_id")
 	public EnumInstance getProductType() {
 		return productType;
 	}

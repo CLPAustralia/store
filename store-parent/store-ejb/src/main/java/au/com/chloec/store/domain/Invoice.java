@@ -51,7 +51,7 @@ public class Invoice extends AbstractDomainObject implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "status_instance_id")
+	@JoinColumn(name = "status_id")
 	public EnumInstance getStatus() {
 		return status;
 	}
@@ -61,7 +61,7 @@ public class Invoice extends AbstractDomainObject implements Serializable {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "payment_type_instance_id")
+	@JoinColumn(name = "payment_type_id")
 	public EnumInstance getPaymentType() {
 		return paymentType;
 	}

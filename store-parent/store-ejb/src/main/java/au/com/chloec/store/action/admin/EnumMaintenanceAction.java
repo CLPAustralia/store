@@ -104,7 +104,7 @@ public class EnumMaintenanceAction {
 			@Override
 			public boolean evaluate(Object obj) {
 				EnumInstance invoiceEnumInstance = (EnumInstance) obj;
-				return invoiceEnumInstance.getName().equals("Percentage");
+				return invoiceEnumInstance.getName().equals(DOMAIN_NAME_DISCOUNT_UNIT_PERCENTAGE);
 			}
 		});
 	}

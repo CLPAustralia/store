@@ -43,7 +43,7 @@ public class ProductPromotion extends AbstractDomainObject implements Serializab
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "discount_unit_instance_id")
+	@JoinColumn(name = "discount_unit_id")
 	public EnumInstance getDiscountUnit() {
 		return discountUnit;
 	}

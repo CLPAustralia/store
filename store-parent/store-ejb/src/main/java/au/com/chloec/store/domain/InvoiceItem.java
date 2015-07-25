@@ -33,13 +33,6 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 
 	public InvoiceItem(){}
 	
-	public InvoiceItem(Product product, BigDecimal unitPrice, Invoice invoice) {
-		this.product = product;
-		this.unitPrice = unitPrice;
-		this.invoice = invoice;
-		this.quantity = 1;
-	}
-	
 	public InvoiceItem(Product product, BigDecimal unitPrice, Invoice invoice, EnumInstance discountUnit, Double discountAmount) {
 		this.product = product;
 		this.unitPrice = unitPrice;
@@ -120,7 +113,7 @@ public class InvoiceItem extends AbstractDomainObject implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name = "discount_unit_instance_id")
+	@JoinColumn(name = "discount_unit_id")
 	public EnumInstance getDiscountUnit() {
 		return discountUnit;
 	}

@@ -147,7 +147,7 @@ public class SaleMaintenanceAction implements SaleMaintenance {
 			}
 		});
 		if (invoiceItem == null) {
-			invoice.getInvoiceItems().add(new InvoiceItem(product, inventoryItemView.getPromotedPrice(), invoice));
+			invoice.getInvoiceItems().add(new InvoiceItem(product, inventoryItemView.getPromotedPrice(), invoice, enumMaintenance.getDiscountUnitPercentage(), Double.valueOf(0)));
 		} else {
 			invoiceItem.add();
 		}

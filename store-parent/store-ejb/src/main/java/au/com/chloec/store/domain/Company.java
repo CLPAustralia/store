@@ -44,7 +44,7 @@ public class Company extends AbstractDomainObject implements Serializable {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "category_instance_id")
+	@JoinColumn(name = "category_id")
 	public EnumInstance getCategory() {
 		return category;
 	}

@@ -93,20 +93,6 @@
 							<f:facet id="RetailPriceFacet" name="header">Promotion Price</f:facet>
 							<h:outputText value="#{inventoryItemView.promotedPrice}" />
 						</h:column>
-						<h:column id="column10" >
-							<f:facet id="iDiscountPercentFacet" name="header">Discount Unit</f:facet>
-							<h:selectOneMenu id="discountUnitMenu" value="#{invoiceItem.discountUnit}">
-								<f:selectItems value="#{allDiscountUnits}" var="discountUnit" itemLabel="#{discountUnit.name}" />
-								<s:convertEntity />
-								<a:ajax event="change" render="invoiceResults" />
-							</h:selectOneMenu>
-						</h:column>
-						<h:column id="column11" >
-							<f:facet id="iDiscountAmountFacet" name="header">Discount Amount</f:facet>
-							<h:inputText value="#{invoiceItem.discountAmount}">
-								<a:ajax event="change" render="invoiceResults" />
-							</h:inputText>
-						</h:column>
 						<h:column id="column12">
 							<f:facet id="ActionFacet" name="header">Action</f:facet>
 							<s:button id="addSale" value="Add"
